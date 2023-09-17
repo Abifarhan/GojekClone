@@ -15,6 +15,7 @@ import com.ourproject.register_module.datasource.http.retrofit
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
+import retrofit2.HttpException
 import retrofit2.Response
 
 
@@ -120,7 +121,34 @@ class RegisterFragment : Fragment() {
 
             override fun onFailure(call: Call<ResponseData>, t: Throwable) {
                 // Registration request failed, handle the error here
-                Log.d("TAG", "Registration request failed: ${t.message}")
+                when (t) {
+                    is java.net.UnknownHostException -> {
+                        // Handle no connectivity error
+                        Log.d("TAG", "No connectivity")
+                    }
+                    is HttpException -> {
+                        // Handle HTTP error responses (4xx and 5xx)
+                        val statusCode = t.code()
+                        when (statusCode) {
+                            404 -> {
+                                // Handle "Not Found" error
+                                Log.d("TAG", "Resource not found error")
+                            }
+                            500 -> {
+                                // Handle internal server error
+                                Log.d("TAG", "Internal server error")
+                            }
+                            else -> {
+                                // Handle other HTTP error codes
+                                Log.d("TAG", "HTTP error. Status Code: $statusCode")
+                            }
+                        }
+                    }
+                    else -> {
+                        // Handle unexpected errors
+                        Log.d("TAG", "Unexpected error: ${t.message}")
+                    }
+                }
             }
         })
 
