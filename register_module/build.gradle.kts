@@ -1,21 +1,20 @@
+@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
+
 }
 
 android {
-    namespace = "com.ourproject.gojekclone"
+    namespace = "com.ourproject.register_module"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.ourproject.gojekclone"
         minSdk = 24
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -35,23 +34,15 @@ android {
         jvmTarget = "17"
     }
 
-    packagingOptions {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-
     buildFeatures {
         viewBinding = true
-//        dataBinding = true
+        dataBinding = true
     }
 }
 
 dependencies {
 
-
     implementation(project(":component"))
-    implementation(project(":register_module"))
     implementation(libs.androidx.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
