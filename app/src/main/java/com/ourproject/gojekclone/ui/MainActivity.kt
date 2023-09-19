@@ -3,7 +3,7 @@ package com.ourproject.gojekclone.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.ourproject.gojekclone.R
-import com.ourproject.register_module.RegisterFragment
+import com.ourproject.register_module.ui.RegisterFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

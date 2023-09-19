@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.navigation.compose)
     implementation(libs.appcompat)
     implementation(libs.constraintlayout)
+    implementation(libs.cronet.api)
     testImplementation(libs.junit)
     testImplementation(libs.ext.junit)
     testImplementation(libs.espresso.core)
