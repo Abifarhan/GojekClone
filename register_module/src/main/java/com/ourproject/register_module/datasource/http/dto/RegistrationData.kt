@@ -44,7 +44,7 @@ data class UserData(
 )
 
 
-@Entity
+@Entity(tableName = "register_feed")
 data class UserLocal(
     @PrimaryKey val id: Int,
     val name: String,
@@ -54,5 +54,4 @@ data class UserLocal(
     val phoneNumber: String,
     val city: String,
     val profile_photo_url: String?
-    // Add other user properties as needed
 )

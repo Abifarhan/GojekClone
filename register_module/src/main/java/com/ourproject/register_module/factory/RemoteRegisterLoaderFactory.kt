@@ -10,7 +10,6 @@ open class RemoteRegisterLoaderFactory {
     companion object {
         fun createRemoteRegisterUserLoader(registrationData: RegistrationData): GoPayRegisterLoader {
 
-            Log.d("TAG", "createRemoteRegisterUserLoader: this executed heheheh")
             return RemoteGopayRegisterLoader(
                 RegisterUserHttpClientFactory.createRegisterUserHttpClient(registrationData)
             )

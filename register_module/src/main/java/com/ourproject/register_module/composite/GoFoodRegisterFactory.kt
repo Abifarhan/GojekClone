@@ -1,5 +1,6 @@
 package com.ourproject.register_module.composite
 
+import android.util.Log
 import com.ourproject.register_module.datasource.http.GoPayRegisterLoader
 import com.ourproject.register_module.datasource.http.HttpRegisterClientResult
 import com.ourproject.register_module.datasource.http.dto.RegistrationData
@@ -29,6 +30,8 @@ class RegisterFeedLoaderComposite(
         return flow {
             primary.submit(userData).collect{
                 try {
+
+                    Log.d("TAG", "submit: here the result of submit $it")
                     primary.submit(userData).collect {
                         when (it) {
                             is HttpRegisterClientResult.Success -> emit(it)
@@ -38,6 +41,7 @@ class RegisterFeedLoaderComposite(
                         }
                     }
                 } catch (e: Exception) {
+                    Log.d("TAG", "submit: here the result of submit 2 $it")
                     fallback.submit(userData)
                 }
             }

@@ -5,11 +5,20 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.RegisterFragment">
 
     <com.ourproject.component.header.HeaderWithTitle
         android:id="@+id/simple_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+
+    <com.ourproject.component.textField.CustomEditTextHintView
+        android:id="@+id/inputName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="28dp"
+        />
 
 </LinearLayout>

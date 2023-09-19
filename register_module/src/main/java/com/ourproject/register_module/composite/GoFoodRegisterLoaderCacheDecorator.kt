@@ -1,5 +1,6 @@
 package com.ourproject.register_module.composite
 
+import android.util.Log
 import com.ourproject.register_module.datasource.db.GofoodRegisterCache
 import com.ourproject.register_module.datasource.http.GoPayRegisterLoader
 import com.ourproject.register_module.datasource.http.HttpRegisterClientResult
@@ -17,6 +18,8 @@ class GoFoodRegisterLoaderCacheDecorator(
     override fun submit(userData: RegistrationData): Flow<HttpRegisterClientResult> {
         return flow {
             decorate.submit(userData).collect { result ->
+
+                Log.d("TAG", "submit: the total data you get is $result")
                 if (result is HttpRegisterClientResult.Success) {
                     val userLocal = result.root.data.user.toUserLocal()
                     cache.save(userLocal)

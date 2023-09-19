@@ -20,29 +20,7 @@ class RemoteGopayRegisterLoader constructor(
     private val registerRetrofitHttpClient: RegisterRetrofitHttpClient
 ) : GoPayRegisterLoader{
     override fun submit(userData: RegistrationData): Flow<HttpRegisterClientResult> {
-        return flow {
-            Log.d("TAG", "Entering flow block")
-            val result = registerRetrofitHttpClient.submit(userData)
-            val firstSuccess = result.firstOrNull { it is HttpRegisterClientResult.Success }
-
-            if (firstSuccess != null) {
-                Log.d("TAG", "Emitting firstSuccess: $firstSuccess")
-                emit(firstSuccess)
-            } else {
-                Log.d("TAG", "No successful result found, emitting failure")
-                // No successful result found, emit a failure
-                emit(HttpRegisterClientResult.Failure(Exception("No successful result")))
-            }
-        }.onEach { result ->
-            when (result) {
-                is HttpRegisterClientResult.Success -> {
-                    Log.d("TAG", "HTTP request is successful: ${result.root}")
-                }
-                is HttpRegisterClientResult.Failure -> {
-                    Log.e("TAG", "HTTP request failed: ${result.throwable.message}")
-                }
-            }
-        }.flowOn(Dispatchers.IO)
+        return registerRetrofitHttpClient.submit(userData)
 
 
 

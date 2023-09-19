@@ -42,6 +42,11 @@ class RegisterFragment : Fragment() {
                 insertTitle = "Register page"
                 insertSubtitle = "Buat akun dulu baru checkout makanan"
             }
+
+
+            inputName.apply {
+                setHint("Isi Nama Anda")
+            }
         }
 
 //        val viewModel : RegisterFeedViewModel = viewModel(factory = RegisterViewModelFactory.FACTORY)
@@ -49,7 +54,7 @@ class RegisterFragment : Fragment() {
 //
         val registrationData = RegistrationData(
             name = "alfonso3",
-            email = "fonso43@gmail.com",
+            email = "fonso51@gmail.com",
             password = "1234567890",
             password_confirmation = "1234567890",
             address = "Jalan berkah",
@@ -64,6 +69,18 @@ class RegisterFragment : Fragment() {
 
 
         viewModel.submitUserRegister(registrationData)
+
+        viewModel.fetchUserDataLocal()
+
+        viewModel.userDataLiveData.observe(viewLifecycleOwner){userData ->
+
+            if (userData != null){
+                // navigate to
+            } else {
+
+            }
+        }
+
 //
 //        val call = apiService.registerUser(registrationData)
 
