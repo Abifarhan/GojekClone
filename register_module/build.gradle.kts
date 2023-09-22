@@ -43,6 +43,8 @@ android {
 dependencies {
 
     implementation(project(":component"))
+    implementation(project(":feature_dashboard"))
+    
     implementation(libs.androidx.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)

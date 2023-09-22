@@ -1,7 +1,9 @@
 package com.ourproject.gojekclone.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.ourproject.feature_dashboard.DashboardActivity
 import com.ourproject.gojekclone.R
 import com.ourproject.register_module.ui.RegisterFragment
 
@@ -17,4 +19,5 @@ class MainActivity : AppCompatActivity() {
             .commit()
 
     }
+
 }
