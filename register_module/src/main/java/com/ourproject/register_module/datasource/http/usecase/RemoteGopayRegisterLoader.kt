@@ -1,23 +1,13 @@
 package com.ourproject.register_module.datasource.http.usecase
 
-import android.util.Log
 import com.ourproject.register_module.datasource.http.GoPayRegisterLoader
 import com.ourproject.register_module.datasource.http.HttpRegisterClientResult
-import com.ourproject.register_module.datasource.http.RegisterRetrofitHttpClient
+import com.ourproject.register_module.datasource.http.RegisterFeedRetrofitHttpClient
 import com.ourproject.register_module.datasource.http.dto.RegistrationData
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.emitAll
-import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onEach
 
 class RemoteGopayRegisterLoader constructor(
-    private val registerRetrofitHttpClient: RegisterRetrofitHttpClient
+    private val registerRetrofitHttpClient: RegisterFeedRetrofitHttpClient
 ) : GoPayRegisterLoader{
     override fun submit(userData: RegistrationData): Flow<HttpRegisterClientResult> {
         return registerRetrofitHttpClient.submit(userData)

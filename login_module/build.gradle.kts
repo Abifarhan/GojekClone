@@ -52,6 +52,9 @@ dependencies {
     implementation(libs.lifecycle.runtime.compose)
     implementation(libs.navigation.compose)
     implementation(libs.appcompat)
+    implementation(libs.com.google.android.material.material)
+    implementation(libs.constraintlayout)
+    implementation(libs.cronet.api)
     testImplementation(libs.junit)
     testImplementation(libs.ext.junit)
     testImplementation(libs.espresso.core)
@@ -70,4 +73,10 @@ dependencies {
     implementation(libs.room)
     kapt(libs.room.compiler)
     implementation(libs.room.runtime)
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.google.code.gson:gson:2.8.8")
+    implementation(project(":feature_dashboard"))
+
 }

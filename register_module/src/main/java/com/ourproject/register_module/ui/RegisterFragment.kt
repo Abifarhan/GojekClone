@@ -2,24 +2,16 @@ package com.ourproject.register_module.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ourproject.feature_dashboard.DashboardActivity
 import com.ourproject.register_module.databinding.FragmentRegisterBinding
-import com.ourproject.register_module.datasource.http.RegisterUserService
 import com.ourproject.register_module.datasource.http.dto.RegistrationData
-import com.ourproject.register_module.datasource.http.retrofit
 import com.ourproject.register_module.presentation.RegisterFeedViewModel
 import com.ourproject.register_module.presentation.RegisterViewModelFactory
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.HttpException
-import retrofit2.Response
 
 
 class RegisterFragment : Fragment() {
@@ -56,7 +48,7 @@ class RegisterFragment : Fragment() {
 //
         val registrationData = RegistrationData(
             name = "alfonso3",
-            email = "fonso52@gmail.com",
+            email = "fonso53@gmail.com",
             password = "1234567890",
             password_confirmation = "1234567890",
             address = "Jalan berkah",
@@ -66,8 +58,7 @@ class RegisterFragment : Fragment() {
         )
 
 
-        val factory = RegisterViewModelFactory(registrationData)
-        viewModel = ViewModelProvider(this, factory).get(RegisterFeedViewModel::class.java)
+        viewModel = ViewModelProvider(this, RegisterViewModelFactory.FACTORY).get(RegisterFeedViewModel::class.java)
 
 
         viewModel.submitUserRegister(registrationData)

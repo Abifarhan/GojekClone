@@ -2,6 +2,9 @@ package com.ourproject.register_module.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import com.ourproject.register_module.composite.GoFoodRegisterFactory
 import com.ourproject.register_module.composite.GoFoodRegisterLoaderCacheDecorator
 import com.ourproject.register_module.datasource.db.usecase.LocalRegisterFeedLoaderFactory
@@ -10,25 +13,25 @@ import com.ourproject.register_module.factory.GofoodRegisterLocalInsertFactory
 import com.ourproject.register_module.factory.RemoteRegisterLoaderFactory
 
 
-class RegisterViewModelFactory(private val param: RegistrationData) : ViewModelProvider.Factory {
+class RegisterViewModelFactory : ViewModel() {
 
-    @Suppress("UNCHECKED_CAST")
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(RegisterFeedViewModel::class.java)) {
-            return RegisterFeedViewModel(
-                GoFoodRegisterFactory.createCompositeFactory(
-                    primary = GoFoodRegisterLoaderCacheDecorator(
-                        decorate = RemoteRegisterLoaderFactory.createRemoteRegisterUserLoader(registrationData = param),
-                        cache = GofoodRegisterLocalInsertFactory.createLocalInsertUserdata(registrationData = param)
+
+
+    companion object{
+        val FACTORY : ViewModelProvider.Factory = viewModelFactory {
+            initializer {
+                RegisterFeedViewModel(
+                    GoFoodRegisterFactory.createCompositeFactory(
+                        primary = GoFoodRegisterLoaderCacheDecorator(
+                            decorate = RemoteRegisterLoaderFactory.createRemoteRegisterUserLoader(),
+                            cache = GofoodRegisterLocalInsertFactory.createLocalInsertUserdata()
+                        ),
+                        fallback = RemoteRegisterLoaderFactory.createRemoteRegisterUserLoader()
                     ),
-                    fallback = RemoteRegisterLoaderFactory.createRemoteRegisterUserLoader(registrationData = param)
-                ),
-                gopayResultRegisterLoader = LocalRegisterFeedLoaderFactory.createLocalCryptoRegisterFeedLoader()
-            ) as T
+                    gopayResultRegisterLoader = LocalRegisterFeedLoaderFactory.createLocalCryptoRegisterFeedLoader()
+                )
+            }
         }
-        // Call super.create(modelClass) when the modelClass is not assignable from RegisterFeedViewModel
-        return super.create(modelClass) as T
     }
-
 
 }

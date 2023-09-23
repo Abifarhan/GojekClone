@@ -7,7 +7,7 @@ import com.ourproject.register_module.datasource.http.dto.RegistrationData
 class GofoodRegisterLocalInsertFactory {
 
     companion object {
-        fun createLocalInsertUserdata(registrationData: RegistrationData): GofoodRegisterCache {
+        fun createLocalInsertUserdata(): GofoodRegisterCache {
             return LocalRegisterUserInsert(RegisterUserDaoFactory.createRegisterUserDao())
         }
     }

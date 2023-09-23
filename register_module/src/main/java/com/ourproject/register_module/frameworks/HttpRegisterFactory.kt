@@ -1,4 +1,4 @@
-package com.ourproject.register_module.factory
+package com.ourproject.register_module.frameworks
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -22,11 +22,4 @@ object HttpRegisterFactory {
     }
 
 
-//    fun createOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor)
-
-    fun createLoggingInterceptor(): HttpLoggingInterceptor {
-        val loggingInterceptor = HttpLoggingInterceptor()
-        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        return loggingInterceptor
-    }
 }

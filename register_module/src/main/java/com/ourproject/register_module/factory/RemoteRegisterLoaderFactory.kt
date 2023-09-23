@@ -8,10 +8,10 @@ import com.ourproject.register_module.datasource.http.usecase.RemoteGopayRegiste
 open class RemoteRegisterLoaderFactory {
 
     companion object {
-        fun createRemoteRegisterUserLoader(registrationData: RegistrationData): GoPayRegisterLoader {
+        fun createRemoteRegisterUserLoader(): GoPayRegisterLoader {
 
             return RemoteGopayRegisterLoader(
-                RegisterUserHttpClientFactory.createRegisterUserHttpClient(registrationData)
+                RegisterUserHttpClientFactory.createRegisterUserHttpClient()
             )
         }
     }
