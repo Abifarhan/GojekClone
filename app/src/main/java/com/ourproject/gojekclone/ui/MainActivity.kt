@@ -3,10 +3,11 @@ package com.ourproject.gojekclone.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.ourproject.feature_dashboard.DashboardActivity
 import com.ourproject.gojekclone.R
-import com.ourproject.login_module.feed.ui.LoginActivity
-import com.ourproject.register_module.ui.RegisterFragment
+import com.ourproject.register_module.ui.RegisterActivity
+import com.ourproject.session_module.SessionManager
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,13 +15,23 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        val fragment = RegisterFragment()
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.main_container, fragment)
-            .commit()
 
+        // todo check if user data already exist
 
-        startActivity(Intent(this, LoginActivity::class.java))
+        SessionManager.init(this)
+        val checkSession = SessionManager.retrieveUserData()
+
+        Log.d("TAG", "onViewCreated: user data you have is $checkSession")
+
+        if (checkSession != null) {
+            Log.d("TAG", "onViewCreated: user data you have is 1")
+                startActivity( Intent(this, DashboardActivity::class.java))
+        } else {
+            Log.d("TAG", "onViewCreated: user data you have is 2")
+            startActivity(Intent(this, RegisterActivity::class.java))
+
+        }
+
 
     }
 

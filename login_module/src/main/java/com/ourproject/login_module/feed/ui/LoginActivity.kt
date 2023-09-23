@@ -24,5 +24,6 @@ class LoginActivity : AppCompatActivity() {
         viewModel.submitDataUser(submitEntity)
 
 
+
     }
 }

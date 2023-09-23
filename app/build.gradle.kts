@@ -54,6 +54,8 @@ dependencies {
     implementation(project(":register_module"))
     implementation(project(":feature_dashboard"))
     implementation(project(":login_module"))
+    implementation(project(":session_module"))
+
     implementation(libs.androidx.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)

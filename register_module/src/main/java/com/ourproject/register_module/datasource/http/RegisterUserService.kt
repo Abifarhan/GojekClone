@@ -1,12 +1,12 @@
 package com.ourproject.register_module.datasource.http
 
-import com.ourproject.register_module.datasource.http.dto.RegistrationData
-import com.ourproject.register_module.datasource.http.dto.ResponseData
+import com.ourproject.register_module.datasource.http.dto.RegistrationDto
+import com.ourproject.register_module.datasource.http.dto.ResponseDataDto
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
 
     interface RegisterUserService {
         @POST("register")
-        fun registerUser(@Body registrationData: RegistrationData): Call<ResponseData>
+        fun registerUser(@Body registrationData: RegistrationDto): Call<ResponseDataDto>
     }

@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "com.ourproject.register_module"
+    namespace = "com.ourproject.session_module"
     compileSdk = 33
 
     defaultConfig {
@@ -42,10 +42,6 @@ android {
 
 dependencies {
 
-    implementation(project(":component"))
-    implementation(project(":feature_dashboard"))
-    implementation(project(":session_module"))
-
     implementation(libs.androidx.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
@@ -62,7 +58,6 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.constraintlayout)
     implementation(libs.cronet.api)
-    implementation(libs.com.google.android.material.material)
     testImplementation(libs.junit)
     testImplementation(libs.ext.junit)
     testImplementation(libs.espresso.core)
@@ -81,8 +76,4 @@ dependencies {
     implementation(libs.room)
     kapt(libs.room.compiler)
     implementation(libs.room.runtime)
-
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
-    implementation("com.google.code.gson:gson:2.8.8")
 }

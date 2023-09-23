@@ -1,16 +1,14 @@
 package com.ourproject.register_module.factory
 
-import android.util.Log
-import com.ourproject.register_module.datasource.http.GoPayRegisterLoader
-import com.ourproject.register_module.datasource.http.dto.RegistrationData
-import com.ourproject.register_module.datasource.http.usecase.RemoteGopayRegisterLoader
+import com.ourproject.register_module.datasource.http.RegisterFeedLoader
+import com.ourproject.register_module.datasource.http.usecase.RemoteRegisterFeedLoader
 
 open class RemoteRegisterLoaderFactory {
 
     companion object {
-        fun createRemoteRegisterUserLoader(): GoPayRegisterLoader {
+        fun createRemoteRegisterUserLoader(): RegisterFeedLoader {
 
-            return RemoteGopayRegisterLoader(
+            return RemoteRegisterFeedLoader(
                 RegisterUserHttpClientFactory.createRegisterUserHttpClient()
             )
         }

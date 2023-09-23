@@ -1,11 +1,11 @@
 package com.ourproject.register_module.composite
 
 import android.util.Log
-import com.ourproject.register_module.datasource.http.GoPayRegisterLoader
+import com.ourproject.register_module.datasource.http.HttpClientResult
+import com.ourproject.register_module.datasource.http.RegisterFeedLoader
 import com.ourproject.register_module.datasource.http.HttpRegisterClientResult
-import com.ourproject.register_module.datasource.http.dto.RegistrationData
+import com.ourproject.register_module.datasource.http.dto.RegistrationEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 
@@ -13,9 +13,9 @@ class GoFoodRegisterFactory {
 
     companion object {
         fun createCompositeFactory(
-            primary: GoPayRegisterLoader,
-            fallback: GoPayRegisterLoader? = null
-        ): GoPayRegisterLoader {
+            primary: RegisterFeedLoader,
+            fallback: RegisterFeedLoader? = null
+        ): RegisterFeedLoader {
             return RegisterFeedLoaderComposite(primary, fallback!!)
         }
     }
@@ -23,10 +23,10 @@ class GoFoodRegisterFactory {
 
 
 class RegisterFeedLoaderComposite(
-    private val primary: GoPayRegisterLoader,
-    private val fallback: GoPayRegisterLoader
-) : GoPayRegisterLoader {
-    override fun submit(userData: RegistrationData): Flow<HttpRegisterClientResult> {
+    private val primary: RegisterFeedLoader,
+    private val fallback: RegisterFeedLoader
+) : RegisterFeedLoader {
+    override fun submit(userData: RegistrationEntity): Flow<HttpClientResult> {
         return flow {
             primary.submit(userData).collect{
                 try {
@@ -34,8 +34,8 @@ class RegisterFeedLoaderComposite(
                     Log.d("TAG", "submit: here the result of submit $it")
                     primary.submit(userData).collect {
                         when (it) {
-                            is HttpRegisterClientResult.Success -> emit(it)
-                            is HttpRegisterClientResult.Failure -> emit(
+                            is HttpClientResult.Success -> emit(it)
+                            is HttpClientResult.Failure -> emit(
                                 fallback.submit(userData).first()
                             )
                         }

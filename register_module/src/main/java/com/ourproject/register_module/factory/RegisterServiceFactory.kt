@@ -1,7 +1,6 @@
 package com.ourproject.register_module.factory
 
 import com.ourproject.register_module.datasource.http.RegisterUserService
-import com.ourproject.register_module.datasource.http.dto.RegistrationData
 import com.ourproject.register_module.frameworks.HttpRegisterFactory
 
 class RegisterServiceFactory {
