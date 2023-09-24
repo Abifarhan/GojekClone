@@ -1,5 +1,6 @@
 package com.ourproject.login_module.feed.domain
 
+import com.ourproject.login_module.feed.db.UserLocal
 import com.ourproject.login_module.feed.http.LoginResultDto
 import com.ourproject.login_module.feed.http.LoginSubmitDto
 
@@ -47,6 +48,19 @@ class Mapper {
             return LoginResultEntity(
                 meta = metaEntity,
                 data = dataEntity
+            )
+        }
+
+
+        fun mapUserEntityToLocal(entity: UserEntity): com.ourproject.register_module.datasource.http.dto.UserLocal {
+            return com.ourproject.register_module.datasource.http.dto.UserLocal(
+                id = entity.id,
+                name = entity.name,
+                email = entity.email,
+                address = entity.profilePhotoPath ?: "default",
+                houseNumber = entity.houseNumber,
+                phoneNumber = entity.phoneNumber,
+                city = entity.city
             )
         }
     }

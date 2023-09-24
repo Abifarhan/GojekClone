@@ -4,8 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.ourproject.register_module.composite.GoFoodRegisterFactory
-import com.ourproject.register_module.composite.GoFoodRegisterLoaderCacheDecorator
+import com.ourproject.register_module.composite.RegisterFeedLoaderFactory
+import com.ourproject.register_module.composite.GoFoodRegisterLoaderSessionDecorator
 import com.ourproject.register_module.datasource.db.usecase.LocalRegisterFeedLoaderFactory
 import com.ourproject.register_module.factory.GofoodRegisterLocalInsertFactory
 import com.ourproject.register_module.factory.RemoteRegisterLoaderFactory
@@ -19,10 +19,10 @@ class RegisterViewModelFactory : ViewModel() {
         val FACTORY : ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 RegisterFeedViewModel(
-                    GoFoodRegisterFactory.createCompositeFactory(
-                        primary = GoFoodRegisterLoaderCacheDecorator(
+                    RegisterFeedLoaderFactory.createCompositeFactory(
+                        primary = GoFoodRegisterLoaderSessionDecorator(
                             decorate = RemoteRegisterLoaderFactory.createRemoteRegisterUserLoader(),
-                            cache = GofoodRegisterLocalInsertFactory.createLocalInsertUserdata()
+                            session = GofoodRegisterLocalInsertFactory.createLocalInsertUserdata()
                         ),
                         fallback = RemoteRegisterLoaderFactory.createRemoteRegisterUserLoader()
                     ),

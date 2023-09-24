@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.ourproject.feature_dashboard.DashboardActivity
+import com.ourproject.register_module.R
 import com.ourproject.register_module.databinding.FragmentRegisterBinding
 import com.ourproject.register_module.datasource.http.dto.RegistrationEntity
 import com.ourproject.register_module.presentation.RegisterFeedViewModel
@@ -16,7 +17,6 @@ import com.ourproject.register_module.presentation.RegisterViewModelFactory
 
 class RegisterFragment : Fragment() {
 
-    private lateinit var viewModel: RegisterFeedViewModel
     private var _binding: FragmentRegisterBinding? = null
     private val binding get() = _binding!!
     override fun onCreateView(
@@ -37,38 +37,26 @@ class RegisterFragment : Fragment() {
                 insertSubtitle = "Buat akun dulu baru checkout makanan"
             }
 
-
-            inputName.apply {
-                setHint("Isi Nama Anda")
-            }
         }
-        val registrationData = RegistrationEntity(
-            name = "alfonso3",
-            email = "fonso55@gmail.com",
-            password = "1234567890",
-            password_confirmation = "1234567890",
-            address = "Jalan berkah",
-            city = "Lhokseumawe",
-            houseNumber = "1",
-            phoneNumber = "1"
-        )
 
 
-        viewModel = ViewModelProvider(this, RegisterViewModelFactory.FACTORY).get(RegisterFeedViewModel::class.java)
+        binding.btnMoe.setOnClickListener {
+            val name = binding.name.text.toString()
+            val email = binding.email.text.toString()
+            val password = binding.password.text.toString()
 
+            val bundle = Bundle()
+            bundle.putString("name", name)
+            bundle.putString("email", email)
+            bundle.putString("password", password)
 
-        viewModel.submitUserRegister(registrationData)
+            val fragment = RegisterSecondFragment()
+            fragment.arguments = bundle
 
-        viewModel.fetchUserDataLocal(requireContext())
-
-        viewModel.userDataLiveData.observe(viewLifecycleOwner){userData ->
-
-            if (userData != null){
-                val intent = Intent(requireActivity(), DashboardActivity::class.java)
-                startActivity(intent)
-            } else {
-
-            }
+            requireFragmentManager().beginTransaction()
+                .replace(R.id.register_container, fragment)
+                .addToBackStack(null)
+                .commit()
         }
     }
 

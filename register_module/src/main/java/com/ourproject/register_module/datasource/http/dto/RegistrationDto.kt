@@ -93,5 +93,4 @@ data class UserLocal(
     val houseNumber: String,
     val phoneNumber: String,
     val city: String,
-    val profile_photo_url: String?
 )

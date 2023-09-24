@@ -1,20 +1,19 @@
 package com.ourproject.register_module.datasource.http
 
-import com.ourproject.register_module.datasource.http.dto.RegistrationDto
 import com.ourproject.register_module.datasource.http.dto.RegistrationEntity
-import com.ourproject.register_module.datasource.http.dto.ResponseDataDto
+import com.ourproject.register_module.datasource.http.dto.ResponseDataEntity
 import kotlinx.coroutines.flow.Flow
 
 
-sealed class HttpRegisterClientResult {
-    data class Success(val root : ResponseDataDto): HttpRegisterClientResult()
+sealed class RegisterFeedResult {
+    data class Success(val root : ResponseDataEntity): RegisterFeedResult()
 
-    data class Failure(val throwable: Throwable): HttpRegisterClientResult()
+    data class Failure(val throwable: Throwable): RegisterFeedResult()
 }
 
 class InvalidDataException : Throwable()
 class ConnectivityException : Throwable()
 interface RegisterFeedLoader {
 
-    fun submit(userData : RegistrationEntity): Flow<HttpClientResult>
+    fun submit(userData : RegistrationEntity): Flow<RegisterFeedResult>
 }

@@ -8,8 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ourproject.register_module.datasource.http.HttpClientResult
 import com.ourproject.register_module.datasource.http.RegisterFeedLoader
-import com.ourproject.register_module.datasource.http.HttpRegisterClientResult
-import com.ourproject.register_module.datasource.http.dto.RegistrationDto
+import com.ourproject.register_module.datasource.http.RegisterFeedResult
 import com.ourproject.register_module.datasource.http.dto.RegistrationEntity
 import com.ourproject.register_module.datasource.http.dto.UserLocal
 import com.ourproject.register_module.domain.GofoodRegisterLoader
@@ -37,10 +36,12 @@ class RegisterFeedViewModel constructor(
                     }
                     .collect { result ->
                         when (result) {
-                            is HttpClientResult.Success -> {
+                            is RegisterFeedResult.Success -> {
+                                Log.e("TAG", "submitUserRegister: Exception within Flow: 1 ${result.root}")
                             }
 
-                            is HttpClientResult.Failure -> {
+                            is RegisterFeedResult.Failure -> {
+                                Log.e("TAG", "submitUserRegister: Exception within Flow: 1 ${result.throwable.message}")
                             }
                         }
                     }
@@ -61,13 +62,11 @@ class RegisterFeedViewModel constructor(
                 when (result) {
                     is GofoodRegisterLocalResult.Success -> {
                         Log.d("TAG", "fetch data local status is ${result.userData}}")
-                        SessionManager.init(context)
-                        SessionManager.saveUserData(result.userData.email)
                         _userDataLiveData.value = result.userData
                     }
 
                     is GofoodRegisterLocalResult.Failure -> {
-                        Log.e("TAG", "fetch data local status is 2 ${result.throwable}}")
+                        Log.e("TAG", "fetch data local status is 2 ${result.throwable.message}}")
                     }
                 }
             }

@@ -3,13 +3,13 @@ package com.ourproject.register_module.composite
 import android.util.Log
 import com.ourproject.register_module.datasource.http.HttpClientResult
 import com.ourproject.register_module.datasource.http.RegisterFeedLoader
-import com.ourproject.register_module.datasource.http.HttpRegisterClientResult
+import com.ourproject.register_module.datasource.http.RegisterFeedResult
 import com.ourproject.register_module.datasource.http.dto.RegistrationEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 
-class GoFoodRegisterFactory {
+class RegisterFeedLoaderFactory {
 
     companion object {
         fun createCompositeFactory(
@@ -26,7 +26,7 @@ class RegisterFeedLoaderComposite(
     private val primary: RegisterFeedLoader,
     private val fallback: RegisterFeedLoader
 ) : RegisterFeedLoader {
-    override fun submit(userData: RegistrationEntity): Flow<HttpClientResult> {
+    override fun submit(userData: RegistrationEntity): Flow<RegisterFeedResult> {
         return flow {
             primary.submit(userData).collect{
                 try {
@@ -34,8 +34,8 @@ class RegisterFeedLoaderComposite(
                     Log.d("TAG", "submit: here the result of submit $it")
                     primary.submit(userData).collect {
                         when (it) {
-                            is HttpClientResult.Success -> emit(it)
-                            is HttpClientResult.Failure -> emit(
+                            is RegisterFeedResult.Success -> emit(it)
+                            is RegisterFeedResult.Failure -> emit(
                                 fallback.submit(userData).first()
                             )
                         }
