@@ -65,3 +65,6 @@ Then the app should display the home screen
 
 #### Save – Error Course (Sad Path):
 1. System delivers save error.
+
+### Diagram
+Kindly visit it on (https://drive.google.com/file/d/1vo6EI6PP4QJx-dL0e7tL-Rd1_JpVNdoW/view?usp=sharing).
