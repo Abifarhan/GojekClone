@@ -20,12 +20,12 @@ class RemoteRegisterFeedLoader constructor(
 
         return flow {
             val mapper = RegisterMapper.mapRegistrationEntityToDto(userData)
+
             registerRetrofitHttpClient.submitRegister(mapper).collect {result ->
                 when (result) {
                     is HttpClientResult.Success -> {
                         val dadta = result.root
                         val final = RegisterMapper.mapResponseDataDtoToEntity(dadta)
-
                         emit(RegisterFeedResult.Success(final))
                     }
 

@@ -10,14 +10,15 @@ import androidx.lifecycle.ViewModelProvider
 import com.ourproject.feature_dashboard.DashboardActivity
 import com.ourproject.register_module.R
 import com.ourproject.register_module.databinding.FragmentRegisterBinding
-import com.ourproject.register_module.datasource.http.dto.RegistrationEntity
 import com.ourproject.register_module.presentation.RegisterFeedViewModel
-import com.ourproject.register_module.presentation.RegisterViewModelFactory
 
 
 class RegisterFragment : Fragment() {
 
     private var _binding: FragmentRegisterBinding? = null
+
+    private lateinit var viewModel: RegisterFeedViewModel
+
     private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +39,15 @@ class RegisterFragment : Fragment() {
             }
 
         }
+        viewModel = ViewModelProvider(this, RegisterFeedViewModel.FACTORY).get(RegisterFeedViewModel::class.java)
+        viewModel.fetchUserDataLocal(requireContext())
+        viewModel.userDataLiveData.observe(viewLifecycleOwner){userData ->
 
+            if (userData != null){
+                val intent = Intent(requireActivity(), DashboardActivity::class.java)
+                startActivity(intent)
+            }
+        }
 
         binding.btnMoe.setOnClickListener {
             val name = binding.name.text.toString()

@@ -2,10 +2,13 @@ package com.ourproject.register_module.datasource.http
 
 import android.util.Log
 import com.ourproject.register_module.datasource.http.dto.RegistrationDto
+import com.ourproject.register_module.datasource.http.usecase.InvalidData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import retrofit2.HttpException
+import java.io.IOException
 
 class RegisterFeedRetrofitHttpClient constructor(
     private val registerUserService: RegisterUserService
@@ -15,27 +18,19 @@ class RegisterFeedRetrofitHttpClient constructor(
         return flow {
             try {
                 Log.d("TAG", "submit: submit: this part executed 1")
-                val call = registerUserService.registerUser(submit)
-                val response = call.execute()
-
-                if (response.isSuccessful) {
-                    val responseData = response.body()
-                    Log.d("TAG", "submit: submit: this part executed 2")
-                    if (responseData != null) {
-                        if (responseData.meta?.code == 200) {
-                            Log.d("TAG", "submit: submit: this part executed 2 $responseData")
-                            emit(HttpClientResult.Success(responseData))
-                        } else {
-                            emit(HttpClientResult.Failure(Exception("Error: ${responseData.meta?.message}")))
-                        }
-                    } else {
-                        emit(HttpClientResult.Failure(Exception("Response body is null")))
-                    }
-                } else {
-                    emit(HttpClientResult.Failure(Exception("HTTP error: ${response.code()}")))
-                }
+                emit(HttpClientResult.Success(registerUserService.registerUser(submit)))
             } catch (t: Throwable) {
-                Log.d("TAG", "submit: submit: this part executed 3")
+
+                when (t) {
+                    is IOException -> {
+                        emit(HttpClientResult.Failure(ConnectivityException()))
+                    }
+                    is HttpException -> {
+                        if (t.code() == 422) {
+                            emit(HttpClientResult.Failure(InvalidDataException()))
+                        }
+                    }
+                }
                 emit(HttpClientResult.Failure(t))
             }
         }.flowOn(Dispatchers.IO)

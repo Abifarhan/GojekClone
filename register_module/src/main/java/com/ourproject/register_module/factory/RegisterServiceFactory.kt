@@ -8,7 +8,10 @@ class RegisterServiceFactory {
     companion object{
         fun createRegisterUser() : RegisterUserService {
             return HttpRegisterFactory.createRetrofit(
-                HttpRegisterFactory.createMoshi()
+                HttpRegisterFactory.createMoshi(),
+                HttpRegisterFactory.createOkhttpClient(
+                    HttpRegisterFactory.createLoggingInterceptor()
+                )
             ).create(RegisterUserService::class.java)
         }
     }

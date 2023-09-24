@@ -15,12 +15,10 @@ import com.ourproject.login_module.factories.RemoteLoginFeedLoaderFactory
 import com.ourproject.login_module.feed.domain.LoginFeedLoader
 import com.ourproject.login_module.feed.domain.LoginFeedResult
 import com.ourproject.login_module.feed.domain.LoginSubmitEntity
-import com.ourproject.login_module.feed.http.RemoteLoginFeedLoader
 import com.ourproject.register_module.datasource.db.usecase.LocalRegisterFeedLoaderFactory
 import com.ourproject.register_module.datasource.http.dto.UserLocal
 import com.ourproject.register_module.domain.GofoodRegisterLoader
 import com.ourproject.register_module.domain.GofoodRegisterLocalResult
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import org.chromium.net.NetworkException
 

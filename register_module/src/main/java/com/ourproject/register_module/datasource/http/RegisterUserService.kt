@@ -8,5 +8,5 @@ import retrofit2.http.POST
 
     interface RegisterUserService {
         @POST("register")
-        fun registerUser(@Body registrationData: RegistrationDto): Call<ResponseDataDto>
+        suspend fun registerUser(@Body registrationData: RegistrationDto): ResponseDataDto
     }

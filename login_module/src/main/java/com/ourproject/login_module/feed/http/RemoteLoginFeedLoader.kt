@@ -28,6 +28,7 @@ class RemoteLoginFeedLoader constructor(
                     }
 
                     is HttpClientResult.Failure -> {
+                        Log.d("loadCryptoFeed", "InvalidData Failure")
                         when (result.throwable) {
                             is ConnectivityException -> {
                                 emit(LoginFeedResult.Failure(Connectivity()))

@@ -10,12 +10,9 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.ourproject.feature_dashboard.DashboardActivity
-import com.ourproject.register_module.R
-import com.ourproject.register_module.databinding.FragmentRegisterBinding
 import com.ourproject.register_module.databinding.FragmentRegisterSecondBinding
 import com.ourproject.register_module.datasource.http.dto.RegistrationEntity
 import com.ourproject.register_module.presentation.RegisterFeedViewModel
-import com.ourproject.register_module.presentation.RegisterViewModelFactory
 
 
 class RegisterSecondFragment : Fragment() {
@@ -33,7 +30,7 @@ class RegisterSecondFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentRegisterSecondBinding.inflate(inflater,container,false)
-        return binding?.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,12 +53,19 @@ class RegisterSecondFragment : Fragment() {
         binding.spinner.adapter = adapter
 
 
-        viewModel = ViewModelProvider(this, RegisterViewModelFactory.FACTORY).get(RegisterFeedViewModel::class.java)
+        viewModel = ViewModelProvider(this, RegisterFeedViewModel.FACTORY).get(RegisterFeedViewModel::class.java)
 
         viewModel.fetchUserDataLocal(requireContext())
-        viewModel.userDataLiveData.observe(viewLifecycleOwner){userData ->
+//        viewModel.userDataLiveData.observe(viewLifecycleOwner){userData ->
+//
+//            if (userData != null){
+//                val intent = Intent(requireActivity(), DashboardActivity::class.java)
+//                startActivity(intent)
+//            }
+//        }
 
-            if (userData != null){
+        viewModel.isUserRegistered.observe(viewLifecycleOwner) { statusRegister ->
+            if (statusRegister) {
                 val intent = Intent(requireActivity(), DashboardActivity::class.java)
                 startActivity(intent)
             }
@@ -75,20 +79,28 @@ class RegisterSecondFragment : Fragment() {
             Toast.makeText(requireContext(), "Clicked $selectedItem", Toast.LENGTH_SHORT).show()
 
             viewModel.submitUserRegister(
+//                RegistrationEntity(
+//                    name = name ?: "",
+//                    email = email ?: "",
+//                    password = password ?: "",
+//                    password_confirmation = password ?: "",
+//                    address = address,
+//                    city = selectedItem,
+//                    houseNumber = houseNumber,
+//                    phoneNumber = phone
+//                )
+
                 RegistrationEntity(
-                    name = name ?: "",
-                    email = email ?: "",
-                    password = password ?: "",
-                    password_confirmation = password ?: "",
-                    address = address,
-                    city = selectedItem,
-                    houseNumber = houseNumber,
-                    phoneNumber = phone
+                    name = "hahhaa",
+                    email = "gelas25@gmail.com",
+                    password = "1234567890",
+                    password_confirmation = "1234567890",
+                    address = "berlin",
+                    city = "berlin",
+                    houseNumber = "4",
+                    phoneNumber = "1234567890"
                 )
             )
-
-            val intent = Intent(requireActivity(), DashboardActivity::class.java)
-            startActivity(intent)
         }
     }
 }
