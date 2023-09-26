@@ -16,14 +16,14 @@ import com.ourproject.login_module.feed.domain.LoginFeedResult
 import com.ourproject.login_module.feed.domain.LoginSubmitEntity
 import com.ourproject.register_module.datasource.db.usecase.LocalRegisterFeedLoaderFactory
 import com.ourproject.register_module.datasource.http.dto.UserLocal
-import com.ourproject.register_module.domain.GofoodRegisterLoader
+import com.ourproject.register_module.domain.GofoodLoader
 import com.ourproject.register_module.domain.GofoodRegisterLocalResult
 import kotlinx.coroutines.launch
 import org.chromium.net.NetworkException
 
 class LoginViewModel constructor(
     private val loginFeedLoader: LoginFeedLoader,
-    private val gopayResulRegisterLoader: GofoodRegisterLoader
+    private val gopayResulRegisterLoader: GofoodLoader
 ) : ViewModel() {
     private val _loginStatus = MutableLiveData<Boolean>()
     val loginStatus: LiveData<Boolean> get() = _loginStatus

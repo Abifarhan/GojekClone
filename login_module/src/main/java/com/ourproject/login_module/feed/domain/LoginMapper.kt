@@ -1,10 +1,9 @@
 package com.ourproject.login_module.feed.domain
 
-import com.ourproject.login_module.feed.db.UserLocal
 import com.ourproject.login_module.feed.http.LoginResultDto
 import com.ourproject.login_module.feed.http.LoginSubmitDto
 
-class Mapper {
+class LoginMapper {
 
     companion object{
 

@@ -1,8 +1,7 @@
 package com.ourproject.register_module.datasource.db.usecase
 
 import com.ourproject.register_module.datasource.db.GofoodRegisterLocalClient
-import com.ourproject.register_module.datasource.http.dto.UserLocal
-import com.ourproject.register_module.domain.GofoodRegisterLoader
+import com.ourproject.register_module.domain.GofoodLoader
 import com.ourproject.register_module.domain.GofoodRegisterLocalResult
 import com.ourproject.register_module.factory.RegisterUserDaoFactory
 import kotlinx.coroutines.flow.Flow
@@ -12,7 +11,7 @@ import kotlinx.coroutines.flow.flow
 class LocalRegisterFeedLoaderFactory {
 
     companion object{
-        fun createLocalCryptoRegisterFeedLoader(): GofoodRegisterLoader {
+        fun createLocalCryptoRegisterFeedLoader(): GofoodLoader {
             return GofoodRegisterLocalLoader(
                 RegisterUserDaoFactory.createRegisterUserDao()
             )
@@ -23,7 +22,7 @@ class LocalRegisterFeedLoaderFactory {
 
 class GofoodRegisterLocalLoader constructor(
     private val registerLocalClient: GofoodRegisterLocalClient
-) : GofoodRegisterLoader {
+) : GofoodLoader {
     override fun loadUserData(): Flow<GofoodRegisterLocalResult> {
         return flow {
             registerLocalClient.getUserData()

@@ -1,6 +1,5 @@
 package com.ourproject.register_module.presentation
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,28 +9,21 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.ourproject.register_module.composite.GoFoodRegisterLoaderSessionDecorator
-import com.ourproject.register_module.composite.RegisterFeedLoaderFactory
 import com.ourproject.register_module.datasource.db.usecase.LocalRegisterFeedLoaderFactory
-import com.ourproject.register_module.datasource.http.HttpClientResult
 import com.ourproject.register_module.datasource.http.RegisterFeedLoader
 import com.ourproject.register_module.datasource.http.RegisterFeedResult
 import com.ourproject.register_module.datasource.http.dto.RegistrationEntity
 import com.ourproject.register_module.datasource.http.dto.UserLocal
-import com.ourproject.register_module.domain.GofoodRegisterLoader
+import com.ourproject.register_module.domain.GofoodLoader
 import com.ourproject.register_module.domain.GofoodRegisterLocalResult
 import com.ourproject.register_module.factory.GofoodRegisterLocalInsertFactory
 import com.ourproject.register_module.factory.RemoteRegisterLoaderFactory
-import com.ourproject.session_module.SessionManager
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import org.chromium.net.NetworkException
 
 class RegisterFeedViewModel constructor(
     private val goPayRegisterLoader: RegisterFeedLoader,
-    private val gopayResultRegisterLoader: GofoodRegisterLoader
+    private val gopayResultRegisterLoader: GofoodLoader
 ): ViewModel(){
 
     private val _userDataLiveData = MutableLiveData<UserLocal>()

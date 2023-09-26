@@ -9,7 +9,7 @@ sealed class GofoodRegisterLocalResult {
 
     data class Failure(val throwable: Throwable) : GofoodRegisterLocalResult()
 }
-interface GofoodRegisterLoader {
+interface GofoodLoader {
 
     fun loadUserData(): Flow<GofoodRegisterLocalResult>
 }

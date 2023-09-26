@@ -4,7 +4,7 @@ import com.ourproject.login_module.feed.db.LoginSession
 import com.ourproject.login_module.feed.domain.LoginFeedLoader
 import com.ourproject.login_module.feed.domain.LoginFeedResult
 import com.ourproject.login_module.feed.domain.LoginSubmitEntity
-import com.ourproject.login_module.feed.domain.Mapper
+import com.ourproject.login_module.feed.domain.LoginMapper
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -17,7 +17,7 @@ class LoginLoaderSessionDecorator(
             decorate.submit(loginSubmitEntity).collect { result ->
                 if (result is LoginFeedResult.Success) {
                     val userLocal = result.loginResultEntity.data.user
-                    session.save(Mapper.mapUserEntityToLocal(userLocal))
+                    session.save(LoginMapper.mapUserEntityToLocal(userLocal))
                 }
                 emit(result)
             }
