@@ -70,7 +70,7 @@ class RegisterFeedViewModel constructor(
         }
     }
 
-    fun fetchUserDataLocal(context: Context) {
+    fun fetchUserDataLocal() {
         viewModelScope.launch {
             gopayResultRegisterLoader.loadUserData().collect { result ->
                 when (result) {

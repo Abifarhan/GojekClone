@@ -17,13 +17,13 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        SessionManager.init(this)
-        val checkSession = SessionManager.retrieveUserData()
+//        SessionManager.init(this)
+//        val checkSession = SessionManager.retrieveUserData()
 
-        Log.d("TAG", "onViewCreated: user data you have is $checkSession")
+//        Log.d("TAG", "onViewCreated: user data you have is $checkSession")
 
-        startActivity(Intent(this, RegisterActivity::class.java))
-//        startActivity(Intent(this, LoginActivity::class.java))
+        startActivity(Intent(this, LoginActivity::class.java))
+//        startActivity(Intent(this, RegisterActivity::class.java))
 
 
     }

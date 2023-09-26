@@ -55,14 +55,14 @@ class RegisterSecondFragment : Fragment() {
 
         viewModel = ViewModelProvider(this, RegisterFeedViewModel.FACTORY).get(RegisterFeedViewModel::class.java)
 
-        viewModel.fetchUserDataLocal(requireContext())
-//        viewModel.userDataLiveData.observe(viewLifecycleOwner){userData ->
-//
-//            if (userData != null){
-//                val intent = Intent(requireActivity(), DashboardActivity::class.java)
-//                startActivity(intent)
-//            }
-//        }
+        viewModel.fetchUserDataLocal()
+        viewModel.userDataLiveData.observe(viewLifecycleOwner){userData ->
+
+            if (userData != null){
+                val intent = Intent(requireActivity(), DashboardActivity::class.java)
+                startActivity(intent)
+            }
+        }
 
         viewModel.isUserRegistered.observe(viewLifecycleOwner) { statusRegister ->
             if (statusRegister) {
@@ -92,7 +92,7 @@ class RegisterSecondFragment : Fragment() {
 
                 RegistrationEntity(
                     name = "hahhaa",
-                    email = "gelas25@gmail.com",
+                    email = "gelas26@gmail.com",
                     password = "1234567890",
                     password_confirmation = "1234567890",
                     address = "berlin",

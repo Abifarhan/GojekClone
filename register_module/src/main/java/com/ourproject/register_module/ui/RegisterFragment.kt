@@ -40,7 +40,7 @@ class RegisterFragment : Fragment() {
 
         }
         viewModel = ViewModelProvider(this, RegisterFeedViewModel.FACTORY).get(RegisterFeedViewModel::class.java)
-        viewModel.fetchUserDataLocal(requireContext())
+        viewModel.fetchUserDataLocal()
         viewModel.userDataLiveData.observe(viewLifecycleOwner){userData ->
 
             if (userData != null){

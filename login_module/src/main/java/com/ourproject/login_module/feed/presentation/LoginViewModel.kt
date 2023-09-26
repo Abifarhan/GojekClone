@@ -8,7 +8,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.ourproject.login_module.composite.LoginFeedLoaderFactory
 import com.ourproject.login_module.composite.LoginLoaderSessionDecorator
 import com.ourproject.login_module.factories.LoginFeedLocalInsertFactory
 import com.ourproject.login_module.factories.RemoteLoginFeedLoaderFactory
@@ -81,14 +80,10 @@ class LoginViewModel constructor(
         val FACTORY: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 LoginViewModel(
-                    LoginFeedLoaderFactory.createCompositeFactory(
-                        primary = LoginLoaderSessionDecorator(
-                            decorate = RemoteLoginFeedLoaderFactory.createRemoteLoginFeedLoader(),
-                            session = LoginFeedLocalInsertFactory.createLocalInsertUserData()
-                        ),
-                        fallback = RemoteLoginFeedLoaderFactory.createRemoteLoginFeedLoader()
+                    loginFeedLoader =  LoginLoaderSessionDecorator(
+                        decorate = RemoteLoginFeedLoaderFactory.createRemoteLoginFeedLoader(),
+                        session = LoginFeedLocalInsertFactory.createLocalInsertUserData()
                     ),
-
                     gopayResulRegisterLoader = LocalRegisterFeedLoaderFactory.createLocalCryptoRegisterFeedLoader()
                 )
             }

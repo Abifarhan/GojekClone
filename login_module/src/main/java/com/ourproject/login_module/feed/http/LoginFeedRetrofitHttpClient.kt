@@ -25,7 +25,7 @@ class LoginFeedRetrofitHttpClient constructor(
                             emit(HttpClientResult.Failure(Exception("Error: ${responseData?.meta?.message}")))
                         }
                     } else {
-                        emit(HttpClientResult.Failure(Exception("Response Body is null")))
+                        emit(HttpClientResult.Failure(Exception("Response Body is null or not Found")))
                     }
                 } else {
                     emit(HttpClientResult.Failure(Exception("HTTP Error: ${response.code()}")))

@@ -26,15 +26,15 @@ class LoginActivity : AppCompatActivity() {
 
        viewModel = ViewModelProvider(this, LoginViewModel.FACTORY).get(LoginViewModel::class.java)
 
-//        viewModel.checkSession()
-//
-//        viewModel.userDataLiveData.observe(this){userData ->
-//
-//            if (userData != null) {
-//                val intent = Intent(this, DashboardActivity::class.java)
-//                startActivity(intent)
-//            }
-//        }
+        viewModel.checkSession()
+
+        viewModel.userDataLiveData.observe(this){userData ->
+
+            if (userData != null) {
+                val intent = Intent(this, DashboardActivity::class.java)
+                startActivity(intent)
+            }
+        }
 
 
         emailEditText = findViewById(R.id.email)
@@ -46,8 +46,8 @@ class LoginActivity : AppCompatActivity() {
         loginButton.setOnClickListener {
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
-//            val submitEntity = LoginSubmitEntity(email,password)
-            val submitEntity = LoginSubmitEntity("fandi5@gmail.com","1234567890")
+            val submitEntity = LoginSubmitEntity(email,password)
+//            val submitEntity = LoginSubmitEntity("fandi5@gmail.com","1234567890")
 
             viewModel.submitDataUser(submitEntity)
 
