@@ -79,27 +79,27 @@ class RegisterSecondFragment : Fragment() {
             Toast.makeText(requireContext(), "Clicked $selectedItem", Toast.LENGTH_SHORT).show()
 
             viewModel.submitUserRegister(
-//                RegistrationEntity(
-//                    name = name ?: "",
-//                    email = email ?: "",
-//                    password = password ?: "",
-//                    password_confirmation = password ?: "",
-//                    address = address,
-//                    city = selectedItem,
-//                    houseNumber = houseNumber,
-//                    phoneNumber = phone
-//                )
-
                 RegistrationEntity(
-                    name = "hahhaa",
-                    email = "gelas26@gmail.com",
-                    password = "1234567890",
-                    password_confirmation = "1234567890",
-                    address = "berlin",
-                    city = "berlin",
-                    houseNumber = "4",
-                    phoneNumber = "1234567890"
+                    name = name ?: "",
+                    email = email ?: "",
+                    password = password ?: "",
+                    password_confirmation = password ?: "",
+                    address = address,
+                    city = selectedItem,
+                    houseNumber = houseNumber,
+                    phoneNumber = phone
                 )
+
+//                RegistrationEntity(
+//                    name = "hahhaa",
+//                    email = "gelas26@gmail.com",
+//                    password = "1234567890",
+//                    password_confirmation = "1234567890",
+//                    address = "berlin",
+//                    city = "berlin",
+//                    houseNumber = "4",
+//                    phoneNumber = "1234567890"
+//                )
             )
         }
     }
