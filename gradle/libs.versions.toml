@@ -29,6 +29,8 @@ coil = "2.4.0"
 mockkAndroid = "1.13.3"
 turbine = "1.0.0"
 
+coroutines = "1.7.3"
+
 
 # room
 room = "2.5.2"
@@ -102,3 +104,7 @@ cronet-api = { group = "org.chromium.net", name = "cronet-api", version = "113.5
 mockk-android = { module = "io.mockk:mockk-android", version.ref = "mockkAndroid" }
 mockk-agent = { module = "io.mockk:mockk-agent", version.ref = "mockkAndroid" }
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+
+# Asynchronous
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
