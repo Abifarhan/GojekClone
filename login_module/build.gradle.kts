@@ -81,4 +81,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.8.8")
     implementation(project(":feature_dashboard"))
 
+    testImplementation(libs.mockk.android)
+    testImplementation(libs.mockk.agent)
+    testImplementation(libs.turbine)
 }
