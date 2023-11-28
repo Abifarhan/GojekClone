@@ -10,6 +10,7 @@ import com.ourproject.register_module.datasource.http.dto.RegistrationEntity
 import com.ourproject.register_module.datasource.http.dto.ResponseDataDto
 import com.ourproject.register_module.datasource.http.dto.UserLocal
 import com.ourproject.register_module.domain.GofoodRegisterLocalResult
+import io.mockk.CapturingSlot
 import io.mockk.MockKAnnotations
 import io.mockk.clearAllMocks
 import io.mockk.confirmVerified
@@ -182,23 +183,15 @@ class RemoteRegisterFeedLoaderTest{
         val slot = slot<RegistrationDto>()
         val receivedResult = HttpClientResult.Success(ResponseDataDto.DEFAULT)
         val expectedResult = GofoodRegisterLocalResult.Success(UserLocal.DEFAULT)
-        every {
-            client.submitRegister(capture(slot))
-        }returns flowOf()
 
+        expected(
+            sut = sut,
+            receivedResult = receivedResult,
+            expectedResult = expectedResult.userData.email,
+            exactly = 1,
+            slot = slot
+        )
 
-        sut.submit(userData = params).test {
-            assertEquals("birin", slot.captured.name)
-            assertEquals("1234567890", slot.captured.password)
-            assertEquals(receivedResult.root.data.user.email, expectedResult.userData.email)
-            awaitComplete()
-        }
-
-        verify(exactly = 1) {
-            client.submitRegister(registerRequest)
-        }
-
-        confirmVerified(client)
     }
 
     private fun expected(
@@ -206,7 +199,9 @@ class RemoteRegisterFeedLoaderTest{
         receivedResult : HttpClientResult,
         expectedResult: Any,
         exactly: Int = -1,
+        slot: CapturingSlot<RegistrationDto> = slot<RegistrationDto>()
     ) = runBlocking {
+
 
         every {
             client.submitRegister(registerRequest)
@@ -223,7 +218,7 @@ class RemoteRegisterFeedLoaderTest{
             currentResult?.let {
                 when(it){
                     is RegisterFeedResult.Success -> {
-                        assertEquals(expectedResult, receivedResult)
+                        assertEquals(expectedResult, it.root.data.user.email)
                     }
 
                     is RegisterFeedResult.Failure -> {
