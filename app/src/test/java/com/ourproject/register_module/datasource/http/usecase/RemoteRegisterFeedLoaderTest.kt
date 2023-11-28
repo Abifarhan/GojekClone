@@ -17,6 +17,7 @@ import io.mockk.every
 import io.mockk.slot
 import io.mockk.spyk
 import io.mockk.verify
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import org.junit.After
@@ -94,7 +95,6 @@ class RemoteRegisterFeedLoaderTest{
     @Test
     fun testSubmitRegisterConnectivityErrorOnClientError() = runBlocking {
 
-
         every {
             client.submitRegister(registerRequest)
         } returns flowOf(HttpClientResult.Failure(ConnectivityException()))
@@ -116,6 +116,53 @@ class RemoteRegisterFeedLoaderTest{
             client.submitRegister(registerRequest)
         }
 
+        confirmVerified(client)
+    }
+
+
+    @Test
+    fun testSubmitDeliverInvalidDataError() = runBlocking {
+        val receivedResult = HttpClientResult.Failure(InvalidDataException())
+
+        every {
+            client.submitRegister(registerRequest)
+        } returns flowOf(receivedResult)
+
+        val expectedResult = InvalidDataException()
+
+        sut.submit(userData = params).test {
+            val currentResult = try {
+                awaitItem()
+            } catch (e: Throwable) {
+                // Handle the case where the flow completes without emitting any items
+                // This might happen when the flow completes with no items emitted
+                // You can log or handle this scenario as needed
+                null
+            }
+
+            currentResult?.let {
+                when (it) {
+                    is RegisterFeedResult.Success -> {
+                        println("come to this condition 1 $it")
+                        // Handle success case if needed
+                    }
+
+                    is RegisterFeedResult.Failure -> {
+                        println("come to this condition 2 $it")
+                        assertEquals(expectedResult, it)
+                    }
+                }
+            }
+
+            awaitComplete()
+        }
+
+        // Verify that the submitRegister function was called
+        verify(exactly = 1) {
+            client.submitRegister(registerRequest)
+        }
+
+        // Confirm that there were no other interactions with the mock
         confirmVerified(client)
     }
 

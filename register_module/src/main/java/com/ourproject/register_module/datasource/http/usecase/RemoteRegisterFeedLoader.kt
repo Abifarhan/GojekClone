@@ -13,6 +13,14 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 
+
+class ConnectivityException : Exception()
+class InvalidDataException : Exception()
+class BadRequestException : Exception()
+class NotFoundException : Exception()
+class InternalServerErrorException : Exception()
+class UnexpectedException : Exception()
+
 class RemoteRegisterFeedLoader constructor(
     private val registerRetrofitHttpClient: RegisterFeedHttpClient
 ) : RegisterFeedLoader{
@@ -39,7 +47,27 @@ class RemoteRegisterFeedLoader constructor(
                                 Log.d("loadCryptoFeed", "InvalidData")
                                 emit(RegisterFeedResult.Failure(InvalidData()))
                             }
+
+                            is BadRequestException -> {
+                                emit(RegisterFeedResult.Failure(BadRequest()))
+                            }
+
+                            is NotFoundException -> {
+                                emit(RegisterFeedResult.Failure(NotFound()))
+                            }
+
+                            is InternalServerErrorException -> {
+                                emit(RegisterFeedResult.Failure(InternalServerError()))
+                            }
+
+                            is UnexpectedException -> {
+                                emit(RegisterFeedResult.Failure(Unexpected()))
+                            }
                         }
+                    }
+
+                    else -> {
+
                     }
                 }
             }
@@ -51,3 +79,7 @@ class RemoteRegisterFeedLoader constructor(
 
 class InvalidData : Throwable()
 class Connectivity : Throwable()
+class BadRequest : Exception()
+class NotFound : Exception()
+class InternalServerError : Exception()
+class Unexpected : Exception()
