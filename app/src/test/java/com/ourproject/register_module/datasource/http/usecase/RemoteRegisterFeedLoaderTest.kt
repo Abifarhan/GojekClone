@@ -24,6 +24,7 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import kotlin.math.exp
 
 
 class RemoteRegisterFeedLoaderTest{
@@ -94,250 +95,65 @@ class RemoteRegisterFeedLoaderTest{
 
     @Test
     fun testSubmitRegisterConnectivityErrorOnClientError() = runBlocking {
-
-        every {
-            client.submitRegister(registerRequest)
-        } returns flowOf(HttpClientResult.Failure(ConnectivityException()))
-
-        val expectedResult = ConnectivityException()
-
-
-        sut.submit(userData = params).test {
-            when (val receivedResult = awaitItem()){
-                is RegisterFeedResult.Failure -> {
-                    assertEquals(expectedResult.message, receivedResult.throwable.message)
-                }
-                else -> {}
-            }
-            awaitComplete()
-        }
-
-        verify(exactly = 1) {
-            client.submitRegister(registerRequest)
-        }
-
-        confirmVerified(client)
+        expected(
+            sut = sut,
+            receivedResult = HttpClientResult.Failure(ConnectivityException()),
+            expectedResult = Connectivity(),
+            exactly = 1
+        )
     }
 
 
     @Test
     fun testSubmitDeliverInvalidDataError() = runBlocking {
-        val receivedResult = HttpClientResult.Failure(InvalidDataException())
-
-        every {
-            client.submitRegister(registerRequest)
-        } returns flowOf(receivedResult)
-
-        val expectedResult = InvalidDataException()
-
-        sut.submit(userData = params).test {
-            val currentResult = try {
-                awaitItem()
-            } catch (e: Throwable) {
-                // Handle the case where the flow completes without emitting any items
-                // This might happen when the flow completes with no items emitted
-                // You can log or handle this scenario as needed
-                null
-            }
-
-            currentResult?.let {
-                when (it) {
-                    is RegisterFeedResult.Success -> {
-                        println("come to this condition 1 $it")
-                        // Handle success case if needed
-                    }
-
-                    is RegisterFeedResult.Failure -> {
-                        println("come to this condition 2 $it")
-                        assertEquals(expectedResult, it)
-                    }
-                }
-            }
-
-            awaitComplete()
-        }
-
-        // Verify that the submitRegister function was called
-        verify(exactly = 1) {
-            client.submitRegister(registerRequest)
-        }
-
-        // Confirm that there were no other interactions with the mock
-        confirmVerified(client)
+        expected(
+            sut = sut,
+            receivedResult = HttpClientResult.Failure(InvalidDataException()),
+            expectedResult = InvalidData(),
+            exactly = 1
+        )
     }
 
 
     @Test
     fun testSubmitRegisterUserBadRequest() = runBlocking {
-        val receivedResult = HttpClientResult.Failure(BadRequestException())
-
-        every {
-            client.submitRegister(registerRequest)
-        } returns flowOf(receivedResult)
-
-        val expectedResult = BadRequest()
-
-        sut.submit(userData = params).test {
-            val currentResult = try {
-                awaitItem()
-            } catch (e: Throwable) {
-                null
-            }
-
-            currentResult?.let {
-                when (it) {
-                    is RegisterFeedResult.Success -> {
-                        println("come to this condition 1 $it")
-                        // Handle success case if needed
-                    }
-
-                    is RegisterFeedResult.Failure -> {
-                        println("come to this condition 2 $it")
-                        assertEquals(expectedResult.message, it.throwable.message)
-                    }
-                }
-            }
-
-            awaitComplete()
-        }
-
-        // Verify that the submitRegister function was called
-        verify(exactly = 1) {
-            client.submitRegister(registerRequest)
-        }
-
-        // Confirm that there were no other interactions with the mock
-        confirmVerified(client)
+        expected(
+            sut = sut,
+            receivedResult = HttpClientResult.Failure(BadRequestException()),
+            expectedResult = BadRequest(),
+            exactly = 1
+        )
     }
 
     @Test
     fun testSubmitRegisterDeliversNotFoundErrorOnClientError() = runBlocking {
-        val receivedResult = HttpClientResult.Failure(NotFoundException())
-
-        every {
-            client.submitRegister(registerRequest)
-        } returns flowOf(receivedResult)
-
-        val expectedResult = NotFound()
-
-        sut.submit(userData = params).test {
-            val currentResult = try {
-                awaitItem()
-            } catch (e: Throwable) {
-                null
-            }
-
-            currentResult?.let {
-                when (it) {
-                    is RegisterFeedResult.Success -> {
-                        println("come to this condition 1 $it")
-                        // Handle success case if needed
-                    }
-
-                    is RegisterFeedResult.Failure -> {
-                        println("come to this condition 2 $it")
-                        assertEquals(expectedResult.message, it.throwable.message)
-                    }
-                }
-            }
-
-            awaitComplete()
-        }
-
-        // Verify that the submitRegister function was called
-        verify(exactly = 1) {
-            client.submitRegister(registerRequest)
-        }
-
-        // Confirm that there were no other interactions with the mock
-        confirmVerified(client)
+        expected(
+            sut = sut,
+            receivedResult = HttpClientResult.Failure(NotFoundException()),
+            expectedResult = NotFound(),
+            exactly = 1
+        )
     }
 
     @Test
     fun testSubmitDeliversInternalServerError() = runBlocking {
-        val receivedResult = HttpClientResult.Failure(InternalServerErrorException())
-
-        every {
-            client.submitRegister(registerRequest)
-        } returns flowOf(receivedResult)
-
-        val expectedResult = InternalServerError()
-
-        sut.submit(userData = params).test {
-            val currentResult = try {
-                awaitItem()
-            } catch (e: Throwable) {
-                null
-            }
-
-            currentResult?.let {
-                when (it) {
-                    is RegisterFeedResult.Success -> {
-                        println("come to this condition 1 $it")
-                        // Handle success case if needed
-                    }
-
-                    is RegisterFeedResult.Failure -> {
-                        println("come to this condition 2 $it")
-                        assertEquals(expectedResult.message, it.throwable.message)
-                    }
-                }
-            }
-
-            awaitComplete()
-        }
-
-        // Verify that the submitRegister function was called
-        verify(exactly = 1) {
-            client.submitRegister(registerRequest)
-        }
-
-        // Confirm that there were no other interactions with the mock
-        confirmVerified(client)
+        expected(
+            sut = sut,
+            receivedResult = HttpClientResult.Failure(InternalServerErrorException()),
+            expectedResult = InternalServerError(),
+            exactly = 1
+        )
     }
 
 
     @Test
     fun testSubmitRegisterUnexpectedError() = runBlocking {
-        val receivedResult = HttpClientResult.Failure(UnexpectedException())
-
-        every {
-            client.submitRegister(registerRequest)
-        } returns flowOf(receivedResult)
-
-        val expectedResult = Unexpected()
-
-        sut.submit(userData = params).test {
-            val currentResult = try {
-                awaitItem()
-            } catch (e: Throwable) {
-                null
-            }
-
-            currentResult?.let {
-                when (it) {
-                    is RegisterFeedResult.Success -> {
-                        println("come to this condition 1 $it")
-                        // Handle success case if needed
-                    }
-
-                    is RegisterFeedResult.Failure -> {
-                        println("come to this condition 2 $it")
-                        assertEquals(expectedResult.message, it.throwable.message)
-                    }
-                }
-            }
-
-            awaitComplete()
-        }
-
-        // Verify that the submitRegister function was called
-        verify(exactly = 1) {
-            client.submitRegister(registerRequest)
-        }
-
-        // Confirm that there were no other interactions with the mock
-        confirmVerified(client)
+        expected(
+            sut = sut,
+            receivedResult = HttpClientResult.Failure(UnexpectedException()),
+            expectedResult = Unexpected(),
+            exactly = 1
+        )
     }
     @Test
     fun testSubmitRegisterUserDataTwice() = runBlocking {
@@ -364,8 +180,6 @@ class RemoteRegisterFeedLoaderTest{
     fun registerWithArgumentsWithResult() = runBlocking {
 
         val slot = slot<RegistrationDto>()
-
-
         val receivedResult = HttpClientResult.Success(ResponseDataDto.DEFAULT)
         val expectedResult = GofoodRegisterLocalResult.Success(UserLocal.DEFAULT)
         every {
@@ -387,5 +201,46 @@ class RemoteRegisterFeedLoaderTest{
         confirmVerified(client)
     }
 
+    private fun expected(
+        sut: RemoteRegisterFeedLoader,
+        receivedResult : HttpClientResult,
+        expectedResult: Any,
+        exactly: Int = -1,
+    ) = runBlocking {
+
+        every {
+            client.submitRegister(registerRequest)
+        } returns flowOf(receivedResult)
+
+
+        sut.submit(userData = params).test {
+            val currentResult = try {
+                awaitItem()
+            } catch (e: Throwable) {
+                null
+            }
+
+            currentResult?.let {
+                when(it){
+                    is RegisterFeedResult.Success -> {
+                        assertEquals(expectedResult, receivedResult)
+                    }
+
+                    is RegisterFeedResult.Failure -> {
+                        assertEquals(expectedResult::class.java, it.throwable::class.java)
+                    }
+                }
+            }
+
+            awaitComplete()
+        }
+
+
+        verify(exactly = exactly) {
+            client.submitRegister(registerRequest)
+        }
+
+        confirmVerified(client)
+    }
 
 }
