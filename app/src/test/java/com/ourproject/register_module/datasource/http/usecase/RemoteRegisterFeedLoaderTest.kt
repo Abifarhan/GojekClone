@@ -3,8 +3,6 @@ package com.ourproject.register_module.datasource.http.usecase
 import app.cash.turbine.test
 import com.ourproject.register_module.datasource.http.HttpClientResult
 import com.ourproject.register_module.datasource.http.RegisterFeedHttpClient
-import com.ourproject.register_module.datasource.http.RegisterFeedResult
-import com.ourproject.register_module.datasource.http.RegisterFeedRetrofitHttpClientTest
 import com.ourproject.register_module.datasource.http.dto.RegistrationDto
 import com.ourproject.register_module.datasource.http.dto.RegistrationEntity
 import com.ourproject.register_module.datasource.http.dto.ResponseDataDto
@@ -62,6 +60,28 @@ class RemoteRegisterFeedLoaderTest{
     @After
     fun tearDown() {
         clearAllMocks()
+    }
+
+    @Test
+    fun testSubmitRegisterUserDataTwice() = runBlocking {
+        every {
+            client.submitRegister(registerRequest)
+        } returns flowOf()
+
+
+        sut.submit(params).test {
+            awaitComplete()
+        }
+
+        sut.submit(params).test {
+            awaitComplete()
+        }
+
+        verify(exactly = 2) {
+            client.submitRegister(registerRequest)
+        }
+
+        confirmVerified(client)
     }
     @Test
     fun registerWithArgumentsWithResult() = runBlocking {
