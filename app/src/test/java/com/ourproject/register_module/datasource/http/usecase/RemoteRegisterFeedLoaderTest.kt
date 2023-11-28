@@ -1,8 +1,10 @@
 package com.ourproject.register_module.datasource.http.usecase
 
 import app.cash.turbine.test
+import com.ourproject.register_module.datasource.http.ConnectivityException
 import com.ourproject.register_module.datasource.http.HttpClientResult
 import com.ourproject.register_module.datasource.http.RegisterFeedHttpClient
+import com.ourproject.register_module.datasource.http.RegisterFeedResult
 import com.ourproject.register_module.datasource.http.dto.RegistrationDto
 import com.ourproject.register_module.datasource.http.dto.RegistrationEntity
 import com.ourproject.register_module.datasource.http.dto.ResponseDataDto
@@ -87,6 +89,34 @@ class RemoteRegisterFeedLoaderTest{
 
         confirmVerified(client)
 
+    }
+
+    @Test
+    fun testSubmitRegisterConnectivityErrorOnClientError() = runBlocking {
+
+
+        every {
+            client.submitRegister(registerRequest)
+        } returns flowOf(HttpClientResult.Failure(ConnectivityException()))
+
+        val expectedResult = ConnectivityException()
+
+
+        sut.submit(userData = params).test {
+            when (val receivedResult = awaitItem()){
+                is RegisterFeedResult.Failure -> {
+                    assertEquals(expectedResult.message, receivedResult.throwable.message)
+                }
+                else -> {}
+            }
+            awaitComplete()
+        }
+
+        verify(exactly = 1) {
+            client.submitRegister(registerRequest)
+        }
+
+        confirmVerified(client)
     }
 
     @Test
