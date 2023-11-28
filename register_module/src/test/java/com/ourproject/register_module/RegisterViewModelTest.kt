@@ -12,6 +12,7 @@ import io.mockk.spyk
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -76,6 +77,21 @@ class RegisterViewModelTest {
         sut.submitUserRegister(params)
 
         verify(exactly = 1) {
+            useCaseRegister.submit(params)
+        }
+        confirmVerified(useCaseRegister)
+    }
+
+    @Test
+    fun testSubmitRequestDataTwice() = runBlocking {
+        every {
+            useCaseRegister.submit(params)
+        } returns flowOf()
+
+        sut.submitUserRegister(params)
+        sut.submitUserRegister(params)
+
+        verify(exactly = 2) {
             useCaseRegister.submit(params)
         }
         confirmVerified(useCaseRegister)
