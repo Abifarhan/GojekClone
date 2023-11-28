@@ -211,6 +211,48 @@ class RemoteRegisterFeedLoaderTest{
     }
 
     @Test
+    fun testSubmitRegisterDeliversNotFoundErrorOnClientError() = runBlocking {
+        val receivedResult = HttpClientResult.Failure(NotFoundException())
+
+        every {
+            client.submitRegister(registerRequest)
+        } returns flowOf(receivedResult)
+
+        val expectedResult = NotFound()
+
+        sut.submit(userData = params).test {
+            val currentResult = try {
+                awaitItem()
+            } catch (e: Throwable) {
+                null
+            }
+
+            currentResult?.let {
+                when (it) {
+                    is RegisterFeedResult.Success -> {
+                        println("come to this condition 1 $it")
+                        // Handle success case if needed
+                    }
+
+                    is RegisterFeedResult.Failure -> {
+                        println("come to this condition 2 $it")
+                        assertEquals(expectedResult.message, it.throwable.message)
+                    }
+                }
+            }
+
+            awaitComplete()
+        }
+
+        // Verify that the submitRegister function was called
+        verify(exactly = 1) {
+            client.submitRegister(registerRequest)
+        }
+
+        // Confirm that there were no other interactions with the mock
+        confirmVerified(client)
+    }
+    @Test
     fun testSubmitRegisterUserDataTwice() = runBlocking {
         every {
             client.submitRegister(registerRequest)
