@@ -63,6 +63,25 @@ class RemoteRegisterFeedLoaderTest{
     }
 
     @Test
+    fun testSubmitRegisterUserDataOnce() = runBlocking {
+        every {
+            client.submitRegister(registerRequest)
+        } returns flowOf()
+
+
+        sut.submit(params).test {
+            awaitComplete()
+        }
+
+        verify(exactly = 1) {
+            client.submitRegister(registerRequest)
+        }
+
+        confirmVerified(client)
+
+    }
+
+    @Test
     fun testSubmitRegisterUserDataTwice() = runBlocking {
         every {
             client.submitRegister(registerRequest)
