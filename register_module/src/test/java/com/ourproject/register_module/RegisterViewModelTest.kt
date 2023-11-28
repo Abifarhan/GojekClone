@@ -7,12 +7,16 @@ import com.ourproject.register_module.domain.GofoodLoader
 import com.ourproject.register_module.presentation.RegisterFeedViewModel
 import io.mockk.MockKAnnotations
 import io.mockk.confirmVerified
+import io.mockk.every
 import io.mockk.spyk
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.setMain
+import org.junit.Before
 import org.junit.Test
 
 class RegisterViewModelTest {
@@ -45,6 +49,7 @@ class RegisterViewModelTest {
     )
 
     @OptIn(ExperimentalCoroutinesApi::class)
+    @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxed = true)
 
@@ -59,6 +64,20 @@ class RegisterViewModelTest {
             useCaseRegister.submit(params)
         }
 
+        confirmVerified(useCaseRegister)
+    }
+
+    @Test
+    fun testSubmitRequestData() = runBlocking {
+        every {
+            useCaseRegister.submit(params)
+        } returns flowOf()
+
+        sut.submitUserRegister(params)
+
+        verify(exactly = 1) {
+            useCaseRegister.submit(params)
+        }
         confirmVerified(useCaseRegister)
     }
 }

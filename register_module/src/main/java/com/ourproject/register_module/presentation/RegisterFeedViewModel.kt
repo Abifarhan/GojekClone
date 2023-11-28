@@ -37,7 +37,6 @@ class RegisterFeedViewModel constructor(
     fun submitUserRegister(registrationData: RegistrationEntity) {
         viewModelScope.launch {
             try {
-                Log.d("TAG", "submitUserRegister: this operation executed")
 
                 goPayRegisterLoader.submit(registrationData)
                     .collect { result ->
@@ -45,19 +44,14 @@ class RegisterFeedViewModel constructor(
                     when (result) {
                         is RegisterFeedResult.Success -> {
                             _isUserRegistered.postValue(true)
-                            Log.d("TAG", "submitUserRegister: Exception within Flow: 1 ${result.root}")
                         }
 
                         is RegisterFeedResult.Failure -> {
                             _isUserRegistered.postValue(false)
-                            Log.e("TAG", "submitUserRegister: Exception within Flow: 2 ${result.throwable.message}")
                         }
                     }
                 }
-            } catch (e: NetworkException) {
-                Log.e("TAG", "submitUserRegister: Network Exception: ${e.message}")
             } catch (e: Exception) {
-                Log.e("TAG", "submitUserRegister: Exception: ${e.message}")
             }
         }
     }
@@ -67,12 +61,10 @@ class RegisterFeedViewModel constructor(
             gopayResultRegisterLoader.loadUserData().collect { result ->
                 when (result) {
                     is GofoodRegisterLocalResult.Success -> {
-                        Log.d("TAG", "fetch data local status is ${result.userData}}")
                         _userDataLiveData.value = result.userData
                     }
 
                     is GofoodRegisterLocalResult.Failure -> {
-                        Log.e("TAG", "fetch data local status is 2 ${result.throwable.message}}")
                     }
                 }
             }
