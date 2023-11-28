@@ -1,13 +1,19 @@
 package com.ourproject.register_module
 
 import com.ourproject.register_module.datasource.http.RegisterFeedLoader
+import com.ourproject.register_module.datasource.http.dto.RegistrationDto
+import com.ourproject.register_module.datasource.http.dto.RegistrationEntity
 import com.ourproject.register_module.domain.GofoodLoader
 import com.ourproject.register_module.presentation.RegisterFeedViewModel
 import io.mockk.MockKAnnotations
+import io.mockk.confirmVerified
 import io.mockk.spyk
+import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.setMain
+import org.junit.Test
 
 class RegisterViewModelTest {
 
@@ -16,12 +22,43 @@ class RegisterViewModelTest {
 
     private lateinit var sut: RegisterFeedViewModel
 
+    private val params = RegistrationEntity(
+        name = "birin",
+        email = "birin1@gmail.com",
+        password = "1234567890",
+        password_confirmation = "1234567890",
+        address = "Jakarta Pusat",
+        city = "Jakarta",
+        houseNumber = "3",
+        phoneNumber = "5"
+    )
 
+    private val registerRequest = RegistrationDto(
+        name = params.name,
+        email = params.email,
+        password = params.password,
+        password_confirmation = params.password_confirmation,
+        address = params.address,
+        city = params.city,
+        houseNumber = params.houseNumber,
+        phoneNumber = params.phoneNumber
+    )
+
+    @OptIn(ExperimentalCoroutinesApi::class)
     fun setUp() {
         MockKAnnotations.init(this, relaxed = true)
 
         sut = RegisterFeedViewModel(goPayRegisterLoader = useCaseRegister, useCaseResultRegister)
 
         Dispatchers.setMain(UnconfinedTestDispatcher())
+    }
+
+    @Test
+    fun testSubmitNotLoad() {
+        verify(exactly = 0) {
+            useCaseRegister.submit(params)
+        }
+
+        confirmVerified(useCaseRegister)
     }
 }
