@@ -63,6 +63,14 @@ class RemoteRegisterFeedLoaderTest{
     }
 
     @Test
+    fun testSubmitDoesNotRequestRegister() {
+        verify(exactly = 0) {
+            client.submitRegister(registerRequest)
+        }
+
+        confirmVerified(client)
+    }
+    @Test
     fun testSubmitRegisterUserDataOnce() = runBlocking {
         every {
             client.submitRegister(registerRequest)
