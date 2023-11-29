@@ -7,6 +7,7 @@ import com.ourproject.register_module.datasource.http.dto.RegistrationDto
 import com.ourproject.register_module.datasource.http.dto.RegistrationEntity
 import com.ourproject.register_module.datasource.http.usecase.BadRequest
 import com.ourproject.register_module.datasource.http.usecase.Connectivity
+import com.ourproject.register_module.datasource.http.usecase.NotFound
 import com.ourproject.register_module.domain.GofoodLoader
 import com.ourproject.register_module.presentation.RegisterFeedViewModel
 import io.mockk.MockKAnnotations
@@ -118,6 +119,15 @@ class RegisterViewModelTest {
             result = RegisterFeedResult.Failure(BadRequest()),
             sut = sut,
             expectedFailedResult = "Permintaan gagal, coba lagi"
+        )
+    }
+
+    @Test
+    fun testSubmitRequestShowsNotFoundError() = runBlocking {
+        expected(
+            result = RegisterFeedResult.Failure(NotFound()),
+            sut = sut,
+            expectedFailedResult =  "Tidak ditemukan, coba lagi"
         )
     }
 
