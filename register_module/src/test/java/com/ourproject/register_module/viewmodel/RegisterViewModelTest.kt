@@ -7,6 +7,7 @@ import com.ourproject.register_module.datasource.http.dto.RegistrationDto
 import com.ourproject.register_module.datasource.http.dto.RegistrationEntity
 import com.ourproject.register_module.datasource.http.usecase.BadRequest
 import com.ourproject.register_module.datasource.http.usecase.Connectivity
+import com.ourproject.register_module.datasource.http.usecase.InternalServerError
 import com.ourproject.register_module.datasource.http.usecase.NotFound
 import com.ourproject.register_module.domain.GofoodLoader
 import com.ourproject.register_module.presentation.RegisterFeedViewModel
@@ -128,6 +129,15 @@ class RegisterViewModelTest {
             result = RegisterFeedResult.Failure(NotFound()),
             sut = sut,
             expectedFailedResult =  "Tidak ditemukan, coba lagi"
+        )
+    }
+
+    @Test
+    fun testSubmitRequestShowsInternalServerError() = runBlocking {
+        expected(
+            result = RegisterFeedResult.Failure(InternalServerError()),
+            sut = sut,
+            expectedFailedResult =  "Server sedang dalam perbaikan"
         )
     }
 
