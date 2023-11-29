@@ -213,10 +213,8 @@ class RemoteRegisterFeedLoaderTest{
         exactly: Int = -1,
         slot: CapturingSlot<RegistrationDto> = slot<RegistrationDto>()
     ) = runBlocking {
-
-
         every {
-            client.submitRegister(registerRequest)
+            client.submitRegister(capture(slot))
         } returns flowOf(receivedResult)
 
 
@@ -230,6 +228,7 @@ class RemoteRegisterFeedLoaderTest{
             currentResult?.let {
                 when(it){
                     is RegisterFeedResult.Success -> {
+                        assertEquals("birin", slot.captured.name)
                         assertEquals(expectedResult, it.root.data.user.email)
                     }
 

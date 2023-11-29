@@ -9,6 +9,7 @@ import com.ourproject.register_module.datasource.http.usecase.BadRequest
 import com.ourproject.register_module.datasource.http.usecase.Connectivity
 import com.ourproject.register_module.datasource.http.usecase.InternalServerError
 import com.ourproject.register_module.datasource.http.usecase.NotFound
+import com.ourproject.register_module.datasource.http.usecase.Unexpected
 import com.ourproject.register_module.domain.GofoodLoader
 import com.ourproject.register_module.presentation.RegisterFeedViewModel
 import io.mockk.MockKAnnotations
@@ -138,6 +139,15 @@ class RegisterViewModelTest {
             result = RegisterFeedResult.Failure(InternalServerError()),
             sut = sut,
             expectedFailedResult =  "Server sedang dalam perbaikan"
+        )
+    }
+
+    @Test
+    fun testSubmitRequestUnexpectedShowsError() = runBlocking {
+        expected(
+            result = RegisterFeedResult.Failure(Unexpected()),
+            sut = sut,
+            expectedFailedResult =  "Terjadi kesalahan, coba lagi"
         )
     }
 
