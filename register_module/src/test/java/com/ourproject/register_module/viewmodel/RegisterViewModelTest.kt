@@ -5,6 +5,7 @@ import com.ourproject.register_module.datasource.http.RegisterFeedLoader
 import com.ourproject.register_module.datasource.http.RegisterFeedResult
 import com.ourproject.register_module.datasource.http.dto.RegistrationDto
 import com.ourproject.register_module.datasource.http.dto.RegistrationEntity
+import com.ourproject.register_module.datasource.http.usecase.BadRequest
 import com.ourproject.register_module.datasource.http.usecase.Connectivity
 import com.ourproject.register_module.domain.GofoodLoader
 import com.ourproject.register_module.presentation.RegisterFeedViewModel
@@ -108,6 +109,15 @@ class RegisterViewModelTest {
             result = RegisterFeedResult.Failure(Connectivity()),
             sut = sut,
             expectedFailedResult = "Tidak ada internet"
+        )
+    }
+
+    @Test
+    fun testSubmitRequestShowsBadRequestError() = runBlocking {
+        expected(
+            result = RegisterFeedResult.Failure(BadRequest()),
+            sut = sut,
+            expectedFailedResult = "Permintaan gagal, coba lagi"
         )
     }
 
