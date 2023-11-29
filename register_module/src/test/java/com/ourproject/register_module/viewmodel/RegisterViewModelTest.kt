@@ -5,6 +5,7 @@ import com.ourproject.register_module.datasource.http.RegisterFeedLoader
 import com.ourproject.register_module.datasource.http.RegisterFeedResult
 import com.ourproject.register_module.datasource.http.dto.RegistrationDto
 import com.ourproject.register_module.datasource.http.dto.RegistrationEntity
+import com.ourproject.register_module.datasource.http.dto.ResponseDataEntity
 import com.ourproject.register_module.datasource.http.usecase.BadRequest
 import com.ourproject.register_module.datasource.http.usecase.Connectivity
 import com.ourproject.register_module.datasource.http.usecase.InternalServerError
@@ -12,9 +13,11 @@ import com.ourproject.register_module.datasource.http.usecase.NotFound
 import com.ourproject.register_module.datasource.http.usecase.Unexpected
 import com.ourproject.register_module.domain.GofoodLoader
 import com.ourproject.register_module.presentation.RegisterFeedViewModel
+import io.mockk.CapturingSlot
 import io.mockk.MockKAnnotations
 import io.mockk.confirmVerified
 import io.mockk.every
+import io.mockk.slot
 import io.mockk.spyk
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
@@ -151,14 +154,26 @@ class RegisterViewModelTest {
         )
     }
 
+    @Test
+    fun testSubmitRequestWithArgumentAndResult() = runBlocking {
+
+        val slot = slot<RegistrationEntity>()
+        expected(
+            result = RegisterFeedResult.Success(ResponseDataEntity.DEFAULT),
+            sut = sut,
+            expectedFailedResult = "",
+            slot = slot
+        )
+    }
 
     private fun expected(
         result: RegisterFeedResult,
         sut: RegisterFeedViewModel,
-        expectedFailedResult: String
+        expectedFailedResult: String,
+        slot: CapturingSlot<RegistrationEntity> = slot<RegistrationEntity>()
     ) = runBlocking {
         every {
-            useCaseRegister.submit(params)
+            useCaseRegister.submit(capture(slot))
         } returns flowOf(result)
 
         sut.submitUserRegister(params)
@@ -169,6 +184,7 @@ class RegisterViewModelTest {
             if (receivedResult.failedMessage.isNotEmpty()) {
                 assertEquals(expectedFailedResult, receivedResult.failedMessage)
             } else {
+                assertEquals("birin",slot.captured.name)
                 assertEquals(true, receivedResult.userRegistered)
             }
 

@@ -168,6 +168,7 @@ class RemoteRegisterFeedLoaderTest{
             exactly = 1
         )
     }
+
     @Test
     fun testSubmitRegisterUserDataTwice() = runBlocking {
         every {

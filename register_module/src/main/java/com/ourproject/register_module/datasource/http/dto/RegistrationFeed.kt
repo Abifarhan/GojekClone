@@ -96,7 +96,14 @@ data class UserDto(
 data class ResponseDataEntity(
     val meta: MetaDataEntity = MetaDataEntity.DEFAULT,
     val data: UserDataEntity = UserDataEntity.DEFAULT
-)
+) {
+    companion object {
+        val DEFAULT = ResponseDataEntity(
+            MetaDataEntity.DEFAULT,
+            UserDataEntity.DEFAULT
+        )
+    }
+}
 
 data class MetaDataEntity(
     val code: Int = 0,
