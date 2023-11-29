@@ -1,8 +1,11 @@
-package com.ourproject.register_module
+package com.ourproject.register_module.viewmodel
 
+import app.cash.turbine.test
 import com.ourproject.register_module.datasource.http.RegisterFeedLoader
+import com.ourproject.register_module.datasource.http.RegisterFeedResult
 import com.ourproject.register_module.datasource.http.dto.RegistrationDto
 import com.ourproject.register_module.datasource.http.dto.RegistrationEntity
+import com.ourproject.register_module.datasource.http.usecase.Connectivity
 import com.ourproject.register_module.domain.GofoodLoader
 import com.ourproject.register_module.presentation.RegisterFeedViewModel
 import io.mockk.MockKAnnotations
@@ -12,11 +15,12 @@ import io.mockk.spyk
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.setMain
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
@@ -96,4 +100,46 @@ class RegisterViewModelTest {
         }
         confirmVerified(useCaseRegister)
     }
+
+    @Test
+    fun testSubmitRequestFailedConnectivityShowsConnectivityError() = runBlocking {
+
+        expected(
+            result = RegisterFeedResult.Failure(Connectivity()),
+            sut = sut,
+            expectedFailedResult = "Tidak ada internet"
+        )
+    }
+
+
+    private fun expected(
+        result: RegisterFeedResult,
+        sut: RegisterFeedViewModel,
+        expectedFailedResult: String
+    ) = runBlocking {
+        every {
+            useCaseRegister.submit(params)
+        } returns flowOf(result)
+
+        sut.submitUserRegister(params)
+
+        sut.isUserRegistered.take(1).test {
+            val receivedResult = awaitItem()
+
+            if (receivedResult.failedMessage.isNotEmpty()) {
+                assertEquals(expectedFailedResult, receivedResult.failedMessage)
+            } else {
+                assertEquals(true, receivedResult.userRegistered)
+            }
+
+            awaitComplete()
+        }
+
+        verify(exactly = 1) {
+            useCaseRegister.submit(params)
+        }
+
+        confirmVerified(useCaseRegister)
+    }
+
 }

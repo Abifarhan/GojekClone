@@ -64,11 +64,12 @@ class RegisterSecondFragment : Fragment() {
             }
         }
 
-        viewModel.isUserRegistered.observe(viewLifecycleOwner) { statusRegister ->
-            if (statusRegister) {
-                val intent = Intent(requireActivity(), DashboardActivity::class.java)
-                startActivity(intent)
-            }
+
+        val userStatus = viewModel.isUserRegistered.value.userRegistered
+
+        if (userStatus){
+            val intent = Intent(requireActivity(), DashboardActivity::class.java)
+            startActivity(intent)
         }
 
         binding.btnMoe.setOnClickListener {

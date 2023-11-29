@@ -1,4 +1,4 @@
-package com.ourproject.register_module.datasource.http.usecase
+package com.ourproject.register_module.usecase
 
 import app.cash.turbine.test
 import com.ourproject.register_module.datasource.http.ConnectivityException
@@ -9,6 +9,18 @@ import com.ourproject.register_module.datasource.http.dto.RegistrationDto
 import com.ourproject.register_module.datasource.http.dto.RegistrationEntity
 import com.ourproject.register_module.datasource.http.dto.ResponseDataDto
 import com.ourproject.register_module.datasource.http.dto.UserLocal
+import com.ourproject.register_module.datasource.http.usecase.BadRequest
+import com.ourproject.register_module.datasource.http.usecase.BadRequestException
+import com.ourproject.register_module.datasource.http.usecase.Connectivity
+import com.ourproject.register_module.datasource.http.usecase.InternalServerError
+import com.ourproject.register_module.datasource.http.usecase.InternalServerErrorException
+import com.ourproject.register_module.datasource.http.usecase.InvalidData
+import com.ourproject.register_module.datasource.http.usecase.InvalidDataException
+import com.ourproject.register_module.datasource.http.usecase.NotFound
+import com.ourproject.register_module.datasource.http.usecase.NotFoundException
+import com.ourproject.register_module.datasource.http.usecase.RemoteRegisterFeedLoader
+import com.ourproject.register_module.datasource.http.usecase.Unexpected
+import com.ourproject.register_module.datasource.http.usecase.UnexpectedException
 import com.ourproject.register_module.domain.GofoodRegisterLocalResult
 import io.mockk.CapturingSlot
 import io.mockk.MockKAnnotations
