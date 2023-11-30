@@ -17,12 +17,11 @@ class RegisterFeedRetrofitHttpClient constructor(
     override fun submitRegister(submit: RegistrationDto): Flow<HttpClientResult> {
         return flow {
             try {
-                Log.d("TAG", "submit: submit: this part executed 1")
                 emit(HttpClientResult.Success(registerUserService.registerUser(submit)))
             } catch (t: Throwable) {
 
                 when (t) {
-                    is IOException -> {
+                    is ConnectivityException -> {
                         emit(HttpClientResult.Failure(ConnectivityException()))
                     }
                     is HttpException -> {
