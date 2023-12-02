@@ -6,6 +6,7 @@ import com.ourproject.login_module.feed.domain.LoginFeedResult
 import com.ourproject.login_module.feed.domain.LoginSubmitEntity
 import com.ourproject.login_module.feed.http.LoginSubmitDto
 import com.ourproject.register_module.datasource.http.RegisterFeedResult
+import com.ourproject.register_module.datasource.http.usecase.BadRequest
 import com.ourproject.register_module.datasource.http.usecase.Connectivity
 import com.ourproject.register_module.domain.GofoodLoader
 import io.mockk.CapturingSlot
@@ -104,7 +105,14 @@ class LoginViewModelTest {
         )
     }
 
-
+    @Test
+    fun testSubmitRequestShowsBadRequestError() = runBlocking {
+        expected(
+            result = LoginFeedResult.Failure(BadRequest()),
+            sut = sut,
+            expectedFailedResult = "Permintaan gagal, coba lagi"
+        )
+    }
 
     private fun expected(
         result: LoginFeedResult,
