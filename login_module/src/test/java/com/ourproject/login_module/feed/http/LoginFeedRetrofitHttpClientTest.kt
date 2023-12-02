@@ -5,6 +5,7 @@ import com.ourproject.login_module.feed.domain.LoginSubmitEntity
 import com.ourproject.register_module.datasource.http.ConnectivityException
 import com.ourproject.register_module.datasource.http.InvalidDataException
 import com.ourproject.register_module.datasource.http.dto.RegistrationDto
+import com.ourproject.register_module.datasource.http.dto.ResponseDataDto
 import com.ourproject.register_module.datasource.http.usecase.BadRequestException
 import com.ourproject.register_module.datasource.http.usecase.NotFoundException
 import com.ourproject.register_module.datasource.http.usecase.UnexpectedException
@@ -96,6 +97,17 @@ class LoginFeedRetrofitHttpClientTest {
         expect(
             sut = sut,
             expectedResult = UnexpectedException()
+        )
+    }
+
+    @Test
+    fun testGetFailsOn200HttpResponse() = runBlocking {
+        expect(
+            sut = sut,
+            receivedResult = LoginResultDto.DEFAULT,
+            expectedResult = HttpClientResult.Success(
+               LoginResultDto.DEFAULT
+            )
         )
     }
     @After
