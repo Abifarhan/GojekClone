@@ -173,11 +173,13 @@ class RegisterFeedRetrofitHttpClientTest {
 
             when (val receivedResult = awaitItem()){
                 is HttpClientResult.Success -> {
+
+                    assertEquals(expectedResult, receivedResult.root.data.user.email)
                     println("success")
                 }
 
                 is HttpClientResult.Failure -> {
-                    println("You are failed")
+                    assertEquals(expectedResult, receivedResult.throwable.message)
                 }
             }
             awaitComplete()
