@@ -3,7 +3,6 @@ package com.ourproject.login_module.feed.http
 import app.cash.turbine.test
 import com.ourproject.login_module.feed.domain.LoginFeedResult
 import com.ourproject.login_module.feed.domain.LoginSubmitEntity
-import com.ourproject.register_module.datasource.http.usecase.RemoteRegisterFeedLoader
 import io.mockk.CapturingSlot
 import io.mockk.MockKAnnotations
 import io.mockk.clearAllMocks
@@ -88,6 +87,15 @@ class RemoteLoginFeedLoaderTest {
         )
     }
 
+    @Test
+    fun testSubmitDeliverInvalidDataError() = runBlocking {
+        expected(
+            sut = sut,
+            receivedResult = HttpClientResult.Failure(InvalidDataException()),
+            expectedResult = InvalidData(),
+            exactly = 1
+        )
+    }
 
 
     private fun expected(
