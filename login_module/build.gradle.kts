@@ -39,7 +39,8 @@ dependencies {
 
     implementation(project(":component"))
 //    implementation(project(":register_module"))
-    implementation(project(":feature_dashboard"))
+    implementation(project(":feature_dashboard")
+    )
     implementation(libs.androidx.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
@@ -57,6 +58,7 @@ dependencies {
     implementation(libs.com.google.android.material.material)
     implementation(libs.constraintlayout)
     implementation(libs.cronet.api)
+    implementation(project(mapOf("path" to ":register_module")))
     testImplementation(libs.junit)
     testImplementation(libs.ext.junit)
     testImplementation(libs.espresso.core)
@@ -84,4 +86,6 @@ dependencies {
     testImplementation(libs.mockk.android)
     testImplementation(libs.mockk.agent)
     testImplementation(libs.turbine)
+    testImplementation(libs.kotlinx.coroutines.test)
+
 }

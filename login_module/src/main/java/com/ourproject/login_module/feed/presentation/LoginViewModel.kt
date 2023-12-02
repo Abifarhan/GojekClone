@@ -16,10 +16,26 @@ import com.ourproject.login_module.feed.domain.LoginFeedResult
 import com.ourproject.login_module.feed.domain.LoginSubmitEntity
 import com.ourproject.register_module.datasource.db.usecase.LocalRegisterFeedLoaderFactory
 import com.ourproject.register_module.datasource.http.dto.UserLocal
+import com.ourproject.register_module.datasource.http.usecase.BadRequest
+import com.ourproject.register_module.datasource.http.usecase.Connectivity
+import com.ourproject.register_module.datasource.http.usecase.InternalServerError
+import com.ourproject.register_module.datasource.http.usecase.InvalidData
+import com.ourproject.register_module.datasource.http.usecase.NotFound
 import com.ourproject.register_module.domain.GofoodLoader
 import com.ourproject.register_module.domain.GofoodRegisterLocalResult
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.chromium.net.NetworkException
+
+data class UserState(
+    val isLoading: Boolean = false,
+    val failedMessage: String = "",
+    val userRegistered: Boolean = false
+)
+
 
 class LoginViewModel constructor(
     private val loginFeedLoader: LoginFeedLoader,
@@ -28,23 +44,46 @@ class LoginViewModel constructor(
     private val _loginStatus = MutableLiveData<Boolean>()
     val loginStatus: LiveData<Boolean> get() = _loginStatus
 
-    private val _userDataLiveData = MutableLiveData<UserLocal>()
-    val userDataLiveData: LiveData<UserLocal> = _userDataLiveData
+    private val _userDataLiveData = MutableStateFlow(UserState())
+    val userDataLiveData: StateFlow<UserState> = _userDataLiveData.asStateFlow()
     fun submitDataUser(submitEntity: LoginSubmitEntity) {
         viewModelScope.launch {
+
+            _userDataLiveData.update {
+                it.copy(isLoading = true)
+            }
+
             try {
                 loginFeedLoader.submit(submitEntity).collect{result ->
-                    when (result) {
-                        is LoginFeedResult.Success -> {
-                            _loginStatus.postValue(true)
-                            Log.d("TAG", "submitDataUser: operation resul is 1 $result")
-                        }
 
-                        is LoginFeedResult.Failure -> {
-                            _loginStatus.postValue(false)
-                            Log.d("TAG", "submitDataUser: operation resul is 1 $result")
+                    _userDataLiveData.update {
+                        when (result) {
+                            is LoginFeedResult.Success -> {
+                                it.copy(
+                                    isLoading = false,
+                                    userRegistered = true
+                                )
+
+                            }
+
+                            is LoginFeedResult.Failure -> {
+                                it.copy(
+                                    isLoading = false,
+                                    failedMessage = when (result.throwable) {
+                                        is Connectivity -> "Tidak ada internet"
+                                        is InvalidData -> {
+                                            "Terjadi kesalahan, coba lagi"
+                                        }
+                                        is BadRequest -> "Permintaan gagal, coba lagi"
+                                        is NotFound -> "Tidak ditemukan, coba lagi"
+                                        is InternalServerError -> "Server sedang dalam perbaikan"
+                                        else -> { "Terjadi kesalahan, coba lagi" }
+                                    }
+                                )
+                             }
                         }
                     }
+
                 }
             } catch (e: NetworkException) {
                 // Handle network-related exceptions (e.g., no connectivity)
@@ -65,7 +104,7 @@ class LoginViewModel constructor(
                 when (result) {
                     is GofoodRegisterLocalResult.Success -> {
                         Log.d("TAG", "fetch data local status is ${result.userData}}")
-                        _userDataLiveData.value = result.userData
+//                        _userDataLiveData.value = result.userData
                     }
 
                     is GofoodRegisterLocalResult.Failure -> {
