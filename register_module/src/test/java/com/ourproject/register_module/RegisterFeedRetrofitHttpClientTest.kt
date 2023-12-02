@@ -64,15 +64,6 @@ class RegisterFeedRetrofitHttpClientTest {
         sut = RegisterFeedRetrofitHttpClient(registerUserService = service)
     }
 
-    @After
-    fun tearDown() {
-        clearAllMocks()
-    }
-
-    @Test
-    fun testSubmitData() {
-//        println("here the user data user ${userMocked}")
-    }
 
     @Test
     fun testGetFailsOnConnectivityError() = runBlocking {
@@ -118,6 +109,23 @@ class RegisterFeedRetrofitHttpClientTest {
             sut = sut,
             expectedResult = UnexpectedException()
         )
+    }
+
+    @Test
+    fun testGetSuccessOn200HttpResponseWithResponse() {
+        expect(
+            sut = sut,
+            receivedResult = ResponseDataDto.DEFAULT,
+            expectedResult = HttpClientResult.Success(
+               ResponseDataDto.Companion.DEFAULT
+            )
+        )
+    }
+
+
+    @After
+    fun tearDown() {
+        clearAllMocks()
     }
     private fun expect(
         withStatusCode: Int? = null,
