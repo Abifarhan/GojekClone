@@ -7,6 +7,7 @@ import com.ourproject.register_module.datasource.http.InvalidDataException
 import com.ourproject.register_module.datasource.http.dto.RegistrationDto
 import com.ourproject.register_module.datasource.http.usecase.BadRequestException
 import com.ourproject.register_module.datasource.http.usecase.NotFoundException
+import com.ourproject.register_module.datasource.http.usecase.UnexpectedException
 import io.mockk.CapturingSlot
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
@@ -90,6 +91,13 @@ class LoginFeedRetrofitHttpClientTest {
         )
     }
 
+    @Test
+    fun testGetFailsOnUnexpectedException() {
+        expect(
+            sut = sut,
+            expectedResult = UnexpectedException()
+        )
+    }
     @After
     fun tearDown() {
         clearAllMocks()
