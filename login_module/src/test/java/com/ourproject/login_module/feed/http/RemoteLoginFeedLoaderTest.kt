@@ -107,6 +107,15 @@ class RemoteLoginFeedLoaderTest {
         )
     }
 
+    @Test
+    fun testSubmitLoginDeliversNotFoundErrorOnClientError() = runBlocking {
+        expected(
+            sut = sut,
+            receivedResult = HttpClientResult.Failure(NotFoundException()),
+            expectedResult = NotFound(),
+            exactly = 1
+        )
+    }
 
     private fun expected(
         sut: RemoteLoginFeedLoader,
@@ -152,5 +161,9 @@ class RemoteLoginFeedLoaderTest {
 }
 
 class BadRequestException : Exception()
+class NotFoundException : Exception()
+
 
 class BadRequest : Exception()
+class NotFound : Exception()
+
