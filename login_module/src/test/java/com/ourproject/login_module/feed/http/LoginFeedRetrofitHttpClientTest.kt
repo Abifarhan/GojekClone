@@ -58,6 +58,19 @@ class LoginFeedRetrofitHttpClientTest {
         val slot = slot<LoginSubmitDto>()
         expect(
             sut = sut,
+            withStatusCode = 400,
+            expectedResult = BadRequestException(),
+            slot = slot
+        )
+    }
+
+
+    @Test
+    fun testGetFailsOn404HttpResponse() = runBlocking {
+        val slot = slot<LoginSubmitDto>()
+        expect(
+            sut = sut,
+            withStatusCode = 404,
             expectedResult = BadRequestException(),
             slot = slot
         )
