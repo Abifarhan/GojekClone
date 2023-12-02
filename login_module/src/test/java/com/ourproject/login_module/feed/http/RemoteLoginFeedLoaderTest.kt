@@ -78,6 +78,18 @@ class RemoteLoginFeedLoaderTest {
 
     }
 
+    @Test
+    fun testSubmitLoginConnectivityErrorOnClientError() = runBlocking {
+        expected(
+            sut = sut,
+            receivedResult = HttpClientResult.Failure(ConnectivityException()),
+            expectedResult = Connectivity(),
+            exactly = 1
+        )
+    }
+
+
+
     private fun expected(
         sut: RemoteLoginFeedLoader,
         receivedResult : HttpClientResult,
