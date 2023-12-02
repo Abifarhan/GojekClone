@@ -24,6 +24,7 @@ import org.junit.Assert.*
 
 import org.junit.After
 import org.junit.Before
+import org.junit.Test
 
 class LoginViewModelTest {
 
@@ -50,6 +51,15 @@ class LoginViewModelTest {
         sut = LoginViewModel(loginFeedLoader = useCase, gopayResulRegisterLoader = useCaseResult)
         Dispatchers.setMain(UnconfinedTestDispatcher())
 
+    }
+
+    @Test
+    fun testSubmitNotLoad() {
+        verify(exactly = 0) {
+            useCase.submit(params)
+        }
+
+        confirmVerified(useCase)
     }
 
 
