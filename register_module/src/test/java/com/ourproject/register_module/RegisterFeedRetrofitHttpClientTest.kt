@@ -3,6 +3,7 @@ package com.ourproject.register_module
 import app.cash.turbine.test
 import com.ourproject.register_module.datasource.http.ConnectivityException
 import com.ourproject.register_module.datasource.http.HttpClientResult
+import com.ourproject.register_module.datasource.http.InvalidDataException
 import com.ourproject.register_module.datasource.http.RegisterFeedRetrofitHttpClient
 import com.ourproject.register_module.datasource.http.RegisterUserService
 import com.ourproject.register_module.datasource.http.dto.RegistrationDto
@@ -100,6 +101,16 @@ class RegisterFeedRetrofitHttpClientTest {
             expectedResult = NotFoundException()
         )
     }
+
+    @Test
+    fun testGetFailsOn422HttpResponse() {
+        expect(
+            withStatusCode = 422,
+            sut = sut,
+            expectedResult = InvalidDataException()
+        )
+    }
+
 
     private fun expect(
         withStatusCode: Int? = null,
