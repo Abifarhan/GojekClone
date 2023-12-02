@@ -38,7 +38,7 @@ dependencies {
 
 
     implementation(project(":component"))
-    implementation(project(":register_module"))
+//    implementation(project(":register_module"))
     implementation(project(":feature_dashboard"))
     implementation(libs.androidx.ktx)
     implementation(libs.lifecycle.runtime.ktx)

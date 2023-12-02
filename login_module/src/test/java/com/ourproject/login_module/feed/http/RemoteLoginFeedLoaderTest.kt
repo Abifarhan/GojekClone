@@ -59,6 +59,25 @@ class RemoteLoginFeedLoaderTest {
         confirmVerified(client)
     }
 
+    @Test
+    fun testSubmitLoginUserDataOnce() = runBlocking {
+        every {
+            client.submitLogin(loginRequest)
+        } returns flowOf()
+
+
+        sut.submit(params).test {
+            awaitComplete()
+        }
+
+        verify(exactly = 1) {
+            client.submitLogin(loginRequest)
+        }
+
+        confirmVerified(client)
+
+    }
+
     private fun expected(
         sut: RemoteLoginFeedLoader,
         receivedResult : HttpClientResult,
