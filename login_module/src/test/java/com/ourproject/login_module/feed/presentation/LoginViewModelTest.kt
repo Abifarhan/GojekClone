@@ -62,6 +62,20 @@ class LoginViewModelTest {
         confirmVerified(useCase)
     }
 
+    @Test
+    fun testSubmitLoginData() = runBlocking {
+        every {
+            useCase.submit(params)
+        } returns flowOf()
+
+        sut.submitDataUser(params)
+
+        verify(exactly = 1) {
+            useCase.submit(params)
+        }
+        confirmVerified(useCase)
+    }
+
 
 
     private fun expected(
