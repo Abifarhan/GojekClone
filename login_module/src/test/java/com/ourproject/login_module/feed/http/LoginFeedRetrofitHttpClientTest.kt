@@ -3,8 +3,10 @@ package com.ourproject.login_module.feed.http
 import app.cash.turbine.test
 import com.ourproject.login_module.feed.domain.LoginSubmitEntity
 import com.ourproject.register_module.datasource.http.ConnectivityException
+import com.ourproject.register_module.datasource.http.InvalidDataException
 import com.ourproject.register_module.datasource.http.dto.RegistrationDto
 import com.ourproject.register_module.datasource.http.usecase.BadRequestException
+import com.ourproject.register_module.datasource.http.usecase.NotFoundException
 import io.mockk.CapturingSlot
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
@@ -71,7 +73,19 @@ class LoginFeedRetrofitHttpClientTest {
         expect(
             sut = sut,
             withStatusCode = 404,
-            expectedResult = BadRequestException(),
+            expectedResult = NotFoundException(),
+            slot = slot
+        )
+    }
+
+
+    @Test
+    fun testGetFailsOn422HttpResponse() = runBlocking {
+        val slot = slot<LoginSubmitDto>()
+        expect(
+            sut = sut,
+            withStatusCode = 422,
+            expectedResult = InvalidDataException(),
             slot = slot
         )
     }
