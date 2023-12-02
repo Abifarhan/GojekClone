@@ -11,6 +11,7 @@ import com.ourproject.register_module.datasource.http.dto.RegistrationEntity
 import com.ourproject.register_module.datasource.http.dto.ResponseDataDto
 import com.ourproject.register_module.datasource.http.usecase.BadRequestException
 import com.ourproject.register_module.datasource.http.usecase.NotFoundException
+import com.ourproject.register_module.datasource.http.usecase.UnexpectedException
 import io.mockk.CapturingSlot
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
@@ -111,7 +112,13 @@ class RegisterFeedRetrofitHttpClientTest {
         )
     }
 
-
+    @Test
+    fun testGetFailsOnUnexpectedException() {
+        expect(
+            sut = sut,
+            expectedResult = UnexpectedException()
+        )
+    }
     private fun expect(
         withStatusCode: Int? = null,
         sut: RegisterFeedRetrofitHttpClient,
