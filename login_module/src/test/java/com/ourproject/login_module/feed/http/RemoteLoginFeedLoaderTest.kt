@@ -117,6 +117,17 @@ class RemoteLoginFeedLoaderTest {
         )
     }
 
+    @Test
+    fun testSubmitDeliversInternalServerError() = runBlocking {
+        expected(
+            sut = sut,
+            receivedResult = HttpClientResult.Failure(InternalServerErrorException()),
+            expectedResult = InternalServerError(),
+            exactly = 1
+        )
+    }
+
+
     private fun expected(
         sut: RemoteLoginFeedLoader,
         receivedResult : HttpClientResult,
@@ -162,8 +173,13 @@ class RemoteLoginFeedLoaderTest {
 
 class BadRequestException : Exception()
 class NotFoundException : Exception()
+class InternalServerErrorException : Exception()
+
 
 
 class BadRequest : Exception()
 class NotFound : Exception()
+
+class InternalServerError : Exception()
+
 
