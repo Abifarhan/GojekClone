@@ -3,9 +3,13 @@ package com.ourproject.login_module.feed.presentation
 import app.cash.turbine.test
 import com.ourproject.login_module.feed.domain.LoginFeedLoader
 import com.ourproject.login_module.feed.domain.LoginFeedResult
+import com.ourproject.login_module.feed.domain.LoginResultEntity
 import com.ourproject.login_module.feed.domain.LoginSubmitEntity
+import com.ourproject.login_module.feed.http.LoginResultDto
 import com.ourproject.login_module.feed.http.LoginSubmitDto
 import com.ourproject.register_module.datasource.http.RegisterFeedResult
+import com.ourproject.register_module.datasource.http.dto.RegistrationEntity
+import com.ourproject.register_module.datasource.http.dto.ResponseDataEntity
 import com.ourproject.register_module.datasource.http.usecase.BadRequest
 import com.ourproject.register_module.datasource.http.usecase.Connectivity
 import com.ourproject.register_module.datasource.http.usecase.InternalServerError
@@ -144,6 +148,17 @@ class LoginViewModelTest {
         )
     }
 
+    @Test
+    fun testSubmitRequestWithArgumentAndResult() = runBlocking {
+
+        val slot = slot<LoginSubmitEntity>()
+        expected(
+            result = LoginFeedResult.Success(LoginResultEntity.DEFAULT),
+            sut = sut,
+            expectedFailedResult = "",
+            slot = slot
+        )
+    }
     private fun expected(
         result: LoginFeedResult,
         sut: LoginViewModel,
