@@ -2,6 +2,7 @@ package com.ourproject.login_module.feed.http
 
 import app.cash.turbine.test
 import com.ourproject.login_module.feed.domain.LoginFeedResult
+import com.ourproject.login_module.feed.domain.LoginResultEntity
 import com.ourproject.login_module.feed.domain.LoginSubmitEntity
 import io.mockk.CapturingSlot
 import io.mockk.MockKAnnotations
@@ -128,7 +129,7 @@ class RemoteLoginFeedLoaderTest {
     }
 
     @Test
-    fun testSubmitRegisterUnexpectedError() = runBlocking {
+    fun testSubmitLoginUnexpectedError() = runBlocking {
         expected(
             sut = sut,
             receivedResult = HttpClientResult.Failure(UnexpectedException()),
@@ -138,7 +139,7 @@ class RemoteLoginFeedLoaderTest {
     }
 
     @Test
-    fun testSubmitRegisterUserDataTwice() = runBlocking {
+    fun testSubmitLoginUserDataTwice() = runBlocking {
         every {
             client.submitLogin(loginRequest)
         } returns flowOf()
@@ -158,7 +159,22 @@ class RemoteLoginFeedLoaderTest {
 
         confirmVerified(client)
     }
+    @Test
+    fun loginWithArgumentsWithResult() = runBlocking {
 
+        val slot = slot<LoginSubmitDto>()
+        val receivedResult = HttpClientResult.Success(LoginResultDto.DEFAULT)
+        val expectedResult = LoginFeedResult.Success(LoginResultEntity.DEFAULT)
+
+        expected(
+            sut = sut,
+            receivedResult = receivedResult,
+            expectedResult = expectedResult,
+            exactly = 1,
+            slot = slot
+        )
+
+    }
 
     private fun expected(
         sut: RemoteLoginFeedLoader,
