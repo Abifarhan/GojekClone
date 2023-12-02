@@ -4,6 +4,7 @@ import app.cash.turbine.test
 import com.ourproject.login_module.feed.domain.LoginSubmitEntity
 import com.ourproject.register_module.datasource.http.ConnectivityException
 import com.ourproject.register_module.datasource.http.dto.RegistrationDto
+import com.ourproject.register_module.datasource.http.usecase.BadRequestException
 import io.mockk.CapturingSlot
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
@@ -51,6 +52,16 @@ class LoginFeedRetrofitHttpClientTest {
         )
     }
 
+
+    @Test
+    fun testGetFailsOn400HttpResponse() = runBlocking {
+        val slot = slot<LoginSubmitDto>()
+        expect(
+            sut = sut,
+            expectedResult = BadRequestException(),
+            slot = slot
+        )
+    }
 
     @After
     fun tearDown() {
