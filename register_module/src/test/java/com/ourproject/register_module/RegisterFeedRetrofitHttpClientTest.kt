@@ -9,6 +9,7 @@ import com.ourproject.register_module.datasource.http.dto.RegistrationDto
 import com.ourproject.register_module.datasource.http.dto.RegistrationEntity
 import com.ourproject.register_module.datasource.http.dto.ResponseDataDto
 import com.ourproject.register_module.datasource.http.usecase.BadRequestException
+import com.ourproject.register_module.datasource.http.usecase.NotFoundException
 import io.mockk.CapturingSlot
 import io.mockk.clearAllMocks
 import io.mockk.coEvery
@@ -91,6 +92,14 @@ class RegisterFeedRetrofitHttpClientTest {
         )
     }
 
+    @Test
+    fun testGetFailsOn404HttpResponse() {
+        expect(
+            withStatusCode = 404,
+            sut = sut,
+            expectedResult = NotFoundException()
+        )
+    }
 
     private fun expect(
         withStatusCode: Int? = null,
