@@ -5,6 +5,8 @@ import com.ourproject.login_module.feed.domain.LoginFeedLoader
 import com.ourproject.login_module.feed.domain.LoginFeedResult
 import com.ourproject.login_module.feed.domain.LoginSubmitEntity
 import com.ourproject.login_module.feed.http.LoginSubmitDto
+import com.ourproject.register_module.datasource.http.RegisterFeedResult
+import com.ourproject.register_module.datasource.http.usecase.Connectivity
 import com.ourproject.register_module.domain.GofoodLoader
 import io.mockk.CapturingSlot
 import io.mockk.MockKAnnotations
@@ -90,6 +92,16 @@ class LoginViewModelTest {
             useCase.submit(params)
         }
         confirmVerified(useCase)
+    }
+
+    @Test
+    fun testSubmitRequestFailedConnectivityShowsConnectivityError() = runBlocking {
+
+        expected(
+            result = LoginFeedResult.Failure(Connectivity()),
+            sut = sut,
+            expectedFailedResult = "Tidak ada internet"
+        )
     }
 
 
