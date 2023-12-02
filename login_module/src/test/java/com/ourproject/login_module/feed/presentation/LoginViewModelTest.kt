@@ -8,6 +8,7 @@ import com.ourproject.login_module.feed.http.LoginSubmitDto
 import com.ourproject.register_module.datasource.http.RegisterFeedResult
 import com.ourproject.register_module.datasource.http.usecase.BadRequest
 import com.ourproject.register_module.datasource.http.usecase.Connectivity
+import com.ourproject.register_module.datasource.http.usecase.NotFound
 import com.ourproject.register_module.domain.GofoodLoader
 import io.mockk.CapturingSlot
 import io.mockk.MockKAnnotations
@@ -111,6 +112,15 @@ class LoginViewModelTest {
             result = LoginFeedResult.Failure(BadRequest()),
             sut = sut,
             expectedFailedResult = "Permintaan gagal, coba lagi"
+        )
+    }
+
+    @Test
+    fun testSubmitRequestShowsNotFoundError() = runBlocking {
+        expected(
+            result = LoginFeedResult.Failure(NotFound()),
+            sut = sut,
+            expectedFailedResult =  "Tidak ditemukan, coba lagi"
         )
     }
 
