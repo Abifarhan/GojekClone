@@ -97,6 +97,16 @@ class RemoteLoginFeedLoaderTest {
         )
     }
 
+    @Test
+    fun testSubmitLoginUserBadRequest() = runBlocking {
+        expected(
+            sut = sut,
+            receivedResult = HttpClientResult.Failure(BadRequestException()),
+            expectedResult = BadRequest(),
+            exactly = 1
+        )
+    }
+
 
     private fun expected(
         sut: RemoteLoginFeedLoader,
@@ -140,3 +150,7 @@ class RemoteLoginFeedLoaderTest {
         confirmVerified(client)
     }
 }
+
+class BadRequestException : Exception()
+
+class BadRequest : Exception()
