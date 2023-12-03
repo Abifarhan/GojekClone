@@ -28,13 +28,13 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.checkSession()
 
-        viewModel.userDataLiveData.observe(this){userData ->
-
-            if (userData != null) {
-                val intent = Intent(this, DashboardActivity::class.java)
-                startActivity(intent)
-            }
-        }
+//        viewModel.userDataLiveData.observe(this){userData ->
+//
+//            if (userData != null) {
+//                val intent = Intent(this, DashboardActivity::class.java)
+//                startActivity(intent)
+//            }
+//        }
 
 
         emailEditText = findViewById(R.id.email)

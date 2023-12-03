@@ -17,11 +17,11 @@ import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.confirmVerified
-import io.mockk.every
 import io.mockk.mockk
 import io.mockk.slot
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -117,7 +117,7 @@ class RegisterFeedRetrofitHttpClientTest {
             sut = sut,
             receivedResult = ResponseDataDto.DEFAULT,
             expectedResult = HttpClientResult.Success(
-               ResponseDataDto.Companion.DEFAULT
+               ResponseDataDto.DEFAULT
             )
         )
     }
@@ -139,7 +139,7 @@ class RegisterFeedRetrofitHttpClientTest {
             withStatusCode != null -> {
                 val response = Response.error<ResponseDataDto>(
                     withStatusCode,
-                    ResponseBody.create(null,"")
+                    "".toResponseBody(null)
                 )
 
                 coEvery {
@@ -151,7 +151,7 @@ class RegisterFeedRetrofitHttpClientTest {
             expectedResult is ConnectivityException -> {
                 coEvery {
                     service.registerUser(capture(slot))
-                } throws ConnectivityException()
+                } throws IOException()
             }
 
             expectedResult is HttpClientResult.Success -> {
@@ -173,13 +173,13 @@ class RegisterFeedRetrofitHttpClientTest {
 
             when (val receivedResult = awaitItem()){
                 is HttpClientResult.Success -> {
-
-                    assertEquals(expectedResult, receivedResult.root.data.user.email)
-                    println("success")
+                    println("success executed")
+                    assertEquals(expectedResult, receivedResult)
                 }
 
                 is HttpClientResult.Failure -> {
-                    assertEquals(expectedResult, receivedResult.throwable.message)
+                    println("failed executed")
+                    assertEquals(expectedResult::class.java, receivedResult.throwable::class.java)
                 }
             }
             awaitComplete()
