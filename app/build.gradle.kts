@@ -61,6 +61,7 @@ dependencies {
     implementation(project(":feature:register:register_http"))
     implementation(project(":feature:register:register_presenter"))
     implementation(project(":feature:register:register_view"))
+    implementation(project(":sharing:session_user"))
 
     implementation(libs.androidx.ktx)
     implementation(libs.lifecycle.runtime.ktx)

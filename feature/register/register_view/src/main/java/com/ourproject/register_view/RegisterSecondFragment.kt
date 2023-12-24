@@ -1,6 +1,5 @@
 package com.ourproject.register_module.ui
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,14 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
-import com.ourproject.register_module.presentation.RegisterFeedViewModel
+import com.ourproject.register_module.presentation.RegisterViewModel
 import com.ourproject.register_view.databinding.FragmentRegisterSecondBinding
 
 
 class RegisterSecondFragment : Fragment() {
 
-    private lateinit var viewModel: RegisterFeedViewModel
+    private lateinit var viewModel: RegisterViewModel
 
     private var _binding: FragmentRegisterSecondBinding? = null
     private val binding get() = _binding!!
@@ -49,16 +47,16 @@ class RegisterSecondFragment : Fragment() {
         binding.spinner.adapter = adapter
 
 
-        viewModel = ViewModelProvider(this, RegisterFeedViewModel.FACTORY).get(RegisterFeedViewModel::class.java)
-
-        viewModel.fetchUserDataLocal()
-        viewModel.userDataLiveData.observe(viewLifecycleOwner){userData ->
-
-            if (userData != null){
-//                val intent = Intent(requireActivity(), DashboardActivity::class.java)
-//                startActivity(intent)
-            }
-        }
+//        viewModel = ViewModelProvider(this, RegisterFeedViewModel.FACTORY).get(RegisterFeedViewModel::class.java)
+//
+//        viewModel.fetchUserDataLocal()
+//        viewModel.userDataLiveData.observe(viewLifecycleOwner){userData ->
+//
+//            if (userData != null){
+////                val intent = Intent(requireActivity(), DashboardActivity::class.java)
+////                startActivity(intent)
+//            }
+//        }
 
 
         val userStatus = viewModel.isUserRegistered.value.userRegistered
@@ -75,29 +73,29 @@ class RegisterSecondFragment : Fragment() {
             val selectedItem = binding.spinner.selectedItem.toString()
             Toast.makeText(requireContext(), "Clicked $selectedItem", Toast.LENGTH_SHORT).show()
 
-            viewModel.submitUserRegister(
-                RegistrationEntity(
-                    name = name ?: "",
-                    email = email ?: "",
-                    password = password ?: "",
-                    password_confirmation = password ?: "",
-                    address = address,
-                    city = selectedItem,
-                    houseNumber = houseNumber,
-                    phoneNumber = phone
-                )
-
+//            viewModel.submitUserRegister(
 //                RegistrationEntity(
-//                    name = "hahhaa",
-//                    email = "gelas26@gmail.com",
-//                    password = "1234567890",
-//                    password_confirmation = "1234567890",
-//                    address = "berlin",
-//                    city = "berlin",
-//                    houseNumber = "4",
-//                    phoneNumber = "1234567890"
+//                    name = name ?: "",
+//                    email = email ?: "",
+//                    password = password ?: "",
+//                    password_confirmation = password ?: "",
+//                    address = address,
+//                    city = selectedItem,
+//                    houseNumber = houseNumber,
+//                    phoneNumber = phone
 //                )
-            )
+//
+////                RegistrationEntity(
+////                    name = "hahhaa",
+////                    email = "gelas26@gmail.com",
+////                    password = "1234567890",
+////                    password_confirmation = "1234567890",
+////                    address = "berlin",
+////                    city = "berlin",
+////                    houseNumber = "4",
+////                    phoneNumber = "1234567890"
+////                )
+//            )
         }
     }
 }

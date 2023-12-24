@@ -45,7 +45,7 @@ dependencies {
     implementation(project(":feature_dashboard"))
     implementation(project(":session_module"))
     implementation(project(":session_module"))
-    implementation(project(":feature:register:register_domain"))
+//    implementation(project(":feature:register:register_domain"))
     implementation(project(":feature:register:register_cache"))
     implementation(project(":feature:register:register_composite"))
     implementation(project(":feature:register:register_http"))

@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.ourproject.register_http"
+    namespace = "com.ourproject.session_user"
     compileSdk = 33
 
     defaultConfig {
@@ -38,7 +38,6 @@ dependencies {
     implementation(libs.androidx.ktx)
     implementation(libs.appcompat)
     implementation(libs.com.google.android.material.material)
-//    implementation(project(mapOf("path" to ":feature:register:register_domain")))
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

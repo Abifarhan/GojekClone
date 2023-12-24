@@ -24,6 +24,8 @@
             <option value="$PROJECT_DIR$/feature_dashboard" />
             <option value="$PROJECT_DIR$/login_module" />
             <option value="$PROJECT_DIR$/session_module" />
+            <option value="$PROJECT_DIR$/sharing" />
+            <option value="$PROJECT_DIR$/sharing/session_user" />
           </set>
         </option>
       </GradleProjectSettings>
