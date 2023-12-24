@@ -17,7 +17,7 @@ class LoginLoaderSessionDecorator(
             decorate.submit(loginSubmitEntity).collect { result ->
                 if (result is LoginFeedResult.Success) {
                     val userLocal = result.loginResultEntity.data.user
-                    session.save(LoginMapper.mapUserEntityToLocal(userLocal))
+//                    session.save(LoginMapper.mapUserEntityToLocal(userLocal))
                 }
                 emit(result)
             }

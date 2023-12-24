@@ -51,16 +51,16 @@ class LoginMapper {
         }
 
 
-        fun mapUserEntityToLocal(entity: UserEntity): com.ourproject.register_module.datasource.http.dto.UserLocal {
-            return com.ourproject.register_module.datasource.http.dto.UserLocal(
-                id = entity.id,
-                name = entity.name,
-                email = entity.email,
-                address = entity.profilePhotoPath ?: "default",
-                houseNumber = entity.houseNumber,
-                phoneNumber = entity.phoneNumber,
-                city = entity.city
-            )
-        }
+//        fun mapUserEntityToLocal(entity: UserEntity): com.ourproject.register_module.datasource.http.dto.UserLocal {
+//            return com.ourproject.register_module.datasource.http.dto.UserLocal(
+//                id = entity.id,
+//                name = entity.name,
+//                email = entity.email,
+//                address = entity.profilePhotoPath ?: "default",
+//                houseNumber = entity.houseNumber,
+//                phoneNumber = entity.phoneNumber,
+//                city = entity.city
+//            )
+//        }
     }
 }

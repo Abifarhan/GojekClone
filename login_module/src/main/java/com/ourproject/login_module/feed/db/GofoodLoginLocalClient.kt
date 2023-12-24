@@ -1,7 +1,7 @@
 package com.ourproject.login_module.feed.db
 
 import kotlinx.coroutines.flow.Flow
-import com.ourproject.register_module.datasource.http.dto.UserLocal
+//import com.ourproject.register_module.datasource.http.dto.UserLocal
 interface GofoodLoginLocalClient {
     suspend fun insert(dataInsert: UserLocal)
 

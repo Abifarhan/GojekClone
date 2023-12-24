@@ -51,10 +51,16 @@ dependencies {
 
 
     implementation(project(":component"))
-    implementation(project(":register_module"))
+//    implementation(project(":register_module"))
     implementation(project(":feature_dashboard"))
     implementation(project(":login_module"))
     implementation(project(":session_module"))
+    implementation(project(":feature:register:register_domain"))
+    implementation(project(":feature:register:register_cache"))
+    implementation(project(":feature:register:register_composite"))
+    implementation(project(":feature:register:register_http"))
+    implementation(project(":feature:register:register_presenter"))
+    implementation(project(":feature:register:register_view"))
 
     implementation(libs.androidx.ktx)
     implementation(libs.lifecycle.runtime.ktx)

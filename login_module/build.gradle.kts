@@ -58,7 +58,7 @@ dependencies {
     implementation(libs.com.google.android.material.material)
     implementation(libs.constraintlayout)
     implementation(libs.cronet.api)
-    implementation(project(mapOf("path" to ":register_module")))
+//    implementation(project(mapOf("path" to ":register_module")))
     testImplementation(libs.junit)
     testImplementation(libs.ext.junit)
     testImplementation(libs.espresso.core)
