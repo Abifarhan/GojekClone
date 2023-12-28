@@ -14,6 +14,10 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/component" />
             <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/login" />
+            <option value="$PROJECT_DIR$/feature/login/login_cache" />
+            <option value="$PROJECT_DIR$/feature/login/login_domain" />
+            <option value="$PROJECT_DIR$/feature/login/login_http" />
             <option value="$PROJECT_DIR$/feature/register" />
             <option value="$PROJECT_DIR$/feature/register/register_cache" />
             <option value="$PROJECT_DIR$/feature/register/register_composite" />

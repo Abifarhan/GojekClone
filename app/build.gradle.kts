@@ -63,6 +63,12 @@ dependencies {
     implementation(project(":feature:register:register_view"))
     implementation(project(":sharing:session_user"))
 
+    // Session
+
+    implementation(project(":feature:login:login_domain"))
+    implementation(project(":feature:login:login_cache"))
+    implementation(project(":feature:login:login_http"))
+
     implementation(libs.androidx.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)

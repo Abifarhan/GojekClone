@@ -35,6 +35,8 @@ android {
 
 dependencies {
 
+    implementation(project(":feature:login:login_domain"))
+
     implementation(libs.androidx.ktx)
     implementation(libs.appcompat)
     implementation(libs.com.google.android.material.material)
