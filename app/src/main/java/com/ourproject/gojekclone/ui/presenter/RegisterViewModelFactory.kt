@@ -3,8 +3,9 @@ package com.ourproject.gojekclone.ui.presenter
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.ourproject.gojekclone.ui.factories.local.LocalSessionInsertFactory
 import com.ourproject.gojekclone.ui.register.RegisterDecoratorFactory
-import com.ourproject.register_module.presentation.RegisterViewModel
+import com.ourproject.gojekclone.ui.register.RegisterRemoteSubmitFactory
 
 class RegisterViewModelFactory {
 
@@ -15,7 +16,8 @@ class RegisterViewModelFactory {
             initializer {
                 RegisterViewModel(
                     RegisterDecoratorFactory.createRegisterDecorator(
-                        decorator = Register
+                        decorator = RegisterRemoteSubmitFactory.createRegisterRemoteSubmit(),
+                        cache = LocalSessionInsertFactory.createLocalSession()
                     )
                 )
             }

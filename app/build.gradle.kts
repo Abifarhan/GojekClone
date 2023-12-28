@@ -78,6 +78,7 @@ dependencies {
     implementation(libs.navigation.compose)
     implementation(libs.appcompat)
     implementation(libs.constraintlayout)
+    implementation(libs.com.google.android.material.material)
     testImplementation(libs.junit)
     testImplementation(libs.ext.junit)
     testImplementation(libs.espresso.core)

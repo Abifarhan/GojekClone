@@ -4,5 +4,5 @@ import SubmitResult
 import kotlinx.coroutines.flow.Flow
 
 interface RegisterSubmit {
-    fun register(registerSubmitDto : RegisterSubmitDto) : Flow<SubmitResult<RegisterSubmitDto>>
+    fun register(registerSubmitDto : RegisterSubmitDto) : Flow<SubmitResult<RemoteRegisterResponseDto>>
 }

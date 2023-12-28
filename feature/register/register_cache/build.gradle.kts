@@ -35,6 +35,9 @@ android {
 
 dependencies {
 
+    implementation(project(":sharing:session_user"))
+    implementation(project(":feature:register:register_domain"))
+
     implementation(libs.androidx.ktx)
     implementation(libs.appcompat)
     implementation(libs.com.google.android.material.material)
