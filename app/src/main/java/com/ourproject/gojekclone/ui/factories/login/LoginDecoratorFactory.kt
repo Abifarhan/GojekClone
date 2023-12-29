@@ -1,15 +1,15 @@
 package com.ourproject.gojekclone.ui.factories.login
 
-import com.ourproject.login_domain.LoginInsert
+import com.ourproject.login_domain.LoginSubmit
 import com.ourproject.register_domain.local.RegisterSaveSession
 
 class LoginDecoratorFactory {
 
     companion object{
         fun createLoginDecorator(
-            decorator: LoginInsert,
+            decorator: LoginSubmit,
             local: RegisterSaveSession
-            ) : LoginInsert{
+            ) : LoginSubmit{
             return LoginLocalDecorator(
                 decorator, local
             )

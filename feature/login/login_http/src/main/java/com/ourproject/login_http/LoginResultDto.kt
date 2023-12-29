@@ -3,16 +3,23 @@ package com.ourproject.login_http
 import com.ourproject.login_domain.Meta
 import com.squareup.moshi.Json
 
-class LoginResultDto(
+data class LoginResultDto(
     @Json(name="data")
-    val remoteLoginData: RemoteLoginData,
+    val remoteLoginData: RemoteLoginData = RemoteLoginData.DEFAULT,
 
     @Json(name="meta")
-    val meta: Meta
-)
+    val meta: Meta = Meta.DEFAULT
+) {
+
+    companion object {
+        val DEFAULT = LoginResultDto(
+            remoteLoginData = RemoteLoginData.DEFAULT,
+            meta = Meta.DEFAULT
+        )
+    }
+}
 
 data class RemoteLoginData(
-
     @Json(name="access_token")
     val accessToken: String,
 
@@ -21,10 +28,17 @@ data class RemoteLoginData(
 
     @Json(name="user")
     val remoteUser: RemoteUser
-)
+) {
+    companion object {
+        val DEFAULT = RemoteLoginData(
+            accessToken = "defaultAccessToken",
+            tokenType = "defaultTokenType",
+            remoteUser = RemoteUser.DEFAULT
+        )
+    }
+}
 
 data class Meta(
-
     @Json(name="code")
     val code: Int,
 
@@ -33,10 +47,17 @@ data class Meta(
 
     @Json(name="status")
     val status: String
-)
+) {
+    companion object {
+        val DEFAULT = Meta(
+            code = 0,
+            message = "defaultMessage",
+            status = "defaultStatus"
+        )
+    }
+}
 
 data class RemoteUser(
-
     @Json(name="profile_photo_url")
     val profilePhotoUrl: String,
 
@@ -78,4 +99,23 @@ data class RemoteUser(
 
     @Json(name="email")
     val email: String
-)
+) {
+    companion object {
+        val DEFAULT = RemoteUser(
+            profilePhotoUrl = "defaultProfilePhotoUrl",
+            address = "Default Address",
+            city = "Default City",
+            roles = "Default Roles",
+            houseNumber = "123",
+            createdAt = System.currentTimeMillis(),
+            emailVerifiedAt = null,
+            currentTeamId = null,
+            phoneNumber = "555-1234",
+            updatedAt = System.currentTimeMillis(),
+            name = "Default Name",
+            id = 0,
+            profilePhotoPath = null,
+            email = "default@example.com"
+        )
+    }
+}

@@ -6,16 +6,15 @@ import com.ourproject.ConnectivityException
 import com.ourproject.InternalServerErrorException
 import com.ourproject.InvalidDataException
 import com.ourproject.NotFoundExceptionException
-import com.ourproject.login_domain.LoginInsert
+import com.ourproject.login_domain.LoginSubmit
 import com.ourproject.login_domain.LoginSubmitEntity
 import com.ourproject.login_domain.LoginSubmitResultEntity
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 
-class RemoteLoginInsert constructor(
+class RemoteLoginSubmit constructor(
     private val loginHttpClient: LoginHttpClient
-) : LoginInsert {
+) : LoginSubmit {
     override fun login(loginSubmitDto: LoginSubmitEntity): Flow<SubmitResult<LoginSubmitResultEntity>> {
 
         return flow {
