@@ -39,8 +39,8 @@ dependencies {
 
     implementation(project(":component"))
 //    implementation(project(":register_module"))
-    implementation(project(":feature_dashboard")
-    )
+//    implementation(project(":feature_dashboard")
+
     implementation(libs.androidx.ktx)
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.activity.compose)
@@ -81,7 +81,7 @@ dependencies {
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.google.code.gson:gson:2.8.8")
-    implementation(project(":feature_dashboard"))
+//    implementation(project(":feature_dashboard"))
 
     testImplementation(libs.mockk.android)
     testImplementation(libs.mockk.agent)

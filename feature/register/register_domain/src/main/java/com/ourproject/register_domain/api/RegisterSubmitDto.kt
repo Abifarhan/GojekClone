@@ -11,58 +11,93 @@ data class RegisterSubmitDto(
     val city: String,
     val houseNumber: String,
     val phoneNumber: String
-)
+){
+
+    companion object {
+        val DEFAULT = RegisterSubmitDto(
+            name = "Default Name",
+            email = "default@example.com",
+            password = "defaultPassword",
+            password_confirmation = "defaultPasswordConfirmation",
+            address = "Default Address",
+            city = "Default City",
+            houseNumber = "123",
+            phoneNumber = "555-1234"
+        )
+    }
+}
 
 
 data class RemoteRegisterResponseDto(
     @Json(name="data")
-    val remoteRegisterData: RemoteRegisterDto,
+    val remoteRegisterData: RemoteRegisterDto = RemoteRegisterDto.DEFAULT,
 
     @Json(name="meta")
-    val meta: MetaDto
-){
+    val meta: MetaDto = MetaDto.DEFAULT
+) {
 
+    companion object {
+        val DEFAULT = RemoteRegisterResponseDto(
+            remoteRegisterData = RemoteRegisterDto.DEFAULT,
+            meta = MetaDto.DEFAULT
+        )
+    }
     data class RemoteRegisterDto(
         @Json(name="access_token")
-        val accessToken: String,
+        val accessToken: String = "",
 
         @Json(name="token_type")
-        val tokenType: String,
+        val tokenType: String = "",
 
         @Json(name="user")
-        val user: UserDto
-    )
+        val user: UserDto = UserDto.DEFAULT
+    ) {
+        companion object {
+            val DEFAULT = RemoteRegisterDto(
+                accessToken = "default_access_token",
+                tokenType = "default_token_type",
+                user = UserDto.DEFAULT
+            )
+        }
+    }
 
     data class MetaDto(
         @Json(name="code")
-        val code: Int,
+        val code: Int = 0,
 
         @Json(name="message")
-        val message: String,
+        val message: String = "",
 
         @Json(name="status")
-        val status: String
-    )
-
+        val status: String = ""
+    ) {
+        companion object {
+            val DEFAULT = MetaDto(
+                code = 0,
+                message = "default_message",
+                status = "default_status"
+            )
+        }
+    }
 
     data class UserDto(
         @Json(name="profile_photo_url")
-        val profilePhotoUrl: String,
+        val profilePhotoUrl: String? = null,
 
         @Json(name="address")
-        val address: String,
+        val address: String = "",
 
         @Json(name="city")
-        val city: String,
+        val city: String = "",
 
         @Json(name="roles")
-        val roles: String,
+        val roles: String = "",
 
         @Json(name="houseNumber")
-        val houseNumber: String,
+        val houseNumber: String = "",
 
         @Json(name="created_at")
-        val createdAt: Long,
+        val createdAt: Long = 0,
 
         @Json(name="email_verified_at")
         val emailVerifiedAt: Any? = null,
@@ -71,21 +106,34 @@ data class RemoteRegisterResponseDto(
         val currentTeamId: Any? = null,
 
         @Json(name="phoneNumber")
-        val phoneNumber: String,
+        val phoneNumber: String = "",
 
         @Json(name="updated_at")
-        val updatedAt: Long,
+        val updatedAt: Long = 0,
 
         @Json(name="name")
-        val name: String,
+        val name: String = "",
 
         @Json(name="id")
-        val id: Int,
+        val id: Int = 0,
 
         @Json(name="profile_photo_path")
         val profilePhotoPath: Any? = null,
 
         @Json(name="email")
-        val email: String
-    )
+        val email: String = ""
+    ) {
+        companion object {
+            val DEFAULT = UserDto(
+                id = 12344,
+                name = "Default Name",
+                email = "default@example.com",
+                address = "Default Address",
+                houseNumber = "123",
+                phoneNumber = "555-1234",
+                city = "Default City",
+                profilePhotoUrl = "default_url"
+            )
+        }
+    }
 }

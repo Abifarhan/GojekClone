@@ -52,7 +52,7 @@ dependencies {
 
     implementation(project(":component"))
 //    implementation(project(":register_module"))
-    implementation(project(":feature_dashboard"))
+//    implementation(project(":feature_dashboard"))
     implementation(project(":login_module"))
     implementation(project(":session_module"))
     implementation(project(":feature:register:register_domain"))
@@ -107,4 +107,7 @@ dependencies {
     testImplementation(libs.mockk.android)
     testImplementation(libs.mockk.agent)
     testImplementation(libs.turbine)
+
+    testImplementation(libs.kotlinx.coroutines.test)
+
 }

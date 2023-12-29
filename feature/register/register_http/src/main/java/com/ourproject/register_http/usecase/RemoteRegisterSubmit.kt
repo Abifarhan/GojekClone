@@ -22,13 +22,11 @@ class RemoteRegisterSubmit(
            registerHttpClient.register(body = registerSubmitDto).collect{ result ->
                when(result){
                    is HttpClientResult.Success -> {
-                       Log.d("TAG", "register: result the operation is $result")
                        val register = result.root
                        emit(SubmitResult.Success(register))
                    }
 
                    is HttpClientResult.Failure -> {
-                       Log.d("TAG", "register: result the operation is error$result")
                        when (result.throwable) {
                            is InvalidDataException -> {
                                emit(SubmitResult.Failure("Invalid Data"))

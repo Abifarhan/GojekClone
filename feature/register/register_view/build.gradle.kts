@@ -42,7 +42,7 @@ android {
 dependencies {
 
     implementation(project(":component"))
-    implementation(project(":feature_dashboard"))
+//    implementation(project(":feature_dashboard"))
     implementation(project(":session_module"))
     implementation(project(":session_module"))
 //    implementation(project(":feature:register:register_domain"))

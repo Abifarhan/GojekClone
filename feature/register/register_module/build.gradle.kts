@@ -43,7 +43,7 @@ android {
 dependencies {
 
     implementation(project(":component"))
-    implementation(project(":feature_dashboard"))
+//    implementation(project(":feature_dashboard"))
     implementation(project(":session_module"))
 
     implementation(libs.androidx.ktx)

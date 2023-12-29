@@ -68,6 +68,15 @@ class RegisterActivity : AppCompatActivity() {
         spinner.adapter = adapter
 
         setListener()
+        setObserver()
+    }
+
+    private fun setObserver() {
+        viewModel.emailUser.observe(this, {
+            if (it.isNotEmpty()){
+
+            }
+        })
     }
 
     private fun setListener() {
