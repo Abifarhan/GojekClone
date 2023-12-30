@@ -8,6 +8,7 @@ import com.ourproject.InternalServerErrorException
 import com.ourproject.InvalidDataException
 import com.ourproject.NotFoundExceptionException
 import com.ourproject.UnexpectedException
+import com.ourproject.register_domain.api.RegisterSubmitEntity
 import com.ourproject.register_http.usecase.dto.RegisterSubmitDto
 import com.ourproject.register_http.usecase.dto.RemoteRegisterResponseDto
 import io.mockk.clearAllMocks
@@ -38,6 +39,18 @@ class RemoteRegisterSubmitTest{
         phoneNumber = "5"
     )
 
+
+    val convertToEntity  = RegisterSubmitEntity(
+        name = registerRequest.name,
+        email = registerRequest.email,
+        password = registerRequest.password,
+        password_confirmation = registerRequest.password_confirmation,
+        address = registerRequest.address,
+        city = registerRequest.city,
+        houseNumber = registerRequest.houseNumber,
+        phoneNumber = registerRequest.phoneNumber
+    )
+
     @Before
     fun setUp(){
         sut = RemoteRegisterSubmit(client)
@@ -59,7 +72,7 @@ class RemoteRegisterSubmitTest{
             client.register(registerRequest)
         } returns flowOf()
 
-        sut.register(registerRequest).test{
+        sut.register(convertToEntity).test{
             awaitComplete()
         }
 
@@ -76,10 +89,10 @@ class RemoteRegisterSubmitTest{
             client.register(registerRequest)
         } returns flowOf()
 
-        sut.register(registerRequest).test{
+        sut.register(convertToEntity).test{
             awaitComplete()
         }
-        sut.register(registerRequest).test{
+        sut.register(convertToEntity).test{
             awaitComplete()
         }
 
@@ -166,7 +179,7 @@ class RemoteRegisterSubmitTest{
             client.register(registerRequest)
         } returns flowOf(receivedHttpClientResult)
 
-        sut.register(registerRequest).test {
+        sut.register(convertToEntity).test {
             when(val receivedResult = awaitItem()){
                 is SubmitResult.Success -> {
                     assertEquals(expectedResult::class.java, receivedResult::class.java)
