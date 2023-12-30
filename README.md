@@ -34,3 +34,7 @@ This exercise is designed to challenge your ability to analyze requirements clea
 
 ### Hi-Fi Design
 Kindly visit it on [Figma](https://www.figma.com/file/fMARq1bHk8nmvvijlM4pB3/Untitled?type=design&node-id=0%3A1&mode=design&t=sIGB7hAL5Zx3FQ4U-1).
+
+
+Login Diagram Flow : (https://drive.google.com/file/d/1vo6EI6PP4QJx-dL0e7tL-Rd1_JpVNdoW/view?usp=sharing).
+Register Diagram Flow : (https://drive.google.com/file/d/1hLDvIxFN8KbWAIslTxKdMAjzKsRQslbF/view?usp=sharing).
