@@ -8,7 +8,6 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
 import com.ourproject.gojekclone.R
-import com.ourproject.gojekclone.ui.presenter.LoginViewModel
 import com.ourproject.gojekclone.ui.presenter.LoginViewModelFactory
 
 class LoginActivity : AppCompatActivity() {
@@ -20,13 +19,13 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var btnLogin: Button
     private lateinit var btnRegister: Button
 
-    private lateinit var viewModel: LoginViewModel
+    private lateinit var viewModel: com.ourproject.login_presenter.LoginViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
 
-        viewModel = ViewModelProvider(this, LoginViewModelFactory.createLoginViewModel())[LoginViewModel::class.java]
+        viewModel = ViewModelProvider(this, LoginViewModelFactory.createLoginViewModel())[com.ourproject.login_presenter.LoginViewModel::class.java]
 
 
 

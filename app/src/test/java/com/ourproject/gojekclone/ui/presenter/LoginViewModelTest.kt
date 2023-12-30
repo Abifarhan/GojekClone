@@ -29,7 +29,7 @@ class LoginViewModelTest{
 
     private val useCase = spyk<LoginSubmit>()
 
-    private lateinit var sut: LoginViewModel
+    private lateinit var sut: com.ourproject.login_presenter.LoginViewModel
 
     private val params = LoginSubmitEntity(
         email = "birin2@gmail.com",
@@ -46,7 +46,7 @@ class LoginViewModelTest{
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxed = true)
-        sut = LoginViewModel(loginInsert = useCase)
+        sut = com.ourproject.login_presenter.LoginViewModel(loginInsert = useCase)
         Dispatchers.setMain(UnconfinedTestDispatcher())
 
     }
@@ -149,7 +149,7 @@ class LoginViewModelTest{
     }
     private fun expected(
         result: SubmitResult<LoginSubmitResultEntity>,
-        sut: LoginViewModel,
+        sut: com.ourproject.login_presenter.LoginViewModel,
         expectedFailedResult: String,
         slot: CapturingSlot<LoginSubmitEntity> = slot<LoginSubmitEntity>()
     ) = runBlocking {

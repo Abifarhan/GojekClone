@@ -1,21 +1,18 @@
+@Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
-    namespace = "com.ourproject.gojekclone"
+    namespace = "com.ourproject.login_http"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.ourproject.gojekclone"
         minSdk = 24
-        targetSdk = 33
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -28,44 +25,18 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "17"
-    }
-
-    packagingOptions {
-        resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
-        }
-    }
-
-    buildFeatures {
-        viewBinding = true
-//        dataBinding = true
+        jvmTarget = "1.8"
     }
 }
 
 dependencies {
 
-
-    implementation(project(":component"))
-
-    implementation(project(":login_module"))
-    implementation(project(":session_module"))
-    implementation(project(":feature:register:domain"))
-    implementation(project(":feature:register:session"))
-    implementation(project(":feature:register:http"))
-    implementation(project(":feature:register:presenter"))
-    implementation(project(":sharing:session_user"))
     implementation(project(":feature:login:domain"))
-    implementation(project(":feature:login:login_presenter"))
-
-    // Session
-
-    implementation(project(":feature:login:session"))
-    implementation(project(":feature:login:http"))
+    implementation(project(":sharing:session_user"))
 
     implementation(libs.androidx.ktx)
     implementation(libs.lifecycle.runtime.ktx)
@@ -82,6 +53,7 @@ dependencies {
     implementation(libs.navigation.compose)
     implementation(libs.appcompat)
     implementation(libs.constraintlayout)
+    implementation(libs.cronet.api)
     implementation(libs.com.google.android.material.material)
     testImplementation(libs.junit)
     testImplementation(libs.ext.junit)
@@ -99,13 +71,16 @@ dependencies {
 
     implementation(libs.coil)
     implementation(libs.room)
-    kapt(libs.room.compiler)
+//    kapt(libs.room.compiler)
     implementation(libs.room.runtime)
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.google.code.gson:gson:2.8.8")
 
     testImplementation(libs.mockk.android)
     testImplementation(libs.mockk.agent)
     testImplementation(libs.turbine)
 
     testImplementation(libs.kotlinx.coroutines.test)
-
 }

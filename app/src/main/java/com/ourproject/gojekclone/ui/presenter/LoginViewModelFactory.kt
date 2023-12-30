@@ -12,10 +12,10 @@ class LoginViewModelFactory {
     companion object {
         fun createLoginViewModel() : ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                LoginViewModel(
+                com.ourproject.login_presenter.LoginViewModel(
                     LoginDecoratorFactory.createLoginDecorator(
                         decorator = LoginRemoteInsertFactory.createLoginRemoteInsert(),
-                        local =LocalSessionInsertFactory.createLocalSession()
+                        local = LocalSessionInsertFactory.createLocalSession()
                     )
                 )
             }
