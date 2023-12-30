@@ -1,115 +1,75 @@
-//package com.ourproject.register_module.presentation
+package com.ourproject.register_presenter
+
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.ourproject.register_domain.api.RegisterSubmit
+import com.ourproject.register_domain.api.RegisterSubmitDto
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+
+data class UserState(
+    val isLoading: Boolean = false,
+    val failedMessage: String = "",
+    val userRegistered: Boolean = false
+)
+class RegisterViewModel constructor(
+    private val registerSubmit: RegisterSubmit
+): ViewModel(){
 //
-//import androidx.lifecycle.ViewModel
-//import com.ourproject.register_domain.PreferenceInsert
-//import com.ourproject.register_module.datasource.http.RegisterFeedLoader
-//
-//import kotlinx.coroutines.flow.MutableStateFlow
-//import kotlinx.coroutines.flow.StateFlow
-//import kotlinx.coroutines.flow.asStateFlow
-//
-//
-//data class UserState(
-//    val isLoading: Boolean = false,
-//    val failedMessage: String = "",
-//    val userRegistered: Boolean = false
-//)
-//class RegisterViewModel constructor(
-//    private val registerSubmit: PreferenceInsert
-//): ViewModel(){
-//
-////    private val _userDataLiveData = MutableLiveData<UserLocal>()
-////    val userDataLiveData: LiveData<UserLocal> = _userDataLiveData
-//
-//
-//    private val _isUserRegistered = MutableStateFlow(UserState())
-//    val isUserRegistered: StateFlow<UserState> = _isUserRegistered.asStateFlow()
-//
-//
-//
-////    fun submitUserRegister(registrationData: gt.RegistrationEntity) {
-////        viewModelScope.launch {
-////
-////            _isUserRegistered.update {
-////                it.copy(isLoading = true)
-////            }
-////
-////            goPayRegisterLoader.submit(registrationData).collect{ result->
-////                _isUserRegistered.update {
-////                    when (result) {
-////                        is RegisterFeedResult.Success -> {
-////                            it.copy(
-////                                isLoading = false,
-////                                userRegistered = true
-////                            )
-////                        }
-////
-////                        is RegisterFeedResult.Failure -> {
-////                            it.copy(
-////                                isLoading = false,
-////                                failedMessage = when (result.throwable) {
-////                                    is Connectivity -> "Tidak ada internet"
-////                                    is InvalidData -> {
-////                                        "Terjadi kesalahan, coba lagi"
-////                                    }
-////                                    is BadRequest -> "Permintaan gagal, coba lagi"
-////                                    is NotFound -> "Tidak ditemukan, coba lagi"
-////                                    is InternalServerError -> "Server sedang dalam perbaikan"
-////                                    else -> { "Terjadi kesalahan, coba lagi" }
-////                                }
-////                            )
-////                        }
-////                    }
-////                }
-////            }
-//////            try {
-//////
-////////                goPayRegisterLoader.submit(registrationData)
-////////                    .collect { result ->
-////////
-////////                    when (result) {
-////////                        is RegisterFeedResult.Success -> {
-////////                            _isUserRegistered.postValue(true)
-////////                        }
-////////
-////////                        is RegisterFeedResult.Failure -> {
-////////                            _isUserRegistered.postValue(false)
-////////                        }
-////////                    }
-////////                }
-//////
-//////                goPayRegisterLoader
-//////            } catch (e: Exception) {
-//////            }
-////        }
-////    }
-//
-////    fun fetchUserDataLocal() {
-////        viewModelScope.launch {
-////            gopayResultRegisterLoader.loadUserData().collect { result ->
-////                when (result) {
-////                    is GofoodRegisterLocalResult.Success -> {
-////                        _userDataLiveData.value = result.userData
-////                    }
-////
-////                    is GofoodRegisterLocalResult.Failure -> {
-////                    }
-////                }
-////            }
-////        }
-////    }
-//
-////    companion object{
-////        val FACTORY : ViewModelProvider.Factory = viewModelFactory {
-////            initializer {
-////                RegisterFeedViewModel(
-////                    goPayRegisterLoader =  GoFoodRegisterLoaderSessionDecorator(
-////                            decorate = RemoteRegisterLoaderFactory.createRemoteRegisterUserLoader(),
-////                            session = GofoodRegisterLocalInsertFactory.createLocalInsertUserdata()
-////                        ),
-////                    gopayResultRegisterLoader = LocalRegisterFeedLoaderFactory.createLocalCryptoRegisterFeedLoader()
-////                )
-////            }
-////        }
-////    }
-//}
+    private val _isUserRegistered = MutableStateFlow(UserState())
+    val isUserRegistered: StateFlow<UserState> = _isUserRegistered.asStateFlow()
+
+    private var _emailUser : MutableLiveData<String> = MutableLiveData()
+
+    val emailUser = _emailUser
+
+    fun submitRegister(
+        registerSubmitDto: RegisterSubmitDto
+    ) {
+        viewModelScope.launch {
+
+            _isUserRegistered.update {
+                it.copy(isLoading = true)
+            }
+
+            registerSubmit.register(
+                registerSubmitDto = registerSubmitDto
+            ).collect { result ->
+
+                _isUserRegistered.update {
+                    when (result) {
+                        is SubmitResult.Success -> {
+                            it.copy(
+                                isLoading = false,
+                                userRegistered = true
+                            )
+                        }
+
+                        is SubmitResult.Failure -> {
+                            it.copy(
+                                isLoading = false,
+                                failedMessage = result.errorMessage
+                            )
+                        }
+                    }
+                }
+                when(result){
+                    is SubmitResult.Success -> {
+                        _emailUser.postValue(registerSubmitDto.email)
+                    }
+                    is SubmitResult.Failure -> {
+                        _emailUser.postValue("")
+                    }
+                    else -> {
+                        _emailUser.postValue("")
+                    }
+                }
+
+            }
+        }
+    }
+}

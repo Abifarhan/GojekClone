@@ -3,11 +3,10 @@ package com.ourproject.gojekclone.ui.presenter
 import SubmitResult
 import app.cash.turbine.test
 import com.ourproject.login_module.feed.http.Connectivity
-import com.ourproject.register_domain.RegisterResultEntity
 import com.ourproject.register_domain.api.RegisterSubmit
 import com.ourproject.register_domain.api.RegisterSubmitDto
 import com.ourproject.register_domain.api.RemoteRegisterResponseDto
-import com.ourproject.register_module.datasource.http.RegisterFeedResult
+import com.ourproject.register_presenter.RegisterViewModel
 import io.mockk.CapturingSlot
 import io.mockk.MockKAnnotations
 import io.mockk.confirmVerified
@@ -24,7 +23,6 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.setMain
 import org.junit.Assert.*
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 
 class RegisterViewModelTest{

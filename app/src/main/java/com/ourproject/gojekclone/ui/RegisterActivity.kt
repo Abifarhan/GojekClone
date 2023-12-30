@@ -11,7 +11,7 @@ import android.widget.Spinner
 import androidx.lifecycle.ViewModelProvider
 import com.ourproject.component.header.HeaderWithTitle
 import com.ourproject.gojekclone.R
-import com.ourproject.gojekclone.ui.presenter.RegisterViewModel
+import com.ourproject.register_presenter.RegisterViewModel
 import com.ourproject.gojekclone.ui.presenter.RegisterViewModelFactory
 import com.ourproject.register_domain.api.RegisterSubmitDto
 

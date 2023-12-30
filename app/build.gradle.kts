@@ -60,7 +60,7 @@ dependencies {
     implementation(project(":feature:register:presenter"))
     implementation(project(":sharing:session_user"))
     implementation(project(":feature:login:domain"))
-    implementation(project(":feature:login:login_presenter"))
+    implementation(project(":feature:login:presenter"))
 
     // Session
 

@@ -45,8 +45,8 @@ dependencies {
     implementation(project(":component"))
     implementation(project(":feature:register:domain"))
     implementation(project(":feature:register:http"))
-//    implementation(project(":feature_dashboard"))
-    //    implementation(project(":feature:register:register_cache"))
+
+    implementation(project(":sharing:session_user"))
 
     implementation(libs.androidx.ktx)
     implementation(libs.lifecycle.runtime.ktx)

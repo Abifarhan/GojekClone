@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.ourproject.gojekclone.ui.factories.local.LocalSessionInsertFactory
 import com.ourproject.gojekclone.ui.register.RegisterDecoratorFactory
 import com.ourproject.gojekclone.ui.register.RegisterRemoteSubmitFactory
+import com.ourproject.register_presenter.RegisterViewModel
 
 class RegisterViewModelFactory {
 
