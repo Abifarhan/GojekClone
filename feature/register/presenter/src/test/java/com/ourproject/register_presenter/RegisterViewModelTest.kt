@@ -1,11 +1,12 @@
-package com.ourproject.gojekclone.ui.presenter
+package com.ourproject.register_presenter
 
 import SubmitResult
 import app.cash.turbine.test
 import com.ourproject.register_domain.api.RegisterSubmit
+import com.ourproject.register_domain.api.RegisterSubmitEntity
+import com.ourproject.register_domain.local.UserEntity
 import com.ourproject.register_http.usecase.dto.RegisterSubmitDto
 import com.ourproject.register_http.usecase.dto.RemoteRegisterResponseDto
-import com.ourproject.register_presenter.RegisterViewModel
 import io.mockk.CapturingSlot
 import io.mockk.MockKAnnotations
 import io.mockk.confirmVerified
@@ -29,7 +30,7 @@ class RegisterViewModelTest{
     private val useCaseRegister = spyk<RegisterSubmit>()
     private lateinit var sut: RegisterViewModel
 
-    private val params = RegisterSubmitDto(
+    private val params = RegisterSubmitEntity(
         name = "birin",
         email = "birin1@gmail.com",
         password = "1234567890",
@@ -137,9 +138,9 @@ class RegisterViewModelTest{
     @Test
     fun testSubmitRequestWithArgumentAndResult() = runBlocking {
 
-        val slot = slot<RegisterSubmitDto>()
+        val slot = slot<RegisterSubmitEntity>()
         expected(
-            result = SubmitResult.Success(RemoteRegisterResponseDto.DEFAULT),
+            result = SubmitResult.Success(UserEntity.DEFAULT),
             sut = sut,
             expectedFailedResult = "",
             slot = slot
@@ -147,10 +148,10 @@ class RegisterViewModelTest{
     }
 
     private fun expected(
-        result: SubmitResult<RemoteRegisterResponseDto>,
+        result: SubmitResult<UserEntity>,
         sut: RegisterViewModel,
         expectedFailedResult: String,
-        slot: CapturingSlot<RegisterSubmitDto> = slot<RegisterSubmitDto>()
+        slot: CapturingSlot<RegisterSubmitEntity> = slot<RegisterSubmitEntity>()
     ) = runBlocking {
         every {
             useCaseRegister.register(capture(slot))
@@ -194,3 +195,4 @@ class NotFound : Exception()
 class InternalServerError : Exception()
 
 class Unexpected : Exception()
+class Connectivity : Exception()

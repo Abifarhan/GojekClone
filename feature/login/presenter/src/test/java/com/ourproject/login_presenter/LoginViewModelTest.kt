@@ -1,9 +1,10 @@
-package com.ourproject.gojekclone.ui.presenter
+package com.ourproject.login_presenter
 
 import SubmitResult
 import app.cash.turbine.test
 import com.ourproject.login_domain.LoginSubmit
 import com.ourproject.login_domain.LoginSubmitEntity
+import com.ourproject.login_domain.UserDomain
 import io.mockk.CapturingSlot
 import io.mockk.MockKAnnotations
 import io.mockk.confirmVerified
@@ -26,16 +27,11 @@ class LoginViewModelTest{
 
     private val useCase = spyk<LoginSubmit>()
 
-    private lateinit var sut: com.ourproject.login_presenter.LoginViewModel
+    private lateinit var sut: LoginViewModel
 
     private val params = LoginSubmitEntity(
         email = "birin2@gmail.com",
         password = "1234567890"
-    )
-
-    private val loginRequest = LoginSubmitDto(
-        email = params.email,
-        password = params.password
     )
 
 
@@ -43,7 +39,7 @@ class LoginViewModelTest{
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxed = true)
-        sut = com.ourproject.login_presenter.LoginViewModel(loginInsert = useCase)
+        sut = LoginViewModel(loginInsert = useCase)
         Dispatchers.setMain(UnconfinedTestDispatcher())
 
     }
@@ -138,15 +134,15 @@ class LoginViewModelTest{
 
         val slot = slot<LoginSubmitEntity>()
         expected(
-            result = SubmitResult.Success(LoginSubmitResultEntity.DEFAULT),
+            result = SubmitResult.Success(UserDomain.DEFAULT),
             sut = sut,
             expectedFailedResult = "",
             slot = slot
         )
     }
     private fun expected(
-        result: SubmitResult<LoginSubmitResultEntity>,
-        sut: com.ourproject.login_presenter.LoginViewModel,
+        result: SubmitResult<UserDomain>,
+        sut: LoginViewModel,
         expectedFailedResult: String,
         slot: CapturingSlot<LoginSubmitEntity> = slot<LoginSubmitEntity>()
     ) = runBlocking {
@@ -176,3 +172,11 @@ class LoginViewModelTest{
         confirmVerified(useCase)
     }
 }
+
+class BadRequest : Exception()
+class NotFound : Exception()
+
+class InternalServerError : Exception()
+
+class Unexpected : Exception()
+class Connectivity : Exception()
