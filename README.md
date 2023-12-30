@@ -36,4 +36,4 @@ This exercise is designed to challenge your ability to analyze requirements clea
 Kindly visit it on [Figma](https://www.figma.com/file/fMARq1bHk8nmvvijlM4pB3/Untitled?type=design&node-id=0%3A1&mode=design&t=sIGB7hAL5Zx3FQ4U-1).
 
 
-Login Diagram Flow : [Draw.IO]([https://www.figma.com/file/fMARq1bHk8nmvvijlM4pB3/Untitled?type=design&node-id=0%3A1&mode=design&t=sIGB7hAL5Zx3FQ4U-1](https://drive.google.com/file/d/1vo6EI6PP4QJx-dL0e7tL-Rd1_JpVNdoW/view?usp=sharing)https://drive.google.com/file/d/1vo6EI6PP4QJx-dL0e7tL-Rd1_JpVNdoW/view?usp=sharing).
+Login Diagram Flow : [Draw.IO](https://drive.google.com/file/d/1vo6EI6PP4QJx-dL0e7tL-Rd1_JpVNdoW/view?usp=sharing).
