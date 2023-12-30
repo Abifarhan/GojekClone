@@ -37,4 +37,4 @@ Kindly visit it on [Figma](https://www.figma.com/file/fMARq1bHk8nmvvijlM4pB3/Unt
 
 
 Login Diagram Flow : (https://drive.google.com/file/d/1vo6EI6PP4QJx-dL0e7tL-Rd1_JpVNdoW/view?usp=sharing).
-Register Digran Flow : (https://drive.google.com/file/d/1hLDvIxFN8KbWAIslTxKdMAjzKsRQslbF/view?usp=sharing).
+Register Diagram Flow : (https://drive.google.com/file/d/1hLDvIxFN8KbWAIslTxKdMAjzKsRQslbF/view?usp=sharing).
