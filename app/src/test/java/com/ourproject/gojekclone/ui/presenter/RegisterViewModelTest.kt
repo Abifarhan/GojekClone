@@ -2,10 +2,9 @@ package com.ourproject.gojekclone.ui.presenter
 
 import SubmitResult
 import app.cash.turbine.test
-import com.ourproject.login_module.feed.http.Connectivity
 import com.ourproject.register_domain.api.RegisterSubmit
-import com.ourproject.register_domain.api.RegisterSubmitDto
-import com.ourproject.register_domain.api.RemoteRegisterResponseDto
+import com.ourproject.register_http.usecase.dto.RegisterSubmitDto
+import com.ourproject.register_http.usecase.dto.RemoteRegisterResponseDto
 import com.ourproject.register_presenter.RegisterViewModel
 import io.mockk.CapturingSlot
 import io.mockk.MockKAnnotations

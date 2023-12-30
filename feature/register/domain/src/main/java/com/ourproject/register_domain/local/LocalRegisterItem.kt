@@ -1,65 +1,38 @@
 package com.ourproject.register_domain.local
 
-data class ResponseDataEntity(
-    val meta: MetaDataEntity = MetaDataEntity.DEFAULT,
-    val data: UserDataEntity = UserDataEntity.DEFAULT
-) {
-    companion object {
-        val DEFAULT = ResponseDataEntity(
-            MetaDataEntity.DEFAULT,
-            UserDataEntity.DEFAULT
-        )
-    }
-}
-
-data class MetaDataEntity(
-    val code: Int = 0,
-    val status: String = "",
-    val message: String = ""
-) {
-    companion object {
-        val DEFAULT = MetaDataEntity(
-            code = 200,
-            status = "OK",
-            message = "Default message"
-        )
-    }
-}
-
-data class UserDataEntity(
-    val access_token: String = "",
-    val token_type: String = "",
-    val user: UserEntity = UserEntity.DEFAULT
-) {
-    companion object {
-        val DEFAULT = UserDataEntity(
-            access_token = "default_token",
-            token_type = "default_type",
-            user = UserEntity.DEFAULT
-        )
-    }
-}
 
 data class UserEntity(
-    val id: Int = 0,
-    val name: String = "",
-    val email: String = "",
+    val profilePhotoUrl: String? = null,
     val address: String = "",
-    val houseNumber: String = "",
-    val phoneNumber: String = "",
     val city: String = "",
-    val profile_photo_url: String? = null
+    val roles: String = "",
+    val houseNumber: String = "",
+    val createdAt: Long = 0,
+    val emailVerifiedAt: Any? = null,
+    val currentTeamId: Any? = null,
+    val phoneNumber: String = "",
+    val updatedAt: Long = 0,
+    val name: String = "",
+    val id: Int = 0,
+    val profilePhotoPath: Any? = null,
+    val email: String = ""
 ) {
     companion object {
         val DEFAULT = UserEntity(
-            id = 12344,
-            name = "Default Name",
-            email = "default@example.com",
+            profilePhotoUrl = "default_url",
             address = "Default Address",
-            houseNumber = "123",
-            phoneNumber = "555-1234",
             city = "Default City",
-            profile_photo_url = "default_url"
+            roles = "",
+            houseNumber = "123",
+            createdAt = 0,
+            emailVerifiedAt = null,
+            currentTeamId = null,
+            phoneNumber = "555-1234",
+            updatedAt = 0,
+            name = "Default Name",
+            id = 12344,
+            profilePhotoPath = null,
+            email = "default@example.com"
         )
     }
 }

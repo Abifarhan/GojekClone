@@ -52,7 +52,6 @@ dependencies {
 
     implementation(project(":component"))
 
-    implementation(project(":login_module"))
     implementation(project(":session_module"))
     implementation(project(":feature:register:domain"))
     implementation(project(":feature:register:session"))

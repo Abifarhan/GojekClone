@@ -6,8 +6,8 @@ import com.ourproject.InternalServerErrorException
 import com.ourproject.InvalidDataException
 import com.ourproject.NotFoundExceptionException
 import com.ourproject.UnexpectedException
-import com.ourproject.register_domain.api.RegisterSubmitDto
-import com.ourproject.register_domain.api.RemoteRegisterResponseDto
+import com.ourproject.register_http.usecase.dto.RegisterSubmitDto
+import com.ourproject.register_http.usecase.dto.RemoteRegisterResponseDto
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.confirmVerified

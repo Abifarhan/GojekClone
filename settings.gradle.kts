@@ -16,8 +16,6 @@ dependencyResolutionManagement {
 rootProject.name = "GojekClone"
 include(":app")
 include(":component")
-include(":login_module")
-//include(":register_module")
 include(":feature_dashboard")
 include(":session_module")
 include(":feature:register:domain")

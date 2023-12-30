@@ -4,7 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ourproject.register_domain.api.RegisterSubmit
-import com.ourproject.register_domain.api.RegisterSubmitDto
+import com.ourproject.register_domain.api.RegisterSubmitEntity
+import com.ourproject.register_http.usecase.dto.RegisterSubmitDto
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,7 +29,7 @@ class RegisterViewModel constructor(
     val emailUser = _emailUser
 
     fun submitRegister(
-        registerSubmitDto: RegisterSubmitDto
+        registerSubmitData: RegisterSubmitEntity
     ) {
         viewModelScope.launch {
 
@@ -37,7 +38,7 @@ class RegisterViewModel constructor(
             }
 
             registerSubmit.register(
-                registerSubmitDto = registerSubmitDto
+                registerSubmitDto = registerSubmitData
             ).collect { result ->
 
                 _isUserRegistered.update {
@@ -59,7 +60,7 @@ class RegisterViewModel constructor(
                 }
                 when(result){
                     is SubmitResult.Success -> {
-                        _emailUser.postValue(registerSubmitDto.email)
+                        _emailUser.postValue(registerSubmitData.email)
                     }
                     is SubmitResult.Failure -> {
                         _emailUser.postValue("")

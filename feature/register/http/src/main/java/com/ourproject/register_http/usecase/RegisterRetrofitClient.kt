@@ -1,14 +1,13 @@
 package com.ourproject.register_http.usecase
 
 import HttpClientResult
-import android.util.Log
 import com.ourproject.ConnectivityException
 import com.ourproject.InternalServerErrorException
 import com.ourproject.InvalidDataException
 import com.ourproject.NotFoundExceptionException
 import com.ourproject.UnexpectedException
-import com.ourproject.register_domain.api.RegisterSubmitDto
-import com.ourproject.register_domain.api.RemoteRegisterResponseDto
+import com.ourproject.register_http.usecase.dto.RegisterSubmitDto
+import com.ourproject.register_http.usecase.dto.RemoteRegisterResponseDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException

@@ -13,7 +13,8 @@ import com.ourproject.component.header.HeaderWithTitle
 import com.ourproject.gojekclone.R
 import com.ourproject.register_presenter.RegisterViewModel
 import com.ourproject.gojekclone.ui.presenter.RegisterViewModelFactory
-import com.ourproject.register_domain.api.RegisterSubmitDto
+import com.ourproject.register_domain.api.RegisterSubmitEntity
+import com.ourproject.register_http.usecase.dto.RegisterSubmitDto
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -92,7 +93,7 @@ class RegisterActivity : AppCompatActivity() {
             setOnClickListener {
 
                 viewModel.submitRegister(
-                    registerSubmitDto = RegisterSubmitDto(
+                    registerSubmitData = RegisterSubmitEntity(
                         name = nameEditText.text.toString().trim(),
                         email = emailEditText.text.toString().trim(),
                         password = passwordEditText.text.toString().trim(),

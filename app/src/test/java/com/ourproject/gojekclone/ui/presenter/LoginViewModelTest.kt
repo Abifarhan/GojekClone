@@ -4,9 +4,6 @@ import SubmitResult
 import app.cash.turbine.test
 import com.ourproject.login_domain.LoginSubmit
 import com.ourproject.login_domain.LoginSubmitEntity
-import com.ourproject.login_domain.LoginSubmitResultEntity
-import com.ourproject.login_module.feed.http.Connectivity
-import com.ourproject.login_module.feed.http.LoginSubmitDto
 import io.mockk.CapturingSlot
 import io.mockk.MockKAnnotations
 import io.mockk.confirmVerified

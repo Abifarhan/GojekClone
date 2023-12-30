@@ -1,4 +1,4 @@
-package com.ourproject.register_domain.api
+package com.ourproject.register_http.usecase.dto
 
 import com.squareup.moshi.Json
 
