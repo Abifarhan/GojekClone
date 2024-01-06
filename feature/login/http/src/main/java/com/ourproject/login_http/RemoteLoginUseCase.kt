@@ -1,21 +1,20 @@
 package com.ourproject.login_http
 
-import HttpClientResult
-import SubmitResult
-import com.ourproject.ConnectivityException
-import com.ourproject.InternalServerErrorException
-import com.ourproject.InvalidDataException
-import com.ourproject.NotFoundExceptionException
-import com.ourproject.login_domain.LoginSubmit
+import com.ourproject.session_user.HttpClientResult
+import com.ourproject.session_user.SubmitResult
+import com.ourproject.session_user.ConnectivityException
+import com.ourproject.session_user.InternalServerErrorException
+import com.ourproject.session_user.InvalidDataException
+import com.ourproject.session_user.NotFoundExceptionException
+import com.ourproject.login_domain.LoginUseCase
 import com.ourproject.login_domain.LoginSubmitEntity
 import com.ourproject.login_domain.UserDomain
-import com.ourproject.login_http.entity.LoginSubmitResultEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class RemoteLoginSubmit constructor(
+class RemoteLoginUseCase constructor(
     private val loginHttpClient: LoginHttpClient
-) : LoginSubmit {
+) : LoginUseCase {
     override fun login(loginSubmitDto: LoginSubmitEntity): Flow<SubmitResult<UserDomain>> {
 
         return flow {

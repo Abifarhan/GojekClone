@@ -1,17 +1,17 @@
 package com.ourproject.gojekclone.ui.decorator
 
-import SubmitResult
-import com.ourproject.register_domain.api.RegisterSubmit
+import com.ourproject.session_user.SubmitResult
+import com.ourproject.register_domain.api.RegisterUserCase
 import com.ourproject.register_domain.api.RegisterSubmitEntity
-import com.ourproject.register_domain.local.RegisterSaveSession
+import com.ourproject.session_user.domain.UserSessionUseCase
 import com.ourproject.register_domain.local.UserEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class RegisterDecorator(
-    private val decorator: RegisterSubmit,
-    private val local: RegisterSaveSession
-) : RegisterSubmit{
+    private val decorator: RegisterUserCase,
+    private val local: UserSessionUseCase
+) : RegisterUserCase{
 
     override fun register(registerSubmitDto: RegisterSubmitEntity): Flow<SubmitResult<UserEntity>> {
         return flow{

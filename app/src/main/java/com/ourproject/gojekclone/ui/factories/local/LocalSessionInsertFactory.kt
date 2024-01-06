@@ -1,15 +1,13 @@
 package com.ourproject.gojekclone.ui.factories.local
 
-import com.ourproject.register_cache.usecase.LocalSessionClient
-import com.ourproject.register_cache.usecase.LocalSessionInsert
-import com.ourproject.register_domain.local.RegisterSaveSession
-import com.ourproject.session_user.PreferenceInsert
+import com.ourproject.register_cache.usecase.LocalSessionInsertUseCase
+import com.ourproject.session_user.domain.UserSessionUseCase
 
 class LocalSessionInsertFactory {
 
     companion object{
-        fun createLocalSession(): RegisterSaveSession{
-            return LocalSessionInsert(
+        fun createLocalSession(): UserSessionUseCase {
+            return LocalSessionInsertUseCase(
                 LocalSessionFactory.createLocalSessionInsert()
             )
         }

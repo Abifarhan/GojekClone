@@ -1,14 +1,14 @@
 package com.ourproject.gojekclone.ui.register
 
-import com.ourproject.register_domain.api.RegisterSubmit
-import com.ourproject.register_http.usecase.RemoteRegisterSubmit
+import com.ourproject.register_domain.api.RegisterUserCase
+import com.ourproject.register_http.usecase.RemoteRegisterUserCase
 
 class RegisterRemoteSubmitFactory {
 
     companion object {
 
-        fun createRegisterRemoteSubmit(): RegisterSubmit {
-            return RemoteRegisterSubmit(
+        fun createRegisterRemoteSubmit(): RegisterUserCase {
+            return RemoteRegisterUserCase(
                 RegisterHttpClientFactory.createRegisterHttpClient()
             )
         }

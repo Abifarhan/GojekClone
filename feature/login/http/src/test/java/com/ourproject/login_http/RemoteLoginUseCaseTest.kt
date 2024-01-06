@@ -1,13 +1,13 @@
 package com.ourproject.login_http
 
-import HttpClientResult
-import SubmitResult
+import com.ourproject.session_user.HttpClientResult
+import com.ourproject.session_user.SubmitResult
 import app.cash.turbine.test
-import com.ourproject.ConnectivityException
-import com.ourproject.InternalServerErrorException
-import com.ourproject.InvalidDataException
-import com.ourproject.NotFoundExceptionException
-import com.ourproject.UnexpectedException
+import com.ourproject.session_user.ConnectivityException
+import com.ourproject.session_user.InternalServerErrorException
+import com.ourproject.session_user.InvalidDataException
+import com.ourproject.session_user.NotFoundExceptionException
+import com.ourproject.session_user.UnexpectedException
 import com.ourproject.login_domain.LoginSubmitEntity
 import io.mockk.clearAllMocks
 import io.mockk.confirmVerified
@@ -21,10 +21,10 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
-class RemoteLoginSubmitTest{
+class RemoteLoginUseCaseTest{
 
     private val client = spyk<LoginHttpClient>()
-    private lateinit var sut: RemoteLoginSubmit
+    private lateinit var sut: RemoteLoginUseCase
 
     private val loginSubmit = LoginSubmitEntity(
         email = "default@gmail.com",
@@ -37,7 +37,7 @@ class RemoteLoginSubmitTest{
     )
     @Before
     fun setUp(){
-        sut = RemoteLoginSubmit(client)
+        sut = RemoteLoginUseCase(client)
     }
 
     @Test
@@ -153,7 +153,7 @@ class RemoteLoginSubmitTest{
     }
 
     private fun expect(
-        sut: RemoteLoginSubmit,
+        sut: RemoteLoginUseCase,
         receivedHttpClientResult: HttpClientResult<LoginResultDto>,
         expectedResult: Any,
         exactly: Int = -1,

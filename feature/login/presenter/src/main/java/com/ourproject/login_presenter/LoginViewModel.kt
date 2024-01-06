@@ -4,7 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ourproject.login_domain.LoginSubmit
+import com.ourproject.login_domain.LoginUseCase
+import com.ourproject.session_user.SubmitResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +18,7 @@ data class UserStateLogin(
     val userRegistered: Boolean = false
 )
 class LoginViewModel constructor(
-    private val loginInsert: LoginSubmit
+    private val loginInsert: LoginUseCase
 ) : ViewModel() {
 
 

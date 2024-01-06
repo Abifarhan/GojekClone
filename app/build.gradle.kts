@@ -63,7 +63,6 @@ dependencies {
 
     // Session
 
-    implementation(project(":feature:login:session"))
     implementation(project(":feature:login:http"))
 
     implementation(libs.androidx.ktx)

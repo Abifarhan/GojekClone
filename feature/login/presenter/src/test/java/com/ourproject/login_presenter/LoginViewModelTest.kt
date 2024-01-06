@@ -1,8 +1,8 @@
 package com.ourproject.login_presenter
 
-import SubmitResult
+import com.ourproject.session_user.SubmitResult
 import app.cash.turbine.test
-import com.ourproject.login_domain.LoginSubmit
+import com.ourproject.login_domain.LoginUseCase
 import com.ourproject.login_domain.LoginSubmitEntity
 import com.ourproject.login_domain.UserDomain
 import io.mockk.CapturingSlot
@@ -25,7 +25,7 @@ import org.junit.Test
 
 class LoginViewModelTest{
 
-    private val useCase = spyk<LoginSubmit>()
+    private val useCase = spyk<LoginUseCase>()
 
     private lateinit var sut: LoginViewModel
 
@@ -87,7 +87,7 @@ class LoginViewModelTest{
     fun testSubmitRequestFailedConnectivityShowsConnectivityError() = runBlocking {
 
         expected(
-            result =SubmitResult.Failure(Connectivity().message ?: ""),
+            result = SubmitResult.Failure(Connectivity().message ?: ""),
             sut = sut,
             expectedFailedResult = "Tidak ada internet"
         )

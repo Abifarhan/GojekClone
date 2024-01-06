@@ -1,6 +1,6 @@
 package com.ourproject.register_cache.usecase
 
-interface LocalSessionClient {
+interface PreferenceClient {
 
     fun saveSessionEmail(email:String)
 

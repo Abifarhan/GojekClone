@@ -1,4 +1,4 @@
-
+package com.ourproject.session_user
 
 sealed class HttpClientResult<T>{
 

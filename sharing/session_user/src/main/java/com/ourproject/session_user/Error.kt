@@ -1,4 +1,4 @@
-package com.ourproject
+package com.ourproject.session_user
 
 class InvalidDataException : Throwable()
 class ConnectivityException : Throwable()
