@@ -1,10 +1,10 @@
 package com.ourproject.gojekclone.ui.decorator
 
-import com.ourproject.session_user.SubmitResult
+import com.ourproject.register_domain.SubmitResult
 import com.ourproject.register_domain.api.RegisterUserCase
 import com.ourproject.register_domain.api.RegisterSubmitEntity
-import com.ourproject.session_user.domain.UserSessionUseCase
 import com.ourproject.register_domain.local.UserEntity
+import com.ourproject.register_domain.usecase.UserSessionUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 

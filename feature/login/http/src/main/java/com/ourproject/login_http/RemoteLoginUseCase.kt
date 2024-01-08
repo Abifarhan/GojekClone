@@ -1,13 +1,14 @@
 package com.ourproject.login_http
 
-import com.ourproject.session_user.HttpClientResult
-import com.ourproject.session_user.SubmitResult
-import com.ourproject.session_user.ConnectivityException
-import com.ourproject.session_user.InternalServerErrorException
-import com.ourproject.session_user.InvalidDataException
-import com.ourproject.session_user.NotFoundExceptionException
+
+import com.ourproject.login_domain.ConnectivityException
+import com.ourproject.login_domain.HttpClientResult
+import com.ourproject.login_domain.InternalServerErrorException
+import com.ourproject.login_domain.InvalidDataException
 import com.ourproject.login_domain.LoginUseCase
 import com.ourproject.login_domain.LoginSubmitEntity
+import com.ourproject.login_domain.NotFoundExceptionException
+import com.ourproject.login_domain.SubmitResult
 import com.ourproject.login_domain.UserDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

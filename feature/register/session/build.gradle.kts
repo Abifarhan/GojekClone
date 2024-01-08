@@ -35,7 +35,6 @@ android {
 
 dependencies {
 
-    implementation(project(":sharing:session_user"))
     implementation(project(":feature:register:domain"))
 
     implementation(libs.androidx.ktx)

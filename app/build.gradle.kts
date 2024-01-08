@@ -52,12 +52,11 @@ dependencies {
 
     implementation(project(":component"))
 
-    implementation(project(":session_module"))
     implementation(project(":feature:register:domain"))
     implementation(project(":feature:register:session"))
+    implementation(project(":feature:login:session"))
     implementation(project(":feature:register:http"))
     implementation(project(":feature:register:presenter"))
-    implementation(project(":sharing:session_user"))
     implementation(project(":feature:login:domain"))
     implementation(project(":feature:login:presenter"))
 

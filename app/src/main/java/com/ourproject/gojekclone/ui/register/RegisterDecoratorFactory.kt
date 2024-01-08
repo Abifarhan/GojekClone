@@ -2,7 +2,7 @@ package com.ourproject.gojekclone.ui.register
 
 import com.ourproject.gojekclone.ui.decorator.RegisterDecorator
 import com.ourproject.register_domain.api.RegisterUserCase
-import com.ourproject.session_user.domain.UserSessionUseCase
+import com.ourproject.register_domain.usecase.UserSessionUseCase
 
 class RegisterDecoratorFactory {
 

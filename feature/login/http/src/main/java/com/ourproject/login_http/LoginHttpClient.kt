@@ -1,6 +1,6 @@
 package com.ourproject.login_http
 
-import com.ourproject.session_user.HttpClientResult
+import com.ourproject.login_domain.HttpClientResult
 import kotlinx.coroutines.flow.Flow
 
 interface LoginHttpClient {

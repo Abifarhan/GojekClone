@@ -18,6 +18,7 @@
             <option value="$PROJECT_DIR$/feature/login/domain" />
             <option value="$PROJECT_DIR$/feature/login/http" />
             <option value="$PROJECT_DIR$/feature/login/presenter" />
+            <option value="$PROJECT_DIR$/feature/login/session" />
             <option value="$PROJECT_DIR$/feature/register" />
             <option value="$PROJECT_DIR$/feature/register/domain" />
             <option value="$PROJECT_DIR$/feature/register/http" />
@@ -25,8 +26,6 @@
             <option value="$PROJECT_DIR$/feature/register/session" />
             <option value="$PROJECT_DIR$/feature_dashboard" />
             <option value="$PROJECT_DIR$/session_module" />
-            <option value="$PROJECT_DIR$/sharing" />
-            <option value="$PROJECT_DIR$/sharing/session_user" />
           </set>
         </option>
       </GradleProjectSettings>

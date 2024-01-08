@@ -43,7 +43,6 @@ android {
 dependencies {
 
     implementation(project(":component"))
-    implementation(project(":sharing:session_user"))
 
     implementation(libs.androidx.ktx)
     implementation(libs.lifecycle.runtime.ktx)

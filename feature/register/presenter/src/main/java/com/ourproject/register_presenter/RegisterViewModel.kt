@@ -3,9 +3,9 @@ package com.ourproject.register_presenter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ourproject.register_domain.SubmitResult
 import com.ourproject.register_domain.api.RegisterUserCase
 import com.ourproject.register_domain.api.RegisterSubmitEntity
-import com.ourproject.session_user.SubmitResult
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

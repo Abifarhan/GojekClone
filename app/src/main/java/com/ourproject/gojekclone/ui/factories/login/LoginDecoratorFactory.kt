@@ -2,7 +2,7 @@ package com.ourproject.gojekclone.ui.factories.login
 
 import com.ourproject.gojekclone.ui.decorator.LoginDecorator
 import com.ourproject.login_domain.LoginUseCase
-import com.ourproject.session_user.domain.UserSessionUseCase
+import com.ourproject.login_domain.UserSessionUseCase
 
 class LoginDecoratorFactory {
 

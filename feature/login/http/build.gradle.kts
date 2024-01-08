@@ -36,7 +36,6 @@ android {
 dependencies {
 
     implementation(project(":feature:login:domain"))
-    implementation(project(":sharing:session_user"))
 
     implementation(libs.androidx.ktx)
     implementation(libs.lifecycle.runtime.ktx)
