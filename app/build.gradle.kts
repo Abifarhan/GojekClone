@@ -59,6 +59,7 @@ dependencies {
     implementation(project(":feature:register:presenter"))
     implementation(project(":feature:login:domain"))
     implementation(project(":feature:login:presenter"))
+    implementation(project(":feature:dashboard:view"))
 
     // Session
 

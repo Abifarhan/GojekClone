@@ -22,9 +22,6 @@ class LoginViewModel constructor(
 ) : ViewModel() {
 
 
-    private var _emailUser : MutableLiveData<String> = MutableLiveData()
-
-    val emailUser = _emailUser
 
     private val _userDataLiveData = MutableStateFlow(UserStateLogin())
         val userDataLiveData: StateFlow<UserStateLogin> = _userDataLiveData.asStateFlow()
@@ -44,14 +41,14 @@ class LoginViewModel constructor(
                     when(result){
 
                         is SubmitResult.Success -> {
-                            _emailUser.postValue(email)
+
                             it.copy(
                                 isLoading = false,
                                 userRegistered = true
                             )
                         }
                         is SubmitResult.Failure -> {
-                            _emailUser.postValue("")
+
                             it.copy(
                                 isLoading = false,
                                 userRegistered = false,

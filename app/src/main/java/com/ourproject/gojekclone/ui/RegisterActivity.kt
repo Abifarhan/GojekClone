@@ -1,5 +1,6 @@
 package com.ourproject.gojekclone.ui
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -9,19 +10,20 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.Spinner
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.ourproject.component.header.HeaderWithTitle
 import com.ourproject.gojekclone.R
 import com.ourproject.register_presenter.RegisterViewModel
 import com.ourproject.gojekclone.ui.presenter.RegisterViewModelFactory
 import com.ourproject.register_domain.api.RegisterSubmitEntity
 import com.ourproject.register_http.usecase.dto.RegisterSubmitDto
+import com.ourproject.view.DashboardActivity
 
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var viewModel: RegisterViewModel
 
 
-    // Views in the first LinearLayout
     private lateinit var frameLayout: LinearLayout
     private lateinit var header: HeaderWithTitle
     private lateinit var nameEditText: EditText
@@ -29,7 +31,6 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var passwordEditText: EditText
     private lateinit var moveButton: Button
 
-    // Views in the second LinearLayout
     private lateinit var secondLinearLayout: LinearLayout
     private lateinit var phoneEditText: EditText
     private lateinit var addressEditText: EditText
@@ -43,7 +44,6 @@ class RegisterActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, RegisterViewModelFactory.createRegisterViewModelFactory())[RegisterViewModel::class.java]
 
 
-        // Find views by ID in the first LinearLayout
         frameLayout = findViewById(R.id.frameLayout)
         header = findViewById(R.id.simple_header)
         nameEditText = findViewById(R.id.name)
@@ -51,7 +51,6 @@ class RegisterActivity : AppCompatActivity() {
         passwordEditText = findViewById(R.id.password)
         moveButton = findViewById(R.id.btn_move)
 
-        // Find views by ID in the second LinearLayout
         secondLinearLayout = findViewById(R.id.secondLinearLayout)
         phoneEditText = findViewById(R.id.phone)
         addressEditText = findViewById(R.id.address)
@@ -73,11 +72,17 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun setObserver() {
-        viewModel.emailUser.observe(this, {
-            if (it.isNotEmpty()){
+        lifecycleScope.launchWhenCreated {
+            viewModel.isUserRegistered.collect{userState ->
+                val intent = if (userState.userRegistered) {
+                    Intent(this@RegisterActivity, DashboardActivity::class.java)
+                } else {
+                    Intent(this@RegisterActivity, RegisterActivity::class.java)
+                }
 
+                startActivity(intent)
             }
-        })
+        }
     }
 
     private fun setListener() {

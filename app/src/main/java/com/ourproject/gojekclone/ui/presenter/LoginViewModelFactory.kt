@@ -4,9 +4,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.ourproject.gojekclone.ui.factories.local.login.LocalLoginSessionInsertFactory
-import com.ourproject.gojekclone.ui.factories.local.register.LocalSessionInsertFactory
-import com.ourproject.gojekclone.ui.factories.login.LoginDecoratorFactory
-import com.ourproject.gojekclone.ui.factories.login.LoginRemoteInsertFactory
+import com.ourproject.gojekclone.ui.factories.remote.login.LoginDecoratorFactory
+import com.ourproject.gojekclone.ui.factories.remote.login.LoginRemoteInsertFactory
 
 class LoginViewModelFactory {
 

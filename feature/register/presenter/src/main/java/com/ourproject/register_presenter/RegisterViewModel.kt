@@ -24,10 +24,6 @@ class RegisterViewModel constructor(
     private val _isUserRegistered = MutableStateFlow(UserState())
     val isUserRegistered: StateFlow<UserState> = _isUserRegistered.asStateFlow()
 
-    private var _emailUser : MutableLiveData<String> = MutableLiveData()
-
-    val emailUser = _emailUser
-
     fun submitRegister(
         registerSubmitData: RegisterSubmitEntity
     ) {

@@ -7,8 +7,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.ourproject.gojekclone.R
 import com.ourproject.gojekclone.ui.presenter.LoginViewModelFactory
+import com.ourproject.view.DashboardActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -35,11 +37,15 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setObserver() {
-        viewModel.emailUser.observe(this) {
-            if (it.isEmpty()) {
-                startActivity(Intent(this, RegisterActivity::class.java))
-            } else {
-//                startActivity(Intent(this, DashboardActivity::class.java))
+        lifecycleScope.launchWhenStarted {
+            viewModel.userDataLiveData.collect { userState ->
+                val intent = if (userState.userRegistered) {
+                    Intent(this@LoginActivity, DashboardActivity::class.java)
+                } else {
+                    Intent(this@LoginActivity, RegisterActivity::class.java)
+                }
+
+                startActivity(intent)
             }
         }
     }
