@@ -13,13 +13,13 @@ class RegisterDecorator(
     private val local: UserSessionUseCase
 ) : RegisterUserCase{
 
-    override fun register(registerSubmitDto: RegisterSubmitEntity): Flow<SubmitResult<UserEntity>> {
+    override fun register(registerSubmit: RegisterSubmitEntity): Flow<SubmitResult> {
         return flow{
-            decorator.register(registerSubmitDto).collect{ response ->
-                if (response is SubmitResult.Success) {
-                    local.insertUserSession(registerSubmitDto.email)
+            decorator.register(registerSubmit).collect{ result ->
+                if (result is SubmitResult.Success) {
+                    local.insertUserSession(result.data.email)
                 }
-                emit(response)
+                emit(result)
             }
         }
     }

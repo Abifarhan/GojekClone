@@ -13,7 +13,10 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/component" />
+            <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/dashboard" />
+            <option value="$PROJECT_DIR$/feature/dashboard/view" />
             <option value="$PROJECT_DIR$/feature/login" />
             <option value="$PROJECT_DIR$/feature/login/domain" />
             <option value="$PROJECT_DIR$/feature/login/http" />
@@ -24,7 +27,6 @@
             <option value="$PROJECT_DIR$/feature/register/http" />
             <option value="$PROJECT_DIR$/feature/register/presenter" />
             <option value="$PROJECT_DIR$/feature/register/session" />
-            <option value="$PROJECT_DIR$/feature_dashboard" />
             <option value="$PROJECT_DIR$/session_module" />
           </set>
         </option>

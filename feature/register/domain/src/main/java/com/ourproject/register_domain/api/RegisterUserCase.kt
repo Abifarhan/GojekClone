@@ -5,5 +5,5 @@ import com.ourproject.register_domain.local.UserEntity
 import kotlinx.coroutines.flow.Flow
 
 interface RegisterUserCase {
-    fun register(registerSubmitDto : RegisterSubmitEntity) : Flow<SubmitResult<UserEntity>>
+    fun register(registerSubmitDto : RegisterSubmitEntity) : Flow<SubmitResult>
 }

@@ -1,7 +1,6 @@
 package com.ourproject.register_http.usecase
 
 import com.ourproject.register_domain.ConnectivityException
-import com.ourproject.register_domain.HttpClientResult
 import com.ourproject.register_domain.InternalServerErrorException
 import com.ourproject.register_domain.InvalidDataException
 import com.ourproject.register_domain.NotFoundExceptionException
@@ -16,7 +15,7 @@ import java.io.IOException
 class RegisterRetrofitClient constructor(
     private val registerService: RegisterService
 ) : RegisterHttpClient {
-    override fun register(body: RegisterSubmitDto): Flow<HttpClientResult<RemoteRegisterResponseDto>> {
+    override fun register(body: RegisterSubmitDto): Flow<HttpClientResult> {
         return flow{
             try {
                 emit(HttpClientResult.Success(registerService.register(body)))

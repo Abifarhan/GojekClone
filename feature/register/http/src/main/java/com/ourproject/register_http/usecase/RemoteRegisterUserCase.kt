@@ -2,7 +2,6 @@ package com.ourproject.register_http.usecase
 
 
 import com.ourproject.register_domain.ConnectivityException
-import com.ourproject.register_domain.HttpClientResult
 import com.ourproject.register_domain.InternalServerErrorException
 import com.ourproject.register_domain.InvalidDataException
 import com.ourproject.register_domain.NotFoundExceptionException
@@ -19,7 +18,7 @@ class RemoteRegisterUserCase(
     private val registerHttpClient: RegisterHttpClient
 ) : RegisterUserCase {
 
-    override fun register(registerSubmit: RegisterSubmitEntity): Flow<SubmitResult<UserEntity>> {
+    override fun register(registerSubmit: RegisterSubmitEntity): Flow<SubmitResult> {
         return flow{
 
             val mapEntityToDto = RegisterSubmitDto(

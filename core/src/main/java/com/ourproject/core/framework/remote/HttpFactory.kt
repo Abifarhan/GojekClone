@@ -1,4 +1,4 @@
-package com.ourproject.gojekclone.ui.framework
+package com.ourproject.core.framework.remote
 
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

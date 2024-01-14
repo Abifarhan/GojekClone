@@ -2,7 +2,6 @@ package com.ourproject.login_http
 
 
 import com.ourproject.login_domain.ConnectivityException
-import com.ourproject.login_domain.HttpClientResult
 import com.ourproject.login_domain.InternalServerErrorException
 import com.ourproject.login_domain.InvalidDataException
 import com.ourproject.login_domain.NotFoundExceptionException
@@ -14,7 +13,7 @@ import java.io.IOException
 class LoginRetrofitClient constructor(
     private val loginService: LoginService
 ) : LoginHttpClient {
-    override fun login(body: LoginSubmitDto): Flow<HttpClientResult<LoginResultDto>> {
+    override fun login(body: LoginSubmitDto): Flow<HttpClientResult> {
         return flow {
             try {
                 emit(HttpClientResult.Success(loginService.login(body)))

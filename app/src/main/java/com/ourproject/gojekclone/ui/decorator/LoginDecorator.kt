@@ -12,7 +12,7 @@ class LoginDecorator(
     private val decorator: LoginUseCase,
     private val local: UserSessionUseCase
 ) : LoginUseCase {
-    override fun login(loginSubmit: LoginSubmitEntity): Flow<SubmitResult<UserDomain>> {
+    override fun login(loginSubmit: LoginSubmitEntity): Flow<SubmitResult> {
         return flow {
             decorator.login(loginSubmit).collect{result ->
                 if (result is SubmitResult.Success){

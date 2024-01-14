@@ -54,17 +54,6 @@ class RegisterViewModel constructor(
                         }
                     }
                 }
-                when(result){
-                    is SubmitResult.Success -> {
-                        _emailUser.postValue(registerSubmitData.email)
-                    }
-                    is SubmitResult.Failure -> {
-                        _emailUser.postValue("")
-                    }
-                    else -> {
-                        _emailUser.postValue("")
-                    }
-                }
 
             }
         }

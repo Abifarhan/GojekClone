@@ -2,7 +2,6 @@ package com.ourproject.login_http
 
 
 import com.ourproject.login_domain.ConnectivityException
-import com.ourproject.login_domain.HttpClientResult
 import com.ourproject.login_domain.InternalServerErrorException
 import com.ourproject.login_domain.InvalidDataException
 import com.ourproject.login_domain.LoginUseCase
@@ -16,7 +15,7 @@ import kotlinx.coroutines.flow.flow
 class RemoteLoginUseCase constructor(
     private val loginHttpClient: LoginHttpClient
 ) : LoginUseCase {
-    override fun login(loginSubmitDto: LoginSubmitEntity): Flow<SubmitResult<UserDomain>> {
+    override fun login(loginSubmitDto: LoginSubmitEntity): Flow<SubmitResult> {
 
         return flow {
 
@@ -64,9 +63,7 @@ class RemoteLoginUseCase constructor(
                             }
                         }
                     }
-                    else-> {
 
-                    }
                 }
             }
 
