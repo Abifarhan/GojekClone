@@ -1,6 +1,5 @@
 package com.ourproject.gojekclone.ui.factories.local.register
 
-import com.ourproject.core.framework.local.LocalFactory
 import com.ourproject.register_cache.usecase.Preference
 import com.ourproject.register_cache.usecase.PreferenceClient
 

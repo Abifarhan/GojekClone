@@ -5,7 +5,6 @@ import com.ourproject.register_http.usecase.RegisterRetrofitClient
 
 class RegisterHttpClientFactory {
 
-
     companion object{
         fun createRegisterHttpClient():RegisterHttpClient {
             return RegisterRetrofitClient(

@@ -6,7 +6,6 @@ import com.ourproject.register_domain.usecase.UserSessionUseCase
 
 class RegisterDecoratorFactory {
 
-
     companion object {
         fun createRegisterDecorator(
             decorator: RegisterUserCase,
