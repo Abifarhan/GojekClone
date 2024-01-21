@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GojekClone</string>
+    <string name="title_activity_register_compose">RegisterComposeActivity</string>
 </resources>

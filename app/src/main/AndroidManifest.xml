@@ -17,6 +17,11 @@
         android:theme="@style/Theme.GojekClone"
         tools:targetApi="31">
         <activity
+            android:name=".ui.compose.ui.RegisterComposeActivity"
+            android:exported="false"
+            android:label="@string/title_activity_register_compose"
+            android:theme="@style/Theme.GojekClone" />
+        <activity
             android:name=".ui.DashboardActivity"
             android:exported="false" />
         <activity

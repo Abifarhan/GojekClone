@@ -16,6 +16,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
     }
 
     buildTypes {
@@ -35,6 +38,9 @@ android {
         jvmTarget = "17"
     }
 
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.5"
+    }
     packagingOptions {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -42,9 +48,13 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
+//        viewBinding = true
+        compose = true
 //        dataBinding = true
     }
+//    composeOptions {
+//        kotlinCompilerExtensionVersion = "1.4.3"
+//    }
 }
 
 dependencies {
