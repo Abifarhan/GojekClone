@@ -118,3 +118,27 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
 
 }
+
+
+//@GET("food")
+//suspend fun fetchFoods(
+//    @Query("page") page: Int? = null,
+//    @Query("limit") limit: Int? = null,
+//    @Query("name") name: String? = null,
+//    @Query("types") types: String? = null,
+//): BaseResponse<PagingDto<FoodDto>>
+//
+//
+//@GET("food")
+//suspend fun fetchFoodById(
+//    @Query("id") id: Int
+//): BaseResponse<FoodDto>
+//
+//
+//@GET("food")
+//suspend fun fetchFoods(
+//    @Query("page") page: Int? = null,
+//    @Query("limit") limit: Int? = null,
+//    @Query("name") name: String? = null,
+//    @Query("types") types: String? = null,
+//): BaseResponse<PagingDto<FoodDto>>
