@@ -1,7 +1,7 @@
 package com.ourproject.login_domain
 
 
-data class UserDomain(
+data class UserEntity(
     val profilePhotoUrl: String,
     val address: String,
     val city: String,
@@ -18,7 +18,7 @@ data class UserDomain(
     val email: String
 ) {
     companion object {
-        val DEFAULT = UserDomain(
+        val DEFAULT = UserEntity(
             profilePhotoUrl = "defaultProfilePhotoUrl",
             address = "Default Address",
             city = "Default City",

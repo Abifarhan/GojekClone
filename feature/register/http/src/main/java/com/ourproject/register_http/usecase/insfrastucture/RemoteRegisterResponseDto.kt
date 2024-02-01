@@ -1,4 +1,4 @@
-package com.ourproject.register_http.usecase.dto
+package com.ourproject.register_http.usecase.insfrastucture
 
 import com.squareup.moshi.Json
 

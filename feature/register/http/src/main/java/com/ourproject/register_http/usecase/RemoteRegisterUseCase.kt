@@ -7,16 +7,16 @@ import com.ourproject.register_domain.InvalidDataException
 import com.ourproject.register_domain.NotFoundExceptionException
 import com.ourproject.register_domain.SubmitResult
 import com.ourproject.register_domain.UnexpectedException
-import com.ourproject.register_domain.api.RegisterUserCase
+import com.ourproject.register_domain.api.RegisterUseCase
 import com.ourproject.register_domain.api.RegisterSubmitEntity
 import com.ourproject.register_domain.local.UserEntity
 import com.ourproject.register_http.usecase.dto.RegisterSubmitDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class RemoteRegisterUserCase(
+class RemoteRegisterUseCase(
     private val registerHttpClient: RegisterHttpClient
-) : RegisterUserCase {
+) : RegisterUseCase {
 
     override fun register(registerSubmit: RegisterSubmitEntity): Flow<SubmitResult> {
         return flow{

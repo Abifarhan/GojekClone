@@ -2,7 +2,7 @@ package com.ourproject.login_http
 
 import com.squareup.moshi.Json
 
-data class LoginResultDto(
+data class RemoteLoginResponseDto(
     @Json(name="data")
     val remoteLoginData: RemoteLoginData = RemoteLoginData.DEFAULT,
 
@@ -11,7 +11,7 @@ data class LoginResultDto(
 ) {
 
     companion object {
-        val DEFAULT = LoginResultDto(
+        val DEFAULT = RemoteLoginResponseDto(
             remoteLoginData = RemoteLoginData.DEFAULT,
             meta = Meta.DEFAULT
         )

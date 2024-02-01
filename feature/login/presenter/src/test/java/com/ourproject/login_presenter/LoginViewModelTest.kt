@@ -4,7 +4,7 @@ import com.ourproject.session_user.SubmitResult
 import app.cash.turbine.test
 import com.ourproject.login_domain.LoginUseCase
 import com.ourproject.login_domain.LoginSubmitEntity
-import com.ourproject.login_domain.UserDomain
+import com.ourproject.login_domain.UserEntity
 import io.mockk.CapturingSlot
 import io.mockk.MockKAnnotations
 import io.mockk.confirmVerified
@@ -134,14 +134,14 @@ class LoginViewModelTest{
 
         val slot = slot<LoginSubmitEntity>()
         expected(
-            result = SubmitResult.Success(UserDomain.DEFAULT),
+            result = SubmitResult.Success(UserEntity.DEFAULT),
             sut = sut,
             expectedFailedResult = "",
             slot = slot
         )
     }
     private fun expected(
-        result: SubmitResult<UserDomain>,
+        result: SubmitResult<UserEntity>,
         sut: LoginViewModel,
         expectedFailedResult: String,
         slot: CapturingSlot<LoginSubmitEntity> = slot<LoginSubmitEntity>()

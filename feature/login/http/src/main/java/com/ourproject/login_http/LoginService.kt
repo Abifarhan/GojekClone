@@ -8,5 +8,5 @@ interface LoginService {
     @POST("login")
     suspend fun login(
         @Body loginBody: LoginSubmitDto
-    ): LoginResultDto
+    ): RemoteLoginResponseDto
 }

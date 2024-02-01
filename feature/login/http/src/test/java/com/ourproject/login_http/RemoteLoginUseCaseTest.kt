@@ -1,6 +1,5 @@
 package com.ourproject.login_http
 
-import com.ourproject.session_user.HttpClientResult
 import com.ourproject.session_user.SubmitResult
 import app.cash.turbine.test
 import com.ourproject.session_user.ConnectivityException
@@ -141,7 +140,7 @@ class RemoteLoginUseCaseTest{
 
         expect(
             sut = sut,
-            receivedHttpClientResult = HttpClientResult.Success(LoginResultDto.DEFAULT),
+            receivedHttpClientResult = HttpClientResult.Success(RemoteLoginResponseDto.DEFAULT),
             expectedResult = SubmitResult.Success(RemoteLoginData.DEFAULT),
             exactly = 1
         )
@@ -154,7 +153,7 @@ class RemoteLoginUseCaseTest{
 
     private fun expect(
         sut: RemoteLoginUseCase,
-        receivedHttpClientResult: HttpClientResult<LoginResultDto>,
+        receivedHttpClientResult: HttpClientResult<RemoteLoginResponseDto>,
         expectedResult: Any,
         exactly: Int = -1,
     ) = runBlocking {

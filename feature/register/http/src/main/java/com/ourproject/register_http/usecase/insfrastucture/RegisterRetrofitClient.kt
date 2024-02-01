@@ -1,12 +1,13 @@
-package com.ourproject.register_http.usecase
+package com.ourproject.register_http.usecase.insfrastucture
 
 import com.ourproject.register_domain.ConnectivityException
 import com.ourproject.register_domain.InternalServerErrorException
 import com.ourproject.register_domain.InvalidDataException
 import com.ourproject.register_domain.NotFoundExceptionException
 import com.ourproject.register_domain.UnexpectedException
+import com.ourproject.register_http.usecase.HttpClientResult
+import com.ourproject.register_http.usecase.RegisterHttpClient
 import com.ourproject.register_http.usecase.dto.RegisterSubmitDto
-import com.ourproject.register_http.usecase.dto.RemoteRegisterResponseDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException

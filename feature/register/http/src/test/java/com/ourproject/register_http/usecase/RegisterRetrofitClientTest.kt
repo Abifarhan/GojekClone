@@ -8,7 +8,8 @@ import com.ourproject.session_user.NotFoundExceptionException
 import com.ourproject.session_user.UnexpectedException
 import com.ourproject.register_http.usecase.dto.RegisterSubmitDto
 import com.ourproject.register_http.usecase.dto.RemoteRegisterResponseDto
-import com.ourproject.session_user.HttpClientResult
+import com.ourproject.register_http.usecase.insfrastucture.RegisterRetrofitClient
+import com.ourproject.register_http.usecase.insfrastucture.RegisterService
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.confirmVerified

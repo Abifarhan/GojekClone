@@ -1,10 +1,9 @@
 package com.ourproject.register_presenter
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ourproject.register_domain.SubmitResult
-import com.ourproject.register_domain.api.RegisterUserCase
+import com.ourproject.register_domain.api.RegisterUseCase
 import com.ourproject.register_domain.api.RegisterSubmitEntity
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,7 +17,7 @@ data class UserState(
     val userRegistered: Boolean = false
 )
 class RegisterViewModel constructor(
-    private val registerSubmit: RegisterUserCase
+    private val registerSubmit: RegisterUseCase
 ): ViewModel(){
 //
     private val _isUserRegistered = MutableStateFlow(UserState())

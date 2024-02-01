@@ -1,6 +1,5 @@
 package com.ourproject.register_http.usecase
 
-import com.ourproject.session_user.HttpClientResult
 import com.ourproject.session_user.SubmitResult
 import app.cash.turbine.test
 import com.ourproject.session_user.ConnectivityException
@@ -26,7 +25,7 @@ import org.junit.Test
 class RemoteRegisterUserCaseTest{
 
     private val client = spyk<RegisterHttpClient>()
-    private lateinit var sut: RemoteRegisterUserCase
+    private lateinit var sut: RemoteRegisterUseCase
 
     private val registerRequest = RegisterSubmitDto(
         name = "birin",
@@ -53,7 +52,7 @@ class RemoteRegisterUserCaseTest{
 
     @Before
     fun setUp(){
-        sut = RemoteRegisterUserCase(client)
+        sut = RemoteRegisterUseCase(client)
     }
 
     @Test
@@ -169,7 +168,7 @@ class RemoteRegisterUserCaseTest{
     }
 
     private fun expect(
-        sut: RemoteRegisterUserCase,
+        sut: RemoteRegisterUseCase,
         receivedHttpClientResult: HttpClientResult<RemoteRegisterResponseDto>,
         expectedResult: Any,
         exactly: Int = -1,

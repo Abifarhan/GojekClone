@@ -7,8 +7,7 @@ import com.ourproject.session_user.InvalidDataException
 import com.ourproject.session_user.NotFoundExceptionException
 import com.ourproject.session_user.UnexpectedException
 import com.ourproject.login_domain.LoginSubmitEntity
-import com.ourproject.login_domain.UserDomain
-import com.ourproject.session_user.HttpClientResult
+import com.ourproject.login_domain.UserEntity
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.confirmVerified
@@ -93,7 +92,7 @@ class LoginRetrofitClientTest {
 
         when{
             withStatusCode != null -> {
-                val response = Response.error<UserDomain>(
+                val response = Response.error<UserEntity>(
                     withStatusCode,
                     "".toResponseBody(null)
                 )

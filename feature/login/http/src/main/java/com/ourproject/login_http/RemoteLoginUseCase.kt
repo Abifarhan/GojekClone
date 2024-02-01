@@ -8,7 +8,7 @@ import com.ourproject.login_domain.LoginUseCase
 import com.ourproject.login_domain.LoginSubmitEntity
 import com.ourproject.login_domain.NotFoundExceptionException
 import com.ourproject.login_domain.SubmitResult
-import com.ourproject.login_domain.UserDomain
+import com.ourproject.login_domain.UserEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
@@ -28,7 +28,7 @@ class RemoteLoginUseCase constructor(
                     is HttpClientResult.Success -> {
                         val login = result.root
 
-                        val dtoToLocal = UserDomain(
+                        val dtoToLocal = UserEntity(
                             profilePhotoUrl = login.remoteLoginData.remoteUser.profilePhotoUrl,
                             address = login.remoteLoginData.remoteUser.address,
                             city = login.remoteLoginData.remoteUser.city,

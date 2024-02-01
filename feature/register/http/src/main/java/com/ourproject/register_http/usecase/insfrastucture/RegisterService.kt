@@ -1,4 +1,4 @@
-package com.ourproject.register_http.usecase
+package com.ourproject.register_http.usecase.insfrastucture
 
 import com.ourproject.register_http.usecase.dto.RegisterSubmitDto
 import com.ourproject.register_http.usecase.dto.RemoteRegisterResponseDto

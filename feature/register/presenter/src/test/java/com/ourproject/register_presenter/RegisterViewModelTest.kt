@@ -2,7 +2,7 @@ package com.ourproject.register_presenter
 
 import com.ourproject.session_user.SubmitResult
 import app.cash.turbine.test
-import com.ourproject.register_domain.api.RegisterUserCase
+import com.ourproject.register_domain.api.RegisterUseCase
 import com.ourproject.register_domain.api.RegisterSubmitEntity
 import com.ourproject.register_domain.local.UserEntity
 import io.mockk.CapturingSlot
@@ -25,7 +25,7 @@ import org.junit.Test
 
 class RegisterViewModelTest{
 
-    private val useCaseRegister = spyk<RegisterUserCase>()
+    private val useCaseRegister = spyk<RegisterUseCase>()
     private lateinit var sut: RegisterViewModel
 
     private val params = RegisterSubmitEntity(
