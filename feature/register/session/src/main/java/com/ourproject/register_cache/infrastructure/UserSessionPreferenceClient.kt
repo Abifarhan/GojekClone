@@ -1,6 +1,8 @@
-package com.ourproject.register_cache.usecase
+package com.ourproject.register_cache.infrastructure
 
 import android.content.SharedPreferences
+import com.ourproject.register_cache.usecase.LocalKey
+import com.ourproject.register_cache.usecase.PreferenceClient
 
 class UserSessionPreferenceClient(private val preferences: SharedPreferences): PreferenceClient {
     override fun saveSessionEmail(email: String) {
