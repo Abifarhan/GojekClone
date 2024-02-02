@@ -1,10 +1,13 @@
-package com.ourproject.login_http
+package com.ourproject.login_http.insfrastructure
 
 
 import com.ourproject.login_domain.ConnectivityException
 import com.ourproject.login_domain.InternalServerErrorException
 import com.ourproject.login_domain.InvalidDataException
 import com.ourproject.login_domain.NotFoundExceptionException
+import com.ourproject.login_http.HttpClientResult
+import com.ourproject.login_http.LoginHttpClient
+import com.ourproject.login_http.LoginSubmitDto
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException

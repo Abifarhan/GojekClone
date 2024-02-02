@@ -106,5 +106,5 @@ dependencies {
     testImplementation(libs.turbine)
 
     testImplementation(libs.kotlinx.coroutines.test)
-
+    implementation("com.jakewharton.timber:timber:4.7.1")
 }

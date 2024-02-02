@@ -3,6 +3,7 @@ package com.ourproject.gojekclone.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Button
@@ -18,6 +19,7 @@ import com.ourproject.gojekclone.ui.presenter.RegisterViewModelFactory
 import com.ourproject.register_domain.api.RegisterSubmitEntity
 import com.ourproject.register_http.usecase.dto.RegisterSubmitDto
 import com.ourproject.view.DashboardActivity
+import timber.log.Timber
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -45,7 +47,6 @@ class RegisterActivity : AppCompatActivity() {
 
 
         frameLayout = findViewById(R.id.frameLayout)
-        header = findViewById(R.id.simple_header)
         nameEditText = findViewById(R.id.name)
         emailEditText = findViewById(R.id.email)
         passwordEditText = findViewById(R.id.password)
@@ -74,13 +75,11 @@ class RegisterActivity : AppCompatActivity() {
     private fun setObserver() {
         lifecycleScope.launchWhenCreated {
             viewModel.isUserRegistered.collect{userState ->
-                val intent = if (userState.userRegistered) {
-                    Intent(this@RegisterActivity, DashboardActivity::class.java)
-                } else {
-                    Intent(this@RegisterActivity, RegisterActivity::class.java)
+                if (userState.userRegistered) {
+                    val intent = Intent(this@RegisterActivity, DashboardActivity::class.java)
+                    startActivity(intent)
                 }
 
-                startActivity(intent)
             }
         }
     }
@@ -89,9 +88,8 @@ class RegisterActivity : AppCompatActivity() {
         moveButton.apply {
             setOnClickListener {
                 secondLinearLayout.visibility = View.VISIBLE
-
+                this.visibility = View.GONE
             }
-            this.visibility = View.GONE
         }
 
         executeButton.apply {
@@ -110,9 +108,9 @@ class RegisterActivity : AppCompatActivity() {
                     )
                 )
 //                viewModel.submitRegister(
-//                    registerSubmitDto = RegisterSubmitDto(
+//                    registerSubmitData = RegisterSubmitEntity(
 //                        name = "hahhaa",
-//                        email = "gelas26@gmail.com",
+//                        email = "gelas40@gmail.com",
 //                        password = "1234567890",
 //                        password_confirmation = "1234567890",
 //                        address = "berlin",

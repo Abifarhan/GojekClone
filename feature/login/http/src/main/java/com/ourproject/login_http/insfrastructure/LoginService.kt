@@ -1,5 +1,6 @@
-package com.ourproject.login_http
+package com.ourproject.login_http.insfrastructure
 
+import com.ourproject.login_http.LoginSubmitDto
 import retrofit2.http.Body
 import retrofit2.http.POST
 

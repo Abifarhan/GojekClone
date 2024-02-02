@@ -8,6 +8,8 @@ import com.ourproject.session_user.NotFoundExceptionException
 import com.ourproject.session_user.UnexpectedException
 import com.ourproject.login_domain.LoginSubmitEntity
 import com.ourproject.login_domain.UserEntity
+import com.ourproject.login_http.insfrastructure.LoginRetrofitClient
+import com.ourproject.login_http.insfrastructure.LoginService
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.confirmVerified

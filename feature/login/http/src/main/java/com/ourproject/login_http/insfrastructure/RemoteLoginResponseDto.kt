@@ -1,4 +1,4 @@
-package com.ourproject.login_http
+package com.ourproject.login_http.insfrastructure
 
 import com.squareup.moshi.Json
 

@@ -10,14 +10,9 @@
     <LinearLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         tools:context=".ui.RegisterFragment">
-
-        <com.ourproject.component.header.HeaderWithTitle
-            android:id="@+id/simple_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
 
 
         <EditText
@@ -60,6 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:visibility="gone"
         tools:context=".ui.RegisterSecondFragment">
 
         <EditText

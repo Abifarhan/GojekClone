@@ -8,6 +8,8 @@ import com.ourproject.session_user.InvalidDataException
 import com.ourproject.session_user.NotFoundExceptionException
 import com.ourproject.session_user.UnexpectedException
 import com.ourproject.login_domain.LoginSubmitEntity
+import com.ourproject.login_http.insfrastructure.RemoteLoginData
+import com.ourproject.login_http.insfrastructure.RemoteLoginResponseDto
 import io.mockk.clearAllMocks
 import io.mockk.confirmVerified
 import io.mockk.every

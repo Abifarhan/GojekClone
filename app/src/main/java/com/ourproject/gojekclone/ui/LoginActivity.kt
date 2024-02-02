@@ -3,6 +3,7 @@ package com.ourproject.gojekclone.ui
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -30,8 +31,6 @@ class LoginActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, LoginViewModelFactory.createLoginViewModel())[com.ourproject.login_presenter.LoginViewModel::class.java]
 
 
-
-
         setListener()
         setObserver()
     }
@@ -39,13 +38,11 @@ class LoginActivity : AppCompatActivity() {
     private fun setObserver() {
         lifecycleScope.launchWhenStarted {
             viewModel.userDataLiveData.collect { userState ->
-                val intent = if (userState.userRegistered) {
-                    Intent(this@LoginActivity, DashboardActivity::class.java)
-                } else {
-                    Intent(this@LoginActivity, RegisterActivity::class.java)
+                if (userState.userRegistered) {
+                    val intent =  Intent(this@LoginActivity, DashboardActivity::class.java)
+                    startActivity(intent)
                 }
 
-                startActivity(intent)
             }
         }
     }
@@ -70,7 +67,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         btnRegister.setOnClickListener {
-            startActivity(Intent(this, RegisterActivity::class.java))
+            val intent =  Intent(this@LoginActivity, RegisterActivity::class.java)
+            startActivity(intent)
         }
     }
 }
