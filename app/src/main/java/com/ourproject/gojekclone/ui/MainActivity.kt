@@ -22,8 +22,6 @@ class MainActivity : AppCompatActivity() {
 
         val savedEmail = preferences.getString(LocalKey.EMAIL_SESSION, null)
 
-        Timber.d("here the result of your email $savedEmail")
-        Log.d("result","here the result of your email $savedEmail")
         if (savedEmail != null) {
         startActivity(Intent(this, DashboardActivity::class.java))
             // Use the savedEmail as needed

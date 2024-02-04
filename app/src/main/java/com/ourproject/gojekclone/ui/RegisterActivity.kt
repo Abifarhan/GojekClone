@@ -19,15 +19,18 @@ import com.ourproject.gojekclone.ui.presenter.RegisterViewModelFactory
 import com.ourproject.register_domain.api.RegisterSubmitEntity
 import com.ourproject.register_http.usecase.dto.RegisterSubmitDto
 import com.ourproject.view.DashboardActivity
+import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
+@AndroidEntryPoint
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var viewModel: RegisterViewModel
 
+    @Inject
+    lateinit var
 
     private lateinit var frameLayout: LinearLayout
-    private lateinit var header: HeaderWithTitle
     private lateinit var nameEditText: EditText
     private lateinit var emailEditText: EditText
     private lateinit var passwordEditText: EditText

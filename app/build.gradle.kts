@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -107,4 +108,6 @@ dependencies {
 
     testImplementation(libs.kotlinx.coroutines.test)
     implementation("com.jakewharton.timber:timber:4.7.1")
+    implementation(libs.dagger.hilt)
+    kapt(libs.dagger.hilt.compiler)
 }

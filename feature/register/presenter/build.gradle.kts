@@ -3,7 +3,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
-
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -92,4 +92,6 @@ dependencies {
     testImplementation(libs.turbine)
 
     testImplementation(libs.kotlinx.coroutines.test)
+    implementation(libs.dagger.hilt)
+    kapt(libs.dagger.hilt.compiler)
 }
