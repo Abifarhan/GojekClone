@@ -1,125 +1,164 @@
 package com.ourproject.gojekclone.ui
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.Spinner
+import android.view.Surface
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import com.ourproject.component.header.HeaderWithTitle
-import com.ourproject.gojekclone.R
+import com.ourproject.component.EmailInput
+import com.ourproject.gojekclone.ui.compose.GoFoodTheme
 import com.ourproject.register_presenter.RegisterViewModel
 import com.ourproject.gojekclone.ui.presenter.RegisterViewModelFactory
-import com.ourproject.register_domain.api.RegisterSubmitEntity
-import com.ourproject.register_http.usecase.dto.RegisterSubmitDto
-import com.ourproject.view.DashboardActivity
+import androidx.compose.material.Surface
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
+import com.ourproject.component.RoundedButton
+import com.ourproject.component.showToast
 import timber.log.Timber
 
-class RegisterActivity : AppCompatActivity() {
+@ExperimentalComposeUiApi
+class RegisterActivity : ComponentActivity() {
 
     private lateinit var viewModel: RegisterViewModel
-
-
-    private lateinit var frameLayout: LinearLayout
-    private lateinit var header: HeaderWithTitle
-    private lateinit var nameEditText: EditText
-    private lateinit var emailEditText: EditText
-    private lateinit var passwordEditText: EditText
-    private lateinit var moveButton: Button
-
-    private lateinit var secondLinearLayout: LinearLayout
-    private lateinit var phoneEditText: EditText
-    private lateinit var addressEditText: EditText
-    private lateinit var houseNumberEditText: EditText
-    private lateinit var spinner: Spinner
-    private lateinit var executeButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
-
         viewModel = ViewModelProvider(this, RegisterViewModelFactory.createRegisterViewModelFactory())[RegisterViewModel::class.java]
 
-
-        frameLayout = findViewById(R.id.frameLayout)
-        nameEditText = findViewById(R.id.name)
-        emailEditText = findViewById(R.id.email)
-        passwordEditText = findViewById(R.id.password)
-        moveButton = findViewById(R.id.btn_move)
-
-        secondLinearLayout = findViewById(R.id.secondLinearLayout)
-        phoneEditText = findViewById(R.id.phone)
-        addressEditText = findViewById(R.id.address)
-        houseNumberEditText = findViewById(R.id.houseNumber)
-        spinner = findViewById(R.id.spinner)
-        executeButton = findViewById(R.id.btn_execute)
-
-        val data1 = arrayOf("Jakarta", "Bandung", "Tangerang")
-
-        val adapter = ArrayAdapter(
-            this,
-            android.R.layout.simple_spinner_item,
-            data1
-        )
-        spinner.adapter = adapter
-
-        setListener()
-        setObserver()
-    }
-
-    private fun setObserver() {
-        lifecycleScope.launchWhenCreated {
-            viewModel.isUserRegistered.collect{userState ->
-                if (userState.userRegistered) {
-                    val intent = Intent(this@RegisterActivity, DashboardActivity::class.java)
-                    startActivity(intent)
-                }
-
-            }
-        }
-    }
-
-    private fun setListener() {
-        moveButton.apply {
-            setOnClickListener {
-                secondLinearLayout.visibility = View.VISIBLE
-                this.visibility = View.GONE
+        setContent {
+            GoFoodTheme {
+                RegisterLayout(viewModel = viewModel)
             }
         }
 
-        executeButton.apply {
-            setOnClickListener {
 
-                viewModel.submitRegister(
-                    registerSubmitData = RegisterSubmitEntity(
-                        name = nameEditText.text.toString().trim(),
-                        email = emailEditText.text.toString().trim(),
-                        password = passwordEditText.text.toString().trim(),
-                        password_confirmation = passwordEditText.text.toString().trim(),
-                        address = addressEditText.text.toString(),
-                        city = spinner.selectedItem.toString(),
-                        houseNumber = houseNumberEditText.text.toString().trim(),
-                        phoneNumber = phoneEditText.text.toString().trim()
+    }
+
+}
+
+
+@ExperimentalComposeUiApi
+@Composable
+fun RegisterLayout(
+    viewModel : RegisterViewModel
+){
+    val email = rememberSaveable{ mutableStateOf("") }
+    val password = rememberSaveable{ mutableStateOf("") }
+    val name = rememberSaveable{ mutableStateOf("") }
+    val phoneNumber = rememberSaveable{ mutableStateOf("") }
+    val houseNumber = rememberSaveable{ mutableStateOf("") }
+    val address = rememberSaveable{ mutableStateOf("") }
+    val passwordFocusRequest = FocusRequester.Default
+
+    val context = LocalContext.current
+
+    Surface(color = MaterialTheme.colorScheme.background,
+        modifier = Modifier.fillMaxSize(),
+        content = {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp)
+                    .background(MaterialTheme.colorScheme.surface)
+                    .border(
+                        1.dp,
+                        MaterialTheme.colorScheme.primary,
+                        shape = RoundedCornerShape(8.dp)
                     )
-                )
-//                viewModel.submitRegister(
-//                    registerSubmitData = RegisterSubmitEntity(
-//                        name = "hahhaa",
-//                        email = "gelas40@gmail.com",
-//                        password = "1234567890",
-//                        password_confirmation = "1234567890",
-//                        address = "berlin",
-//                        city = "berlin",
-//                        houseNumber = "4",
-//                        phoneNumber = "1234567890"
-//                    )
-//                )
+            ) {
+                Column(
+                    verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally
+                ){
+
+                    EmailInput(
+                        emailState = name, enabled = true,
+                        labelId = "Name",
+                        onAction = KeyboardActions{
+                            passwordFocusRequest.requestFocus()
+                        }
+                    )
+
+                    EmailInput(
+                        emailState = email, enabled = true,
+                        onAction = KeyboardActions{
+                            passwordFocusRequest.requestFocus()
+                        }
+                    )
+
+                    EmailInput(
+                        emailState = password, enabled = true,
+                        labelId = "Password",
+                        onAction = KeyboardActions{
+                            passwordFocusRequest.requestFocus()
+                        }
+                    )
+
+                    EmailInput(
+                        emailState = phoneNumber, enabled = true,
+                        labelId = "Nomor HP",
+                        onAction = KeyboardActions{
+                            passwordFocusRequest.requestFocus()
+                        }
+                    )
+
+                    EmailInput(
+                        emailState = address, enabled = true,
+                        labelId = "Address",
+                        onAction = KeyboardActions{
+                            passwordFocusRequest.requestFocus()
+                        }
+                    )
+
+                    EmailInput(
+                        emailState = houseNumber, enabled = true,
+                        labelId = "Nomor Rumah",
+                        onAction = KeyboardActions{
+                            passwordFocusRequest.requestFocus()
+                        }
+                    )
+
+                    Row(modifier = Modifier.padding(top = 6.dp),
+                        horizontalArrangement = Arrangement.SpaceAround
+                    ) {
+                        RoundedButton(label = "Save",
+
+                            onPress = {
+                                Timber.d("RegisterLayout: you are clicked ")
+                                showToast(context = context, "${email.value}")
+                            }
+                            )
+
+                    }
+                }
             }
+
         }
+        )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DefaultPreview() {
+    GoFoodTheme {
+
     }
 }

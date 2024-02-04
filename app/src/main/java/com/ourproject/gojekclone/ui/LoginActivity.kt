@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalComposeUiApi::class)
+
 package com.ourproject.gojekclone.ui
 
 import android.content.Intent
@@ -7,6 +9,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.ourproject.gojekclone.R
@@ -31,44 +34,44 @@ class LoginActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this, LoginViewModelFactory.createLoginViewModel())[com.ourproject.login_presenter.LoginViewModel::class.java]
 
 
-        setListener()
-        setObserver()
+//        setListener()
+//        setObserver()
     }
 
-    private fun setObserver() {
-        lifecycleScope.launchWhenStarted {
-            viewModel.userDataLiveData.collect { userState ->
-                if (userState.userRegistered) {
-                    val intent =  Intent(this@LoginActivity, DashboardActivity::class.java)
-                    startActivity(intent)
-                }
-
-            }
-        }
-    }
-
-    private fun setListener() {
-        editTextEmail = findViewById(R.id.email)
-        editTextPassword = findViewById(R.id.password)
-        btnLogin = findViewById(R.id.btnLogin)
-        btnRegister = findViewById(R.id.btnRegister)
-
-
-        btnLogin.setOnClickListener {
-
-            viewModel.login(
-                email = editTextEmail.text.toString().trim(),
-                password = editTextPassword.text.toString().trim()
-            )
+//    private fun setObserver() {
+//        lifecycleScope.launchWhenStarted {
+//            viewModel.userDataLiveData.collect { userState ->
+//                if (userState.userRegistered) {
+//                    val intent =  Intent(this@LoginActivity, DashboardActivity::class.java)
+//                    startActivity(intent)
+//                }
+//
+//            }
+//        }
+//    }
+//
+//    private fun setListener() {
+//        editTextEmail = findViewById(R.id.email)
+//        editTextPassword = findViewById(R.id.password)
+//        btnLogin = findViewById(R.id.btnLogin)
+//        btnRegister = findViewById(R.id.btnRegister)
+//
+//
+//        btnLogin.setOnClickListener {
+//
 //            viewModel.login(
-//                email = "andika@gmail.com",
-//                password = "1234567890"
+//                email = editTextEmail.text.toString().trim(),
+//                password = editTextPassword.text.toString().trim()
 //            )
-        }
-
-        btnRegister.setOnClickListener {
-            val intent =  Intent(this@LoginActivity, RegisterActivity::class.java)
-            startActivity(intent)
-        }
-    }
+////            viewModel.login(
+////                email = "andika@gmail.com",
+////                password = "1234567890"
+////            )
+//        }
+//
+//        btnRegister.setOnClickListener {
+//            val intent =  Intent(this@LoginActivity, RegisterActivity::class.java)
+//            startActivity(intent)
+//        }
+//    }
 }

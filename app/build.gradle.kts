@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
+    kotlin("kapt")
 }
 
 android {
@@ -16,6 +16,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary=  true
+        }
     }
 
     buildTypes {
@@ -42,9 +45,12 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
-//        dataBinding = true
+        compose = true
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.5"
+    }
+
 }
 
 dependencies {
@@ -89,6 +95,7 @@ dependencies {
     androidTestImplementation(libs.ui.test.junit4)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
+
 
     implementation(libs.retrofit)
     implementation(libs.moshi.kotlin)
