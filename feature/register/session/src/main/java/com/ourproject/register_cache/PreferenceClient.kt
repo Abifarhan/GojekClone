@@ -1,8 +1,8 @@
-package com.ourproject.register_cache.usecase
+package com.ourproject.register_cache
 
 interface PreferenceClient {
 
-    fun saveSessionEmail(email:String)
+    fun saveSessionEmail(userData:UserSessionSubmit)
 
     fun getSessionEmail(): String
 }

@@ -37,6 +37,7 @@ dependencies {
 
     implementation(project(":feature:register:domain"))
     implementation(project(":feature:register:http"))
+    implementation(project(":feature:register:session"))
 
     implementation(libs.androidx.ktx)
     implementation(libs.lifecycle.runtime.ktx)
