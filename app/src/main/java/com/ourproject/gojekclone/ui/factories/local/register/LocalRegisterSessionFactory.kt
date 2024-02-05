@@ -1,7 +1,7 @@
 package com.ourproject.gojekclone.ui.factories.local.register
 
 import com.ourproject.core.framework.local.LocalFactory
-import com.ourproject.register_cache.infrastructure.UserSessionPreferenceClient
+import com.ourproject.infrastructure.session.UserSessionPreferenceClient
 import com.ourproject.register_cache.usecase.PreferenceClient
 
 class LocalRegisterSessionFactory {

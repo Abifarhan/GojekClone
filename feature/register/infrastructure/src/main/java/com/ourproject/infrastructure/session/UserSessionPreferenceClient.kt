@@ -1,4 +1,4 @@
-package com.ourproject.register_cache.infrastructure
+package com.ourproject.infrastructure.session
 
 import android.content.SharedPreferences
 import com.ourproject.register_cache.usecase.LocalKey
