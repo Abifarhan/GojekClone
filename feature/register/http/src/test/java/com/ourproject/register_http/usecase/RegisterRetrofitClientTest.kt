@@ -1,13 +1,12 @@
 package com.ourproject.register_http.usecase
 
 import app.cash.turbine.test
+import com.ourproject.infrastructure.remote.HttpClientResult
 import com.ourproject.session_user.ConnectivityException
 import com.ourproject.session_user.InternalServerErrorException
 import com.ourproject.session_user.InvalidDataException
 import com.ourproject.session_user.NotFoundExceptionException
 import com.ourproject.session_user.UnexpectedException
-import com.ourproject.register_http.usecase.dto.RegisterSubmitDto
-import com.ourproject.register_http.usecase.dto.RemoteRegisterResponseDto
 import com.ourproject.register_http.usecase.insfrastucture.RegisterRetrofitClient
 import com.ourproject.register_http.usecase.insfrastucture.RegisterService
 import io.mockk.coEvery
@@ -30,7 +29,7 @@ class RegisterRetrofitClientTest{
     private lateinit var sut: RegisterRetrofitClient
 
 
-    private val registerRequest = RegisterSubmitDto(
+    private val registerRequest = RegisterSubmitRequest(
         name = "birin",
         email = "birin1@gmail.com",
         password = "1234567890",

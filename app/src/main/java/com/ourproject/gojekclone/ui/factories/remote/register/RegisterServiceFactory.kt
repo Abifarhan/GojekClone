@@ -1,7 +1,7 @@
 package com.ourproject.gojekclone.ui.factories.remote.register
 
 import com.ourproject.core.framework.remote.HttpFactory
-import com.ourproject.register_http.usecase.insfrastucture.RegisterService
+import com.ourproject.infrastructure.remote.RegisterService
 
 class RegisterServiceFactory {
 

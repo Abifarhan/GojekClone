@@ -3,8 +3,8 @@ package com.ourproject.register_presenter
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ourproject.register_domain.SubmitResult
-import com.ourproject.register_domain.api.RegisterUseCase
-import com.ourproject.register_domain.api.RegisterSubmitEntity
+import com.ourproject.register_domain.RegisterUseCase
+import com.ourproject.register_domain.RegisterSubmitDomain
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,7 +24,7 @@ class RegisterViewModel constructor(
     val isUserRegistered: StateFlow<UserState> = _isUserRegistered.asStateFlow()
 
     fun submitRegister(
-        registerSubmitData: RegisterSubmitEntity
+        registerSubmitData: RegisterSubmitDomain
     ) {
         viewModelScope.launch {
 

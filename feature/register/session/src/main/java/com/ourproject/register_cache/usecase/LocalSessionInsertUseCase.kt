@@ -1,6 +1,6 @@
 package com.ourproject.register_cache.usecase
 
-import com.ourproject.register_domain.usecase.UserSessionUseCase
+import com.ourproject.register_domain.UserSessionUseCase
 
 
 class LocalSessionInsertUseCase(private val preferenceClient: PreferenceClient):

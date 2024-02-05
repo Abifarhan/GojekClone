@@ -2,9 +2,9 @@ package com.ourproject.register_presenter
 
 import com.ourproject.session_user.SubmitResult
 import app.cash.turbine.test
-import com.ourproject.register_domain.api.RegisterUseCase
-import com.ourproject.register_domain.api.RegisterSubmitEntity
-import com.ourproject.register_domain.local.UserEntity
+import com.ourproject.register_domain.RegisterUseCase
+import com.ourproject.register_domain.RegisterSubmitDomain
+import com.ourproject.register_domain.UserDataDomain
 import io.mockk.CapturingSlot
 import io.mockk.MockKAnnotations
 import io.mockk.confirmVerified
@@ -28,7 +28,7 @@ class RegisterViewModelTest{
     private val useCaseRegister = spyk<RegisterUseCase>()
     private lateinit var sut: RegisterViewModel
 
-    private val params = RegisterSubmitEntity(
+    private val params = RegisterSubmitDomain(
         name = "birin",
         email = "birin1@gmail.com",
         password = "1234567890",
@@ -136,9 +136,9 @@ class RegisterViewModelTest{
     @Test
     fun testSubmitRequestWithArgumentAndResult() = runBlocking {
 
-        val slot = slot<RegisterSubmitEntity>()
+        val slot = slot<RegisterSubmitDomain>()
         expected(
-            result = SubmitResult.Success(UserEntity.DEFAULT),
+            result = SubmitResult.Success(UserDataDomain.DEFAULT),
             sut = sut,
             expectedFailedResult = "",
             slot = slot
@@ -146,10 +146,10 @@ class RegisterViewModelTest{
     }
 
     private fun expected(
-        result: SubmitResult<UserEntity>,
+        result: SubmitResult<UserDataDomain>,
         sut: RegisterViewModel,
         expectedFailedResult: String,
-        slot: CapturingSlot<RegisterSubmitEntity> = slot<RegisterSubmitEntity>()
+        slot: CapturingSlot<RegisterSubmitDomain> = slot<RegisterSubmitDomain>()
     ) = runBlocking {
         every {
             useCaseRegister.register(capture(slot))

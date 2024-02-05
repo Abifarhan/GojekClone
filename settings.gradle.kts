@@ -27,3 +27,5 @@ include(":feature:login:presenter")
 include("feature:login:session")
 include(":feature:dashboard:view")
 include(":core")
+
+include(":feature:register:infrastructure")

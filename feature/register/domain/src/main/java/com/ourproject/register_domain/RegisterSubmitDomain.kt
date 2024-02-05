@@ -1,6 +1,6 @@
-package com.ourproject.register_domain.api
+package com.ourproject.register_domain
 
-data class RegisterSubmitEntity(
+data class RegisterSubmitDomain(
     val name: String,
     val email: String,
     val password: String,

@@ -1,7 +1,8 @@
-package com.ourproject.register_http.usecase.dto
+package com.ourproject.infrastructure.remote
 
 import com.squareup.moshi.Json
-data class RemoteRegisterDto(
+
+data class RemoteRegisterRequest(
     @Json(name="password")
     val password: String?,
 

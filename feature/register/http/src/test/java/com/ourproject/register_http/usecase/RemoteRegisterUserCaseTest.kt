@@ -7,9 +7,7 @@ import com.ourproject.session_user.InternalServerErrorException
 import com.ourproject.session_user.InvalidDataException
 import com.ourproject.session_user.NotFoundExceptionException
 import com.ourproject.session_user.UnexpectedException
-import com.ourproject.register_domain.api.RegisterSubmitEntity
-import com.ourproject.register_http.usecase.dto.RegisterSubmitDto
-import com.ourproject.register_http.usecase.dto.RemoteRegisterResponseDto
+import com.ourproject.register_domain.RegisterSubmitDomain
 import io.mockk.clearAllMocks
 import io.mockk.confirmVerified
 import io.mockk.every
@@ -27,7 +25,7 @@ class RemoteRegisterUserCaseTest{
     private val client = spyk<RegisterHttpClient>()
     private lateinit var sut: RemoteRegisterUseCase
 
-    private val registerRequest = RegisterSubmitDto(
+    private val registerRequest = RegisterSubmitRequest(
         name = "birin",
         email = "birin1@gmail.com",
         password = "1234567890",
@@ -39,7 +37,7 @@ class RemoteRegisterUserCaseTest{
     )
 
 
-    val convertToEntity  = RegisterSubmitEntity(
+    val convertToEntity  = RegisterSubmitDomain(
         name = registerRequest.name,
         email = registerRequest.email,
         password = registerRequest.password,
