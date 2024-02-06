@@ -22,7 +22,7 @@ class LoginViewModel constructor(
 
 
     private val _userDataLiveData = MutableStateFlow(UserStateLogin())
-        val userDataLiveData: StateFlow<UserStateLogin> = _userDataLiveData.asStateFlow()
+    val userDataLiveData: StateFlow<UserStateLogin> = _userDataLiveData.asStateFlow()
     fun login(inputLoginForm : UserInputDataLogin){
         viewModelScope.launch {
             _userDataLiveData.update {
