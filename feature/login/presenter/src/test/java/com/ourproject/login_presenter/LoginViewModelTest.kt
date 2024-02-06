@@ -3,8 +3,8 @@ package com.ourproject.login_presenter
 import com.ourproject.session_user.SubmitResult
 import app.cash.turbine.test
 import com.ourproject.login_domain.LoginUseCase
-import com.ourproject.login_domain.LoginSubmitEntity
-import com.ourproject.login_domain.UserEntity
+import com.ourproject.login_domain.LoginSubmitDomain
+import com.ourproject.login_domain.UserDataDomain
 import io.mockk.CapturingSlot
 import io.mockk.MockKAnnotations
 import io.mockk.confirmVerified
@@ -29,7 +29,7 @@ class LoginViewModelTest{
 
     private lateinit var sut: LoginViewModel
 
-    private val params = LoginSubmitEntity(
+    private val params = LoginSubmitDomain(
         email = "birin2@gmail.com",
         password = "1234567890"
     )
@@ -132,19 +132,19 @@ class LoginViewModelTest{
     @Test
     fun testSubmitRequestWithArgumentAndResult() = runBlocking {
 
-        val slot = slot<LoginSubmitEntity>()
+        val slot = slot<LoginSubmitDomain>()
         expected(
-            result = SubmitResult.Success(UserEntity.DEFAULT),
+            result = SubmitResult.Success(UserDataDomain.DEFAULT),
             sut = sut,
             expectedFailedResult = "",
             slot = slot
         )
     }
     private fun expected(
-        result: SubmitResult<UserEntity>,
+        result: SubmitResult<UserDataDomain>,
         sut: LoginViewModel,
         expectedFailedResult: String,
-        slot: CapturingSlot<LoginSubmitEntity> = slot<LoginSubmitEntity>()
+        slot: CapturingSlot<LoginSubmitDomain> = slot<LoginSubmitDomain>()
     ) = runBlocking {
         every {
             useCase.login(capture(slot))

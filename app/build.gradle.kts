@@ -89,6 +89,7 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.com.google.android.material.material)
     implementation(project(mapOf("path" to ":feature:register:infrastructure")))
+    implementation(project(mapOf("path" to ":feature:login:infrastructure")))
     testImplementation(libs.junit)
     testImplementation(libs.ext.junit)
     testImplementation(libs.espresso.core)

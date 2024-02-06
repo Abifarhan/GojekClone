@@ -1,7 +1,6 @@
 package com.ourproject.login_presenter
 
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ourproject.login_domain.LoginUseCase
@@ -30,7 +29,7 @@ class LoginViewModel constructor(
             _userDataLiveData.update {
                 it.copy(isLoading = true)
             }
-            loginInsert.login(com.ourproject.login_domain.LoginSubmitEntity(
+            loginInsert.login(com.ourproject.login_domain.LoginSubmitDomain(
                 email = email,
                 password = password
             )).collect{ result ->

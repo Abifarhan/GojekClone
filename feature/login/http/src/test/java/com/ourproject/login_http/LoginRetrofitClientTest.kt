@@ -6,10 +6,10 @@ import com.ourproject.session_user.InternalServerErrorException
 import com.ourproject.session_user.InvalidDataException
 import com.ourproject.session_user.NotFoundExceptionException
 import com.ourproject.session_user.UnexpectedException
-import com.ourproject.login_domain.LoginSubmitEntity
-import com.ourproject.login_domain.UserEntity
-import com.ourproject.login_http.insfrastructure.LoginRetrofitClient
-import com.ourproject.login_http.insfrastructure.LoginService
+import com.ourproject.login_domain.LoginSubmitDomain
+import com.ourproject.login_domain.UserDataDomain
+import com.ourproject.infrastructure.remote.LoginRetrofitClient
+import com.ourproject.infrastructure.remote.LoginService
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.confirmVerified
@@ -26,23 +26,23 @@ import java.io.IOException
 
 class LoginRetrofitClientTest {
 
-    private val service = mockk<LoginService>()
-    private lateinit var sut: LoginRetrofitClient
+    private val service = mockk<com.ourproject.infrastructure.remote.LoginService>()
+    private lateinit var sut: com.ourproject.infrastructure.remote.LoginRetrofitClient
 
 
-    private val loginSubmit = LoginSubmitEntity(
+    private val loginSubmit = LoginSubmitDomain(
         email = "default@gmail.com",
         password = "password12345"
     )
 
-    private val convertDto = LoginSubmitDto(
+    private val convertDto = LoginSubmitRequest(
         email = loginSubmit.email,
         password = loginSubmit.password
     )
 
     @Before
     fun setUp(){
-        sut = LoginRetrofitClient(service)
+        sut = com.ourproject.infrastructure.remote.LoginRetrofitClient(service)
     }
 
     @Test
@@ -88,13 +88,13 @@ class LoginRetrofitClientTest {
 
     private fun expect(
         withStatusCode: Int? = null,
-        sut: LoginRetrofitClient,
+        sut: com.ourproject.infrastructure.remote.LoginRetrofitClient,
         expectedResult: Any
     ) = runBlocking {
 
         when{
             withStatusCode != null -> {
-                val response = Response.error<UserEntity>(
+                val response = Response.error<UserDataDomain>(
                     withStatusCode,
                     "".toResponseBody(null)
                 )

@@ -5,21 +5,21 @@ import com.ourproject.login_domain.ConnectivityException
 import com.ourproject.login_domain.InternalServerErrorException
 import com.ourproject.login_domain.InvalidDataException
 import com.ourproject.login_domain.LoginUseCase
-import com.ourproject.login_domain.LoginSubmitEntity
+import com.ourproject.login_domain.LoginSubmitDomain
 import com.ourproject.login_domain.NotFoundExceptionException
 import com.ourproject.login_domain.SubmitResult
-import com.ourproject.login_domain.UserEntity
+import com.ourproject.login_domain.UserDataDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class RemoteLoginUseCase constructor(
     private val loginHttpClient: LoginHttpClient
 ) : LoginUseCase {
-    override fun login(loginSubmitDto: LoginSubmitEntity): Flow<SubmitResult> {
+    override fun login(loginSubmitDto: LoginSubmitDomain): Flow<SubmitResult> {
 
         return flow {
 
-            val mapper = LoginSubmitDto(
+            val mapper = LoginSubmitRequest(
                 email = loginSubmitDto.email,
                 password = loginSubmitDto.password
             )
@@ -28,21 +28,21 @@ class RemoteLoginUseCase constructor(
                     is HttpClientResult.Success -> {
                         val login = result.root
 
-                        val dtoToLocal = UserEntity(
-                            profilePhotoUrl = login.remoteLoginData.remoteUser.profilePhotoUrl,
-                            address = login.remoteLoginData.remoteUser.address,
-                            city = login.remoteLoginData.remoteUser.city,
-                            roles = login.remoteLoginData.remoteUser.roles,
-                            houseNumber = login.remoteLoginData.remoteUser.houseNumber,
-                            createdAt = login.remoteLoginData.remoteUser.createdAt,
-                            emailVerifiedAt = login.remoteLoginData.remoteUser.emailVerifiedAt,
-                            currentTeamId = login.remoteLoginData.remoteUser.currentTeamId,
-                            phoneNumber = login.remoteLoginData.remoteUser.phoneNumber,
-                            updatedAt = login.remoteLoginData.remoteUser.updatedAt,
-                            name = login.remoteLoginData.remoteUser.name,
-                            id = login.remoteLoginData.remoteUser.id,
-                            profilePhotoPath = login.remoteLoginData.remoteUser.profilePhotoPath,
-                            email = login.remoteLoginData.remoteUser.email
+                        val dtoToLocal = UserDataDomain(
+                            profilePhotoUrl = login.profilePhotoUrl,
+                            address = login.address,
+                            city = login.city,
+                            roles = login.roles,
+                            houseNumber = login.houseNumber,
+                            createdAt = login.createdAt,
+                            emailVerifiedAt = login.emailVerifiedAt,
+                            currentTeamId = login.currentTeamId,
+                            phoneNumber = login.phoneNumber,
+                            updatedAt = login.updatedAt,
+                            name = login.name,
+                            id = login.id,
+                            profilePhotoPath = login.profilePhotoPath,
+                            email = login.email
                         )
                         emit(SubmitResult.Success(dtoToLocal))
                     }

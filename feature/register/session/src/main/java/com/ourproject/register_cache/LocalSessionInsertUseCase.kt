@@ -4,7 +4,7 @@ import com.ourproject.register_domain.UserDataDomain
 import com.ourproject.register_domain.UserSessionUseCase
 
 
-class LocalSessionInsertUseCase(private val preferenceClient: PreferenceClient):
+class LocalSessionInsertUseCase(private val preferenceClient: RegisterPreferenceClient):
     UserSessionUseCase {
 
 

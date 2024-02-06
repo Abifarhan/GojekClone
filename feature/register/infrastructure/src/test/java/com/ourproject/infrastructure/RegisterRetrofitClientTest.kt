@@ -1,14 +1,18 @@
-package com.ourproject.register_http.usecase
+package com.ourproject.infrastructure
 
 import app.cash.turbine.test
-import com.ourproject.infrastructure.remote.HttpClientResult
-import com.ourproject.session_user.ConnectivityException
-import com.ourproject.session_user.InternalServerErrorException
-import com.ourproject.session_user.InvalidDataException
-import com.ourproject.session_user.NotFoundExceptionException
-import com.ourproject.session_user.UnexpectedException
-import com.ourproject.register_http.usecase.insfrastucture.RegisterRetrofitClient
-import com.ourproject.register_http.usecase.insfrastucture.RegisterService
+import com.ourproject.infrastructure.remote.RegisterRetrofitClient
+import com.ourproject.infrastructure.remote.RegisterService
+import com.ourproject.infrastructure.remote.RemoteRegisterRequest
+import com.ourproject.infrastructure.remote.RemoteRegisterResponse
+import com.ourproject.register_domain.ConnectivityException
+import com.ourproject.register_domain.InternalServerErrorException
+import com.ourproject.register_domain.InvalidDataException
+import com.ourproject.register_domain.NotFoundExceptionException
+import com.ourproject.register_domain.UnexpectedException
+import com.ourproject.register_http.usecase.HttpClientResult
+import com.ourproject.register_http.usecase.RegisterSubmitRequest
+
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.confirmVerified
@@ -29,7 +33,18 @@ class RegisterRetrofitClientTest{
     private lateinit var sut: RegisterRetrofitClient
 
 
-    private val registerRequest = RegisterSubmitRequest(
+    private val registerRequest = RemoteRegisterRequest(
+        name = "birin",
+        email = "birin1@gmail.com",
+        password = "1234567890",
+        passwordConfirmation = "1234567890",
+        address = "Jakarta Pusat",
+        city = "Jakarta",
+        houseNumber = "3",
+        phoneNumber = "5"
+    )
+
+    private val dtoToUseCase = RegisterSubmitRequest(
         name = "birin",
         email = "birin1@gmail.com",
         password = "1234567890",
@@ -94,7 +109,7 @@ class RegisterRetrofitClientTest{
 
         when{
             withStatusCode != null -> {
-                val response = Response.error<RemoteRegisterResponseDto>(
+                val response = Response.error<RemoteRegisterResponse>(
                     withStatusCode,
                     "".toResponseBody(null)
                 )
@@ -112,7 +127,7 @@ class RegisterRetrofitClientTest{
         }
 
 
-        sut.register(registerRequest).test {
+        sut.register(dtoToUseCase).test {
             when(val receivedResult = awaitItem()){
                 is HttpClientResult.Success -> {
                     assertEquals(expectedResult, receivedResult)

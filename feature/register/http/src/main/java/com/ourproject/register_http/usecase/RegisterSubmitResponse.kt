@@ -29,4 +29,22 @@ data class RegisterSubmitResponse(
     val profilePhotoPath: Any? = null,
 
     val email: String = ""
-)
+) {
+    companion object{
+        val DEFAULT = RegisterSubmitResponse(
+            name = "",
+            email = "",
+            address = "",
+            city = "",
+            houseNumber = "",
+            phoneNumber = "",
+            profilePhotoUrl = "",
+            roles = "",
+            createdAt = 0,
+            emailVerifiedAt = "",
+            currentTeamId = "",
+            id = 0,
+            profilePhotoPath = ""
+        )
+    }
+}

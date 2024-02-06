@@ -33,7 +33,7 @@ class RegisterViewModel constructor(
             }
 
             registerSubmit.register(
-                registerSubmitDto = registerSubmitData
+                registerSubmitDomain = registerSubmitData
             ).collect { result ->
 
                 _isUserRegistered.update {

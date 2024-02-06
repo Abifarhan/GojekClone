@@ -1,18 +1,18 @@
 package com.ourproject.gojekclone.ui.factories.remote.login
 
 import com.ourproject.core.framework.remote.HttpFactory
-import com.ourproject.login_http.insfrastructure.LoginService
+import com.ourproject.infrastructure.remote.LoginService
 
 class LoginServiceFactory {
 
     companion object{
-        fun createLoginService(): LoginService {
+        fun createLoginService(): com.ourproject.infrastructure.remote.LoginService {
             return HttpFactory.createRetrofit(
                 HttpFactory.createMoshi(),
                 HttpFactory.createOkhttpClient(
                     HttpFactory.createLoggingInterceptor()
                 )
-            ).create(LoginService::class.java)
+            ).create(com.ourproject.infrastructure.remote.LoginService::class.java)
         }
     }
 }

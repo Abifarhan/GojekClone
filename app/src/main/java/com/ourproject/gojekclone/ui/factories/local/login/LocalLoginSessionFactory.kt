@@ -1,15 +1,15 @@
 package com.ourproject.gojekclone.ui.factories.local.login
 
 import com.ourproject.core.framework.local.LocalFactory
-import com.ourproject.session.usecase.infrastructure.Preference
-import com.ourproject.session.usecase.PreferenceClient
+import com.ourproject.infrastructure.session.UserLoginSessionPreferenceClient
+import com.ourproject.session.usecase.LoginPreferenceClient
 
 class LocalLoginSessionFactory {
 
     companion object{
 
-        fun createLocalSessionInsert(): PreferenceClient {
-            return Preference(
+        fun createLocalSessionInsert(): LoginPreferenceClient {
+            return UserLoginSessionPreferenceClient(
                 LocalFactory.createPreference()
             )
         }

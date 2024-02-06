@@ -29,3 +29,4 @@ include(":feature:dashboard:view")
 include(":core")
 
 include(":feature:register:infrastructure")
+include(":feature:login:infrastructure")

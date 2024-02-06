@@ -4,6 +4,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface LoginHttpClient {
     fun login(
-        body: LoginSubmitDto
+        body: LoginSubmitRequest
     ): Flow<HttpClientResult>
 }

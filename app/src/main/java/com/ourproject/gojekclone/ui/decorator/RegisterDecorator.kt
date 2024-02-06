@@ -13,9 +13,9 @@ class RegisterDecorator(
     private val local: UserSessionUseCase
 ) : RegisterUseCase {
 
-    override fun register(registerSubmit: RegisterSubmitDomain): Flow<SubmitResult> {
+    override fun register(registerSubmitDomain: RegisterSubmitDomain): Flow<SubmitResult> {
         return flow{
-            decorator.register(registerSubmit).collect{ result ->
+            decorator.register(registerSubmitDomain).collect{ result ->
                 if (result is SubmitResult.Success) {
                     val interceptResult = UserDataDomain(
                         profilePhotoPath = result.data.profilePhotoPath,

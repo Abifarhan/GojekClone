@@ -1,9 +1,9 @@
 package com.ourproject.register_presenter
 
-import com.ourproject.session_user.SubmitResult
 import app.cash.turbine.test
 import com.ourproject.register_domain.RegisterUseCase
 import com.ourproject.register_domain.RegisterSubmitDomain
+import com.ourproject.register_domain.SubmitResult
 import com.ourproject.register_domain.UserDataDomain
 import io.mockk.CapturingSlot
 import io.mockk.MockKAnnotations
@@ -146,7 +146,7 @@ class RegisterViewModelTest{
     }
 
     private fun expected(
-        result: SubmitResult<UserDataDomain>,
+        result: SubmitResult<UserDataDomain.DEFAULT>,
         sut: RegisterViewModel,
         expectedFailedResult: String,
         slot: CapturingSlot<RegisterSubmitDomain> = slot<RegisterSubmitDomain>()

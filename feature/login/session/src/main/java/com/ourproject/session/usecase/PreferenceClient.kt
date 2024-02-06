@@ -1,8 +1,8 @@
 package com.ourproject.session.usecase
 
-interface PreferenceClient {
+interface LoginPreferenceClient {
 
-    fun saveSessionEmail(email:String)
+    fun saveSessionEmail(userSessionSubmit : UserSessionSubmit)
 
     fun getSessionEmail(): String
 }

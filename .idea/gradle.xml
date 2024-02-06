@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/feature/login" />
             <option value="$PROJECT_DIR$/feature/login/domain" />
             <option value="$PROJECT_DIR$/feature/login/http" />
+            <option value="$PROJECT_DIR$/feature/login/infrastructure" />
             <option value="$PROJECT_DIR$/feature/login/presenter" />
             <option value="$PROJECT_DIR$/feature/login/session" />
             <option value="$PROJECT_DIR$/feature/register" />

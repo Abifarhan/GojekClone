@@ -7,9 +7,9 @@ import com.ourproject.session_user.InternalServerErrorException
 import com.ourproject.session_user.InvalidDataException
 import com.ourproject.session_user.NotFoundExceptionException
 import com.ourproject.session_user.UnexpectedException
-import com.ourproject.login_domain.LoginSubmitEntity
-import com.ourproject.login_http.insfrastructure.RemoteLoginData
-import com.ourproject.login_http.insfrastructure.RemoteLoginResponseDto
+import com.ourproject.login_domain.LoginSubmitDomain
+import com.ourproject.infrastructure.remote.RemoteLoginData
+import com.ourproject.infrastructure.remote.RemoteLoginResponseDto
 import io.mockk.clearAllMocks
 import io.mockk.confirmVerified
 import io.mockk.every
@@ -27,12 +27,12 @@ class RemoteLoginUseCaseTest{
     private val client = spyk<LoginHttpClient>()
     private lateinit var sut: RemoteLoginUseCase
 
-    private val loginSubmit = LoginSubmitEntity(
+    private val loginSubmit = LoginSubmitDomain(
         email = "default@gmail.com",
         password = "password12345"
     )
 
-    private val convertDto = LoginSubmitDto(
+    private val convertDto = LoginSubmitRequest(
         email = loginSubmit.email,
         password = loginSubmit.password
     )
@@ -142,8 +142,8 @@ class RemoteLoginUseCaseTest{
 
         expect(
             sut = sut,
-            receivedHttpClientResult = HttpClientResult.Success(RemoteLoginResponseDto.DEFAULT),
-            expectedResult = SubmitResult.Success(RemoteLoginData.DEFAULT),
+            receivedHttpClientResult = HttpClientResult.Success(com.ourproject.infrastructure.remote.RemoteLoginResponseDto.DEFAULT),
+            expectedResult = SubmitResult.Success(com.ourproject.infrastructure.remote.RemoteLoginData.DEFAULT),
             exactly = 1
         )
     }
@@ -155,7 +155,7 @@ class RemoteLoginUseCaseTest{
 
     private fun expect(
         sut: RemoteLoginUseCase,
-        receivedHttpClientResult: HttpClientResult<RemoteLoginResponseDto>,
+        receivedHttpClientResult: HttpClientResult<com.ourproject.infrastructure.remote.RemoteLoginResponseDto>,
         expectedResult: Any,
         exactly: Int = -1,
     ) = runBlocking {

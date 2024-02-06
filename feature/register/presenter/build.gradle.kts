@@ -33,15 +33,10 @@ android {
         jvmTarget = "17"
     }
 
-    buildFeatures {
-        viewBinding = true
-//        dataBinding = true
-    }
 }
 
 dependencies {
 
-    implementation(project(":component"))
     implementation(project(":feature:register:domain"))
     implementation(project(":feature:register:http"))
 

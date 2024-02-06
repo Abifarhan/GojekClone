@@ -2,10 +2,11 @@ package com.ourproject.infrastructure.session
 
 import android.content.SharedPreferences
 import com.ourproject.register_cache.LocalKey
-import com.ourproject.register_cache.PreferenceClient
+import com.ourproject.register_cache.RegisterPreferenceClient
 import com.ourproject.register_cache.UserSessionSubmit
 
-class UserSessionPreferenceClient(private val preferences: SharedPreferences): PreferenceClient {
+class UserRegisterSessionPreferenceClient(private val preferences: SharedPreferences):
+    RegisterPreferenceClient {
 
     override fun saveSessionEmail(userData: UserSessionSubmit) {
         val sessionToInfrastructure = LocalUserSessionSubmit(

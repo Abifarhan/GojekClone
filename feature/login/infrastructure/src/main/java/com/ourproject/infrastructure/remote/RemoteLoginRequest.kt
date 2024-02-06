@@ -1,8 +1,8 @@
-package com.ourproject.login_http
+package com.ourproject.infrastructure.remote
 
 import com.squareup.moshi.Json
 
-class LoginSubmitDto(
+data class RemoteLoginRequest(
     @Json(name="password")
     val password: String? = null,
 

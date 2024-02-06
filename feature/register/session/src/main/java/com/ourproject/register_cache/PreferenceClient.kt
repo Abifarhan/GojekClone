@@ -1,6 +1,6 @@
 package com.ourproject.register_cache
 
-interface PreferenceClient {
+interface RegisterPreferenceClient {
 
     fun saveSessionEmail(userData:UserSessionSubmit)
 

@@ -1,13 +1,14 @@
 package com.ourproject.register_http.usecase
 
-import com.ourproject.session_user.SubmitResult
 import app.cash.turbine.test
-import com.ourproject.session_user.ConnectivityException
-import com.ourproject.session_user.InternalServerErrorException
-import com.ourproject.session_user.InvalidDataException
-import com.ourproject.session_user.NotFoundExceptionException
-import com.ourproject.session_user.UnexpectedException
+import com.ourproject.register_domain.ConnectivityException
+import com.ourproject.register_domain.InternalServerErrorException
+import com.ourproject.register_domain.InvalidDataException
+import com.ourproject.register_domain.NotFoundExceptionException
 import com.ourproject.register_domain.RegisterSubmitDomain
+import com.ourproject.register_domain.SubmitResult
+import com.ourproject.register_domain.UnexpectedException
+import com.ourproject.register_domain.UserDataDomain
 import io.mockk.clearAllMocks
 import io.mockk.confirmVerified
 import io.mockk.every
@@ -154,8 +155,8 @@ class RemoteRegisterUserCaseTest{
 
         expect(
             sut = sut,
-            receivedHttpClientResult = HttpClientResult.Success(RemoteRegisterResponseDto.DEFAULT),
-            expectedResult = SubmitResult.Success(registerRequest),
+            receivedHttpClientResult = HttpClientResult.Success(RegisterSubmitResponse.DEFAULT),
+            expectedResult = SubmitResult.Success(UserDataDomain.DEFAULT),
             exactly = 1
         )
     }
@@ -167,7 +168,7 @@ class RemoteRegisterUserCaseTest{
 
     private fun expect(
         sut: RemoteRegisterUseCase,
-        receivedHttpClientResult: HttpClientResult<RemoteRegisterResponseDto>,
+        receivedHttpClientResult: HttpClientResult,
         expectedResult: Any,
         exactly: Int = -1,
     ) = runBlocking {
