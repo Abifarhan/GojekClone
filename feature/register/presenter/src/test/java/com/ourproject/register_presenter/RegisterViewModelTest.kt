@@ -30,7 +30,7 @@ class RegisterViewModelTest{
 
     private val params = RegisterSubmitDomain(
         name = "birin",
-        email = "birin1@gmail.com",
+        email = "birinn1@gmail.com",
         password = "1234567890",
         password_confirmation = "1234567890",
         address = "Jakarta Pusat",
@@ -146,7 +146,7 @@ class RegisterViewModelTest{
     }
 
     private fun expected(
-        result: SubmitResult<UserDataDomain.DEFAULT>,
+        result: SubmitResult,
         sut: RegisterViewModel,
         expectedFailedResult: String,
         slot: CapturingSlot<RegisterSubmitDomain> = slot<RegisterSubmitDomain>()

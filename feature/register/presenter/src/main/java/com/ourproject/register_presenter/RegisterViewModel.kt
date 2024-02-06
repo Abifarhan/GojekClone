@@ -1,5 +1,6 @@
 package com.ourproject.register_presenter
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ourproject.register_domain.SubmitResult
@@ -24,7 +25,7 @@ class RegisterViewModel constructor(
     val isUserRegistered: StateFlow<UserState> = _isUserRegistered.asStateFlow()
 
     fun submitRegister(
-        registerSubmitData: RegisterSubmitDomain
+        registerSubmitData:  UserInputData
     ) {
         viewModelScope.launch {
 
@@ -33,12 +34,22 @@ class RegisterViewModel constructor(
             }
 
             registerSubmit.register(
-                registerSubmitDomain = registerSubmitData
+                registerSubmitDomain = RegisterSubmitDomain(
+                    name = registerSubmitData.name,
+                    email = registerSubmitData.email,
+                    password = registerSubmitData.password,
+                    password_confirmation = registerSubmitData.password_confirmation,
+                    address = registerSubmitData.address,
+                    city = registerSubmitData.city,
+                    houseNumber = registerSubmitData.houseNumber,
+                    phoneNumber = registerSubmitData.phoneNumber
+                )
             ).collect { result ->
 
                 _isUserRegistered.update {
                     when (result) {
                         is SubmitResult.Success -> {
+                            Log.d("TAG", "submitRegister: here the result of operation success")
                             it.copy(
                                 isLoading = false,
                                 userRegistered = true
@@ -46,6 +57,7 @@ class RegisterViewModel constructor(
                         }
 
                         is SubmitResult.Failure -> {
+                            Log.d("TAG", "submitRegister: here the result of operation failure ${result.errorMessage}")
                             it.copy(
                                 isLoading = false,
                                 failedMessage = result.errorMessage

@@ -1,6 +1,5 @@
 package com.ourproject.login_presenter
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ourproject.login_domain.LoginUseCase
@@ -24,17 +23,15 @@ class LoginViewModel constructor(
 
     private val _userDataLiveData = MutableStateFlow(UserStateLogin())
         val userDataLiveData: StateFlow<UserStateLogin> = _userDataLiveData.asStateFlow()
-    fun login(email: String, password: String){
+    fun login(inputLoginForm : UserInputDataLogin){
         viewModelScope.launch {
             _userDataLiveData.update {
                 it.copy(isLoading = true)
             }
             loginInsert.login(com.ourproject.login_domain.LoginSubmitDomain(
-                email = email,
-                password = password
+                email = inputLoginForm.email,
+                password = inputLoginForm.password
             )).collect{ result ->
-                Log.d("TAG", "login: login operation result is $result")
-//                _login.value = result.
 
                 _userDataLiveData.update {
                     when(result){

@@ -19,11 +19,6 @@ import com.ourproject.view.DashboardActivity
 class LoginActivity : AppCompatActivity() {
 
 
-    private lateinit var txtLogin: TextView
-    private lateinit var editTextEmail: EditText
-    private lateinit var editTextPassword: EditText
-    private lateinit var btnLogin: Button
-    private lateinit var btnRegister: Button
 
     private lateinit var viewModel: com.ourproject.login_presenter.LoginViewModel
     override fun onCreate(savedInstanceState: Bundle?) {

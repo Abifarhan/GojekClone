@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        startActivity(Intent(this, RegisterActivity::class.java))
+        startActivity(Intent(this, LoginActivity::class.java))
 //        val preferences = getSharedPreferences(LocalKey.EMAIL_SESSION, Context.MODE_PRIVATE)
 //
 //        val savedEmail = preferences.getString(LocalKey.EMAIL_SESSION, null)

@@ -1,5 +1,6 @@
 package com.ourproject.gojekclone.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Surface
@@ -30,10 +31,13 @@ import com.ourproject.gojekclone.ui.compose.GoFoodTheme
 import com.ourproject.register_presenter.RegisterViewModel
 import com.ourproject.gojekclone.ui.presenter.RegisterViewModelFactory
 import androidx.compose.material.Surface
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.ourproject.component.RoundedButton
 import com.ourproject.component.showToast
+import com.ourproject.register_presenter.UserInputData
+import com.ourproject.view.DashboardActivity
 import timber.log.Timber
 
 @ExperimentalComposeUiApi
@@ -44,12 +48,12 @@ class RegisterActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this, RegisterViewModelFactory.createRegisterViewModelFactory())[RegisterViewModel::class.java]
 
-        setContent {
-            GoFoodTheme {
-                RegisterLayout(viewModel = viewModel)
-            }
-        }
 
+            setContent {
+                GoFoodTheme {
+                    RegisterLayout(viewModel = viewModel, this@RegisterActivity)
+                }
+            }
 
     }
 
@@ -59,17 +63,30 @@ class RegisterActivity : ComponentActivity() {
 @ExperimentalComposeUiApi
 @Composable
 fun RegisterLayout(
-    viewModel : RegisterViewModel
+    viewModel : RegisterViewModel,
+    activity: RegisterActivity
 ){
+    val context = LocalContext.current
+
+    LaunchedEffect(Unit){
+        viewModel.isUserRegistered.collect{
+            if (it.userRegistered){
+                val intent = Intent(activity, DashboardActivity::class.java)
+                activity.startActivity(intent)
+            }
+        }
+    }
+
+
     val email = rememberSaveable{ mutableStateOf("") }
     val password = rememberSaveable{ mutableStateOf("") }
     val name = rememberSaveable{ mutableStateOf("") }
     val phoneNumber = rememberSaveable{ mutableStateOf("") }
     val houseNumber = rememberSaveable{ mutableStateOf("") }
     val address = rememberSaveable{ mutableStateOf("") }
+    val city = rememberSaveable{ mutableStateOf("") }
     val passwordFocusRequest = FocusRequester.Default
 
-    val context = LocalContext.current
 
     Surface(color = MaterialTheme.colorScheme.background,
         modifier = Modifier.fillMaxSize(),
@@ -129,6 +146,14 @@ fun RegisterLayout(
                     )
 
                     EmailInput(
+                        emailState = address, enabled = true,
+                        labelId = "City",
+                        onAction = KeyboardActions{
+                            passwordFocusRequest.requestFocus()
+                        }
+                    )
+
+                    EmailInput(
                         emailState = houseNumber, enabled = true,
                         labelId = "Nomor Rumah",
                         onAction = KeyboardActions{
@@ -142,8 +167,20 @@ fun RegisterLayout(
                         RoundedButton(label = "Save",
 
                             onPress = {
-                                Timber.d("RegisterLayout: you are clicked ")
+
                                 showToast(context = context, "${email.value}")
+                                viewModel.submitRegister(
+                                    registerSubmitData = UserInputData(
+                                        name = name.value,
+                                        email = email.value,
+                                        password = password.value,
+                                        password_confirmation = password.value,
+                                        address = address.value,
+                                        city = city.value,
+                                        houseNumber = houseNumber.value,
+                                        phoneNumber = phoneNumber.value
+                                    )
+                                )
                             }
                             )
 
