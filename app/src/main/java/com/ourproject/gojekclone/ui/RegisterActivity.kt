@@ -35,6 +35,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.ourproject.component.RoundedButton
 import com.ourproject.component.showToast
+import com.ourproject.register_domain.SubmitResult
 import com.ourproject.register_presenter.UserInputData
 import com.ourproject.view.DashboardActivity
 import timber.log.Timber

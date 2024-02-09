@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 data class UserState(
     val isLoading: Boolean = false,
@@ -68,5 +69,20 @@ class RegisterViewModel constructor(
 
             }
         }
+    }
+
+    fun submitRegisterVersion2(registerSubmitData:  UserInputData) = runBlocking {
+        registerSubmit.register(
+        registerSubmitDomain = RegisterSubmitDomain(
+            name = registerSubmitData.name,
+            email = registerSubmitData.email,
+            password = registerSubmitData.password,
+            password_confirmation = registerSubmitData.password_confirmation,
+            address = registerSubmitData.address,
+            city = registerSubmitData.city,
+            houseNumber = registerSubmitData.houseNumber,
+            phoneNumber = registerSubmitData.phoneNumber
+        )
+        )
     }
 }

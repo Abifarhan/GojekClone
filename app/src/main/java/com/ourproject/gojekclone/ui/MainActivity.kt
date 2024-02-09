@@ -4,15 +4,12 @@ package com.ourproject.gojekclone.ui
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.compose.ui.ExperimentalComposeUiApi
 import com.ourproject.gojekclone.R
 import com.ourproject.session.usecase.LocalKey
 import com.ourproject.view.DashboardActivity
-import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
 

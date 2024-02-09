@@ -29,4 +29,6 @@ data class LoginSubmitResult(
     val profilePhotoPath: Any? = null,
 
     val email: String
-)
+) {
+
+}

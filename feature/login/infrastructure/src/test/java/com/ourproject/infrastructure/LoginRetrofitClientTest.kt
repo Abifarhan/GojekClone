@@ -1,15 +1,16 @@
-package com.ourproject.login_http
+package com.ourproject.infrastructure
 
 import app.cash.turbine.test
-import com.ourproject.session_user.ConnectivityException
-import com.ourproject.session_user.InternalServerErrorException
-import com.ourproject.session_user.InvalidDataException
-import com.ourproject.session_user.NotFoundExceptionException
-import com.ourproject.session_user.UnexpectedException
+import com.ourproject.infrastructure.remote.RemoteLoginRequest
+import com.ourproject.login_domain.ConnectivityException
+import com.ourproject.login_domain.InternalServerErrorException
+import com.ourproject.login_domain.InvalidDataException
 import com.ourproject.login_domain.LoginSubmitDomain
+import com.ourproject.login_domain.NotFoundExceptionException
+import com.ourproject.login_domain.UnexpectedException
 import com.ourproject.login_domain.UserDataDomain
-import com.ourproject.infrastructure.remote.LoginRetrofitClient
-import com.ourproject.infrastructure.remote.LoginService
+import com.ourproject.login_http.HttpClientResult
+import com.ourproject.login_http.LoginSubmitRequest
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.confirmVerified
@@ -35,10 +36,16 @@ class LoginRetrofitClientTest {
         password = "password12345"
     )
 
-    private val convertDto = LoginSubmitRequest(
+    private val convertDto = RemoteLoginRequest(
         email = loginSubmit.email,
         password = loginSubmit.password
     )
+
+    private val DtoToResult =
+        LoginSubmitRequest (
+            email = loginSubmit.email,
+            password = loginSubmit.password
+        )
 
     @Before
     fun setUp(){
@@ -112,7 +119,7 @@ class LoginRetrofitClientTest {
         }
 
 
-        sut.login(convertDto).test {
+        sut.login(DtoToResult).test {
             when(val receivedResult = awaitItem()){
                 is HttpClientResult.Success -> {
                     assertEquals(expectedResult, receivedResult)

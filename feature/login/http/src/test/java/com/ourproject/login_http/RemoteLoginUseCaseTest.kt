@@ -1,15 +1,13 @@
 package com.ourproject.login_http
 
-import com.ourproject.session_user.SubmitResult
 import app.cash.turbine.test
-import com.ourproject.session_user.ConnectivityException
-import com.ourproject.session_user.InternalServerErrorException
-import com.ourproject.session_user.InvalidDataException
-import com.ourproject.session_user.NotFoundExceptionException
-import com.ourproject.session_user.UnexpectedException
+import com.ourproject.login_domain.ConnectivityException
+import com.ourproject.login_domain.InternalServerErrorException
+import com.ourproject.login_domain.InvalidDataException
 import com.ourproject.login_domain.LoginSubmitDomain
-import com.ourproject.infrastructure.remote.RemoteLoginData
-import com.ourproject.infrastructure.remote.RemoteLoginResponseDto
+import com.ourproject.login_domain.NotFoundExceptionException
+import com.ourproject.login_domain.SubmitResult
+import com.ourproject.login_domain.UnexpectedException
 import io.mockk.clearAllMocks
 import io.mockk.confirmVerified
 import io.mockk.every
@@ -142,8 +140,8 @@ class RemoteLoginUseCaseTest{
 
         expect(
             sut = sut,
-            receivedHttpClientResult = HttpClientResult.Success(com.ourproject.infrastructure.remote.RemoteLoginResponseDto.DEFAULT),
-            expectedResult = SubmitResult.Success(com.ourproject.infrastructure.remote.RemoteLoginData.DEFAULT),
+            receivedHttpClientResult = HttpClientResult.Success(LoginSubmitResult),
+            expectedResult = SubmitResult.Success(),
             exactly = 1
         )
     }
@@ -155,7 +153,7 @@ class RemoteLoginUseCaseTest{
 
     private fun expect(
         sut: RemoteLoginUseCase,
-        receivedHttpClientResult: HttpClientResult<com.ourproject.infrastructure.remote.RemoteLoginResponseDto>,
+        receivedHttpClientResult: HttpClientResult,
         expectedResult: Any,
         exactly: Int = -1,
     ) = runBlocking {

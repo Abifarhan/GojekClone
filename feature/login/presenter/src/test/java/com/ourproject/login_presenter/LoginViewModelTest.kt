@@ -1,9 +1,9 @@
 package com.ourproject.login_presenter
 
-import com.ourproject.session_user.SubmitResult
 import app.cash.turbine.test
 import com.ourproject.login_domain.LoginUseCase
 import com.ourproject.login_domain.LoginSubmitDomain
+import com.ourproject.login_domain.SubmitResult
 import com.ourproject.login_domain.UserDataDomain
 import io.mockk.CapturingSlot
 import io.mockk.MockKAnnotations
@@ -141,7 +141,7 @@ class LoginViewModelTest{
         )
     }
     private fun expected(
-        result: SubmitResult<UserDataDomain>,
+        result: SubmitResult,
         sut: LoginViewModel,
         expectedFailedResult: String,
         slot: CapturingSlot<LoginSubmitDomain> = slot<LoginSubmitDomain>()
