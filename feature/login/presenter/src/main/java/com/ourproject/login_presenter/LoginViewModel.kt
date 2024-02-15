@@ -2,6 +2,7 @@ package com.ourproject.login_presenter
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ourproject.login_domain.LoginSubmitDomain
 import com.ourproject.login_domain.LoginUseCase
 import com.ourproject.login_domain.SubmitResult
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,23 +29,23 @@ class LoginViewModel constructor(
             _userDataLiveData.update {
                 it.copy(isLoading = true)
             }
-            loginInsert.login(com.ourproject.login_domain.LoginSubmitDomain(
+            loginInsert.login(
+                LoginSubmitDomain(
                 email = inputLoginForm.email,
                 password = inputLoginForm.password
-            )).collect{ result ->
+                )
+            ).collect{ result ->
 
                 _userDataLiveData.update {
                     when(result){
 
                         is SubmitResult.Success -> {
-
                             it.copy(
                                 isLoading = false,
                                 userRegistered = true
                             )
                         }
                         is SubmitResult.Failure -> {
-
                             it.copy(
                                 isLoading = false,
                                 userRegistered = false,

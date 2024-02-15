@@ -15,13 +15,13 @@ import kotlinx.coroutines.flow.flow
 class RemoteLoginUseCase constructor(
     private val loginHttpClient: LoginHttpClient
 ) : LoginUseCase {
-    override fun login(loginSubmitDto: LoginSubmitDomain): Flow<SubmitResult> {
+    override fun login(loginSubmit: LoginSubmitDomain): Flow<SubmitResult> {
 
         return flow {
 
             val mapper = LoginSubmitRequest(
-                email = loginSubmitDto.email,
-                password = loginSubmitDto.password
+                email = loginSubmit.email,
+                password = loginSubmit.password
             )
             loginHttpClient.login(body = mapper).collect{ result ->
                 when(result){
