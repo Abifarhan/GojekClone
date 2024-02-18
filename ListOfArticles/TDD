@@ -1,0 +1,9 @@
+
+1. https://www.browserstack.com/guide/tdd-in-android
+
+
+The 3 Laws of TDD: Focus on One Thing at a Time
+
+1. Write no production code except to pass a failing test.
+2. Write only enough of a test to demonstrate a failure. (Not compiling is also a valid failure)
+3. Write only enough production code to pass the test.
