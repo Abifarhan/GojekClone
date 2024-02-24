@@ -2,14 +2,14 @@ package com.ourproject.gojekclone.ui.factories.remote.login
 
 import com.ourproject.login_domain.LoginUseCase
 import com.ourproject.login_http.RemoteLoginUseCase
+import dagger.Binds
+import dagger.Module
 
-class LoginRemoteInsertFactory {
+@Module
+abstract class LoginRemoteInsertFactory {
 
-    companion object {
-        fun createLoginRemoteInsert(): LoginUseCase{
-            return RemoteLoginUseCase(
-                LoginHttpClientFactory.createLoginHttpClient()
-            )
-        }
-    }
+   @Binds
+   abstract fun createRemoteLoginUseCase(
+      remoteLoginUseCase: RemoteLoginUseCase
+   ) : LoginUseCase
 }

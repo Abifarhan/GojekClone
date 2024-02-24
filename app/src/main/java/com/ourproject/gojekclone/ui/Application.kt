@@ -2,12 +2,11 @@ package com.ourproject.gojekclone.ui
 
 import android.app.Application
 import com.ourproject.core.framework.local.LocalFactory
+import com.ourproject.gojekclone.ui.di.DaggerMainComponent
+import com.ourproject.gojekclone.ui.di.MainComponent
 
 class Application : Application() {
-
-    override fun onCreate() {
-        super.onCreate()
-
-        com.ourproject.core.framework.local.LocalFactory.application = this
+    val mainComponent: MainComponent by lazy {
+        DaggerMainComponent.factory().create()
     }
 }

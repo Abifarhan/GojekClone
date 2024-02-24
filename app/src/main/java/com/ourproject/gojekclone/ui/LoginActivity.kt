@@ -3,6 +3,7 @@ package com.ourproject.gojekclone.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -17,6 +18,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -24,9 +26,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ourproject.component.EmailInput
 import com.ourproject.component.RoundedButton
 import com.ourproject.gojekclone.ui.compose.GoFoodTheme
+import com.ourproject.gojekclone.ui.di.MainComponent
 import com.ourproject.gojekclone.ui.presenter.LoginViewModelFactory
 import com.ourproject.login_presenter.LoginViewModel
 import com.ourproject.login_presenter.UserInputDataLogin
@@ -41,11 +46,11 @@ class LoginActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProvider(this, LoginViewModelFactory.createLoginViewModel())[LoginViewModel::class.java]
+        val mainComponent = (application as Application).mainComponent
 
         setContent {
             GoFoodTheme {
-                LoginLayout(viewModel, this@LoginActivity)
+                LoginLayout(mainComponent = mainComponent)
             }
         }
     }
@@ -54,22 +59,26 @@ class LoginActivity : ComponentActivity() {
 
 @ExperimentalComposeUiApi
 @Composable
-fun LoginLayout(viewModel: LoginViewModel, activity: LoginActivity) {
+fun LoginLayout(mainComponent: MainComponent) {
 
     val context = LocalContext.current
 
     val email = rememberSaveable { mutableStateOf("") }
     val password = rememberSaveable { mutableStateOf("") }
 
-    LaunchedEffect(Unit){
-        viewModel.userDataLiveData.collect{
-            if (it.userRegistered) {
-                val intent = Intent(activity, DashboardActivity::class.java)
-                activity.startActivity(intent)
-            }
-        }
+    val viewModel: LoginViewModel = viewModel {
+        mainComponent.loginViewModel()
     }
 
+    val userStateLogin by viewModel.loginUiState.collectAsStateWithLifecycle()
+    Log.d("loadInsert", "$userStateLogin")
+
+    viewModel.login(
+        UserInputDataLogin(
+            email = "birin1@gmail.com",
+            password =  "123456789"
+        )
+    )
     Surface(
         color = MaterialTheme.colors.background,
         modifier = Modifier.fillMaxSize(),

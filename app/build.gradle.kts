@@ -116,4 +116,6 @@ dependencies {
 
     testImplementation(libs.kotlinx.coroutines.test)
     implementation("com.jakewharton.timber:timber:4.7.1")
+    implementation(libs.dagger.android)
+    kapt(libs.dagger.compiler)
 }

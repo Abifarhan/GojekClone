@@ -2,14 +2,14 @@ package com.ourproject.gojekclone.ui.factories.remote.login
 
 import com.ourproject.infrastructure.remote.LoginRetrofitClient
 import com.ourproject.login_http.LoginHttpClient
+import dagger.Binds
+import dagger.Module
 
-class LoginHttpClientFactory {
+@Module
+abstract class LoginHttpClientFactory {
 
-    companion object{
-        fun createLoginHttpClient(): LoginHttpClient {
-            return LoginRetrofitClient(
-                LoginServiceFactory.createLoginService()
-            )
-        }
-    }
+    @Binds
+    abstract fun createLoginHttpClient(
+        loginRetrofitClient: LoginRetrofitClient
+    ) : LoginHttpClient
 }

@@ -13,8 +13,9 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
-class LoginRetrofitClient constructor(
+class LoginRetrofitClient @Inject constructor(
     private val loginService: LoginService
 ) : LoginHttpClient {
     override fun login(body: LoginSubmitRequest): Flow<HttpClientResult> {

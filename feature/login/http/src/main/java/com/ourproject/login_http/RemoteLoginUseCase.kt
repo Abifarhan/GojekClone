@@ -11,8 +11,9 @@ import com.ourproject.login_domain.SubmitResult
 import com.ourproject.login_domain.UserDataDomain
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class RemoteLoginUseCase constructor(
+class RemoteLoginUseCase @Inject constructor(
     private val loginHttpClient: LoginHttpClient
 ) : LoginUseCase {
     override fun login(loginSubmit: LoginSubmitDomain): Flow<SubmitResult> {

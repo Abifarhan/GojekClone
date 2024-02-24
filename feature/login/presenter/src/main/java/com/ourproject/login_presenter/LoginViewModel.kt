@@ -1,69 +1,109 @@
 package com.ourproject.login_presenter
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ourproject.login_domain.LoginSubmitDomain
 import com.ourproject.login_domain.LoginUseCase
 import com.ourproject.login_domain.SubmitResult
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-data class UserStateLogin(
-    val isLoading: Boolean = false,
-    val failedMessage: String = "",
-    val userRegistered: Boolean = false
-)
-class LoginViewModel constructor(
+sealed interface LoginSubmitUiState {
+    val isLoading: Boolean
+    val failedMessage: String
+
+    data class LoginSuccess(
+        override val isLoading: Boolean,
+        val userRegistered: Boolean,
+        override val failedMessage: String
+    ) : LoginSubmitUiState
+
+    data class LoginFailed(
+        override val isLoading: Boolean,
+        val userRegistered: Boolean,
+        override val failedMessage: String
+    ) : LoginSubmitUiState
+
+}
+
+class LoginViewModel @Inject constructor(
     private val loginInsert: LoginUseCase
 ) : ViewModel() {
 
 
+    private val viewModelState = MutableStateFlow(
+        LoginViewModelState(
+            isLoading = true,
+            failedMessage = "",
+            isLoginSuccess = false
+        )
+    )
 
-    private val _userDataLiveData = MutableStateFlow(UserStateLogin())
-    val userDataLiveData: StateFlow<UserStateLogin> = _userDataLiveData.asStateFlow()
-    fun login(inputLoginForm : UserInputDataLogin){
-        viewModelScope.launch {
-            _userDataLiveData.update {
-                it.copy(isLoading = true)
-            }
-            loginInsert.login(
-                LoginSubmitDomain(
+    var loginUiState = viewModelState
+        .map(LoginViewModelState::toLoginUiState)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5000),
+            initialValue = viewModelState.value.toLoginUiState()
+        )
+
+    fun login(inputLoginForm: UserInputDataLogin) {
+    viewModelScope.launch {
+
+        loginInsert.login(
+            LoginSubmitDomain(
                 email = inputLoginForm.email,
                 password = inputLoginForm.password
-                )
-            ).collect{ result ->
+            )
+        ).collect { result ->
 
-                _userDataLiveData.update {
-                    when(result){
+            Log.d("Tracing result","result of operation is $result")
+            viewModelState.update {
+                when(result){
+                    is SubmitResult.Success -> it.copy(
+                        isLoginSuccess = true,
+                        isLoading = false,
+                        failedMessage = ""
+                    )
 
-                        is SubmitResult.Success -> {
-                            it.copy(
-                                isLoading = false,
-                                userRegistered = true
-                            )
-                        }
-                        is SubmitResult.Failure -> {
-                            it.copy(
-                                isLoading = false,
-                                userRegistered = false,
-                                failedMessage = result.errorMessage
-                            )
-                        }
-
-                        else -> {
-                            it.copy(
-                                isLoading = false,
-                                userRegistered = true
-                            )
-                        }
-                    }
+                    is SubmitResult.Failure -> it.copy(
+                        isLoginSuccess = false,
+                        isLoading = false,
+                        failedMessage = "failed login "
+                    )
                 }
-
-
             }
         }
     }
+    }
+}
+
+
+data class LoginViewModelState(
+    val isLoading: Boolean = false,
+    val isLoginSuccess: Boolean = false,
+    val failedMessage: String
+) {
+
+    fun toLoginUiState(): LoginSubmitUiState {
+        return if (isLoginSuccess) LoginSubmitUiState.LoginSuccess(
+            isLoading = isLoading,
+            userRegistered = isLoginSuccess,
+            failedMessage = failedMessage
+        ) else
+            LoginSubmitUiState.LoginSuccess(
+                isLoading = isLoading,
+                userRegistered = isLoginSuccess,
+                failedMessage = failedMessage
+            )
+    }
+
 }
