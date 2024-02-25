@@ -20,48 +20,44 @@ class LoginRetrofitClient constructor(
     override fun login(body: LoginSubmitRequest): Flow<HttpClientResult> {
         return flow {
             try {
-                val execution = loginService.login(
-                    loginBody = RemoteLoginRequest(
-                        password = body.password,
-                        email = body.email
-                    )
-                )
-
-                val result = LoginSubmitResult(
-                    profilePhotoUrl = execution.remoteLoginData.remoteUser.profilePhotoUrl,
-                    address = execution.remoteLoginData.remoteUser.address,
-                    city = execution.remoteLoginData.remoteUser.city,
-                    roles = execution.remoteLoginData.remoteUser.roles,
-                    houseNumber = execution.remoteLoginData.remoteUser.houseNumber,
-                    createdAt = execution.remoteLoginData.remoteUser.createdAt,
-                    emailVerifiedAt = execution.remoteLoginData.remoteUser.emailVerifiedAt,
-                    currentTeamId = execution.remoteLoginData.remoteUser.currentTeamId,
-                    phoneNumber = execution.remoteLoginData.remoteUser.phoneNumber,
-                    updatedAt = execution.remoteLoginData.remoteUser.updatedAt,
-                    name = execution.remoteLoginData.remoteUser.name,
-                    id = execution.remoteLoginData.remoteUser.id,
-                    profilePhotoPath = execution.remoteLoginData.remoteUser.profilePhotoPath,
-                    email = execution.remoteLoginData.remoteUser.email
-                )
-                emit(HttpClientResult.Success(result))
+                val loginResponse = loginService.login(RemoteLoginRequest(password = body.password, email = body.email))
+                emit(HttpClientResult.Success(loginResponse.remoteLoginData.toModels()))
             } catch (throwable: Throwable){
-                when(throwable) {
-                    is IOException -> {
-                        emit(HttpClientResult.Failure(ConnectivityException()))
-                    }
+                val result = when (throwable) {
+                    is IOException -> HttpClientResult.Failure(ConnectivityException())
                     is HttpException -> {
-                        when(throwable.code()){
-                            404 -> emit(HttpClientResult.Failure(NotFoundExceptionException()))
-                            422 -> emit(HttpClientResult.Failure(InvalidDataException()))
-                            500 -> emit(HttpClientResult.Failure(InternalServerErrorException()))
+                        when (throwable.code()) {
+                            404 -> HttpClientResult.Failure(NotFoundExceptionException())
+                            422 -> HttpClientResult.Failure(InvalidDataException())
+                            500 -> HttpClientResult.Failure(InternalServerErrorException())
+                            else -> HttpClientResult.Failure(InvalidDataException())
                         }
                     }
-                    else -> {
-                        emit(HttpClientResult.Failure(InvalidDataException()))
-                    }
+                    else -> HttpClientResult.Failure(InvalidDataException())
                 }
+
+                emit(result)
             }
         }
+    }
+
+    private fun RemoteLoginData.toModels(): LoginSubmitResult {
+        return LoginSubmitResult(
+            profilePhotoUrl = this.remoteUser.profilePhotoUrl,
+            address = this.remoteUser.address,
+            city = this.remoteUser.city,
+            roles = this.remoteUser.roles,
+            houseNumber = this.remoteUser.houseNumber,
+            createdAt = this.remoteUser.createdAt,
+            emailVerifiedAt = this.remoteUser.emailVerifiedAt,
+            currentTeamId = this.remoteUser.currentTeamId,
+            phoneNumber = this.remoteUser.phoneNumber,
+            updatedAt = this.remoteUser.updatedAt,
+            name = this.remoteUser.name,
+            id = this.remoteUser.id,
+            profilePhotoPath = this.remoteUser.profilePhotoPath,
+            email = this.remoteUser.email
+        )
     }
 
 }
