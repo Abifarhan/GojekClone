@@ -2,7 +2,7 @@ package com.ourproject.session.usecase
 
 interface LoginPreferenceClient {
 
-    fun saveSessionEmail(userSessionSubmit : UserSessionSubmit)
+    fun saveSessionEmail(email: String)
 
     fun getSessionEmail(): String
 }

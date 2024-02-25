@@ -8,9 +8,6 @@ class LocalSessionInsertUseCase(private val preferenceClient: LoginPreferenceCli
 
 
     override fun insertUserSession(data: UserDataDomain) {
-        val mapper = UserSessionSubmit(
-            email = data.email
-        )
-        preferenceClient.saveSessionEmail(mapper)
+        preferenceClient.saveSessionEmail(data.email)
     }
 }
