@@ -6,10 +6,9 @@ import androidx.lifecycle.viewModelScope
 import com.ourproject.login_domain.LoginSubmitDomain
 import com.ourproject.login_domain.LoginUseCase
 import com.ourproject.login_domain.SubmitResult
+import com.ourproject.login_domain.UserSessionUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -35,7 +34,8 @@ sealed interface LoginSubmitUiState {
 }
 
 class LoginViewModel @Inject constructor(
-    private val loginInsert: LoginUseCase
+    private val loginSubmitUseCase: LoginUseCase,
+    private val loginSessionUseCase: UserSessionUseCase
 ) : ViewModel() {
 
 
@@ -58,21 +58,23 @@ class LoginViewModel @Inject constructor(
     fun login(inputLoginForm: UserInputDataLogin) {
     viewModelScope.launch {
 
-        loginInsert.login(
+        loginSubmitUseCase.login(
             LoginSubmitDomain(
                 email = inputLoginForm.email,
                 password = inputLoginForm.password
             )
         ).collect { result ->
 
-            Log.d("Tracing result","result of operation is $result")
             viewModelState.update {
                 when(result){
-                    is SubmitResult.Success -> it.copy(
-                        isLoginSuccess = true,
-                        isLoading = false,
-                        failedMessage = ""
-                    )
+                    is SubmitResult.Success -> {
+                        loginSessionUseCase.insertUserSession(result.data)
+                        it.copy(
+                            isLoginSuccess = true,
+                            isLoading = false,
+                            failedMessage = ""
+                        )
+                    }
 
                     is SubmitResult.Failure -> it.copy(
                         isLoginSuccess = false,

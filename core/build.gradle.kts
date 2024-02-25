@@ -41,6 +41,8 @@ dependencies {
     implementation(libs.androidx.ktx)
     implementation(libs.appcompat)
     implementation(libs.com.google.android.material.material)
+    implementation(project(mapOf("path" to ":feature:login:infrastructure")))
+    implementation(project(mapOf("path" to ":feature:login:session")))
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

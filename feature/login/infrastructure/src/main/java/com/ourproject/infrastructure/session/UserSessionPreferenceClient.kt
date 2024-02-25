@@ -4,8 +4,9 @@ import android.content.SharedPreferences
 import com.ourproject.session.usecase.LocalKey
 import com.ourproject.session.usecase.LoginPreferenceClient
 import com.ourproject.session.usecase.UserSessionSubmit
+import javax.inject.Inject
 
-class UserLoginSessionPreferenceClient(private val preferences: SharedPreferences):
+class UserLoginSessionPreferenceClient @Inject constructor(private val preferences: SharedPreferences):
     LoginPreferenceClient {
 
 

@@ -39,7 +39,7 @@ class LoginViewModelTest{
     @Before
     fun setUp() {
         MockKAnnotations.init(this, relaxed = true)
-        sut = LoginViewModel(loginInsert = useCase)
+        sut = LoginViewModel(loginSubmitUseCase = useCase)
         Dispatchers.setMain(UnconfinedTestDispatcher())
 
     }
