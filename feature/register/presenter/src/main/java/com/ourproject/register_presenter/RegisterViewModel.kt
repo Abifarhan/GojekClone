@@ -34,23 +34,11 @@ class RegisterViewModel constructor(
                 it.copy(isLoading = true)
             }
 
-            registerSubmit.register(
-                registerSubmitDomain = RegisterSubmitDomain(
-                    name = registerSubmitData.name,
-                    email = registerSubmitData.email,
-                    password = registerSubmitData.password,
-                    password_confirmation = registerSubmitData.password_confirmation,
-                    address = registerSubmitData.address,
-                    city = registerSubmitData.city,
-                    houseNumber = registerSubmitData.houseNumber,
-                    phoneNumber = registerSubmitData.phoneNumber
-                )
-            ).collect { result ->
+            registerSubmit.register(registerSubmitData.presenterToDomain()).collect { result ->
 
                 _isUserRegistered.update {
                     when (result) {
                         is SubmitResult.Success -> {
-                            Log.d("TAG", "submitRegister: here the result of operation success")
                             it.copy(
                                 isLoading = false,
                                 userRegistered = true
@@ -58,7 +46,6 @@ class RegisterViewModel constructor(
                         }
 
                         is SubmitResult.Failure -> {
-                            Log.d("TAG", "submitRegister: here the result of operation failure ${result.errorMessage}")
                             it.copy(
                                 isLoading = false,
                                 failedMessage = result.errorMessage
@@ -71,18 +58,15 @@ class RegisterViewModel constructor(
         }
     }
 
-    fun submitRegisterVersion2(registerSubmitData:  UserInputData) = runBlocking {
-        registerSubmit.register(
-        registerSubmitDomain = RegisterSubmitDomain(
-            name = registerSubmitData.name,
-            email = registerSubmitData.email,
-            password = registerSubmitData.password,
-            password_confirmation = registerSubmitData.password_confirmation,
-            address = registerSubmitData.address,
-            city = registerSubmitData.city,
-            houseNumber = registerSubmitData.houseNumber,
-            phoneNumber = registerSubmitData.phoneNumber
-        )
-        )
-    }
+
+    private fun UserInputData.presenterToDomain() = RegisterSubmitDomain(
+        name = this.name,
+        email = this.email,
+        password = this.password,
+        password_confirmation = this.password_confirmation,
+        address = this.address,
+        city = this.city,
+        houseNumber = this.houseNumber,
+        phoneNumber = this.phoneNumber
+    )
 }
