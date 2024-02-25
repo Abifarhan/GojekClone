@@ -18,50 +18,20 @@ class RemoteLoginUseCase constructor(
     override fun login(loginSubmit: LoginSubmitDomain): Flow<SubmitResult> {
 
         return flow {
-
-            val mapper = LoginSubmitRequest(
-                email = loginSubmit.email,
-                password = loginSubmit.password
-            )
-            loginHttpClient.login(body = mapper).collect{ result ->
+            loginHttpClient.login(body = loginSubmit.domainToModels()).collect{ result ->
                 when(result){
                     is HttpClientResult.Success -> {
-                        val login = result.root
-
-                        val dtoToLocal = UserDataDomain(
-                            profilePhotoUrl = login.profilePhotoUrl,
-                            address = login.address,
-                            city = login.city,
-                            roles = login.roles,
-                            houseNumber = login.houseNumber,
-                            createdAt = login.createdAt,
-                            emailVerifiedAt = login.emailVerifiedAt,
-                            currentTeamId = login.currentTeamId,
-                            phoneNumber = login.phoneNumber,
-                            updatedAt = login.updatedAt,
-                            name = login.name,
-                            id = login.id,
-                            profilePhotoPath = login.profilePhotoPath,
-                            email = login.email
-                        )
-                        emit(SubmitResult.Success(dtoToLocal))
+                        emit(SubmitResult.Success(result.root.modelToDomain()))
                     }
-
                     is HttpClientResult.Failure -> {
-                        when(result.throwable){
-                            is InvalidDataException -> {
-                                emit(SubmitResult.Failure("Invalid Data"))
-                            }
-                            is ConnectivityException -> {
-                                emit(SubmitResult.Failure("Connectivity"))
-                            }
-                            is NotFoundExceptionException -> {
-                                emit(SubmitResult.Failure("Not Found"))
-                            }
-                            is InternalServerErrorException -> {
-                                emit(SubmitResult.Failure("Internal Server Error"))
-                            }
+                        val failureMessage = when (result.throwable) {
+                            is InvalidDataException -> "Invalid Data"
+                            is ConnectivityException -> "Connectivity"
+                            is NotFoundExceptionException -> "Not Found"
+                            is InternalServerErrorException -> "Internal Server Error"
+                            else -> "Unknown Error"
                         }
+                        emit(SubmitResult.Failure(failureMessage))
                     }
 
                 }
@@ -70,5 +40,30 @@ class RemoteLoginUseCase constructor(
         }
     }
 
+    private fun LoginSubmitDomain.domainToModels(): LoginSubmitRequest {
+        return LoginSubmitRequest(
+            email = this.email,
+            password = this.password
+        )
+    }
+
+    private fun  LoginSubmitResult.modelToDomain(): UserDataDomain {
+        return UserDataDomain(
+            profilePhotoUrl = this.profilePhotoUrl,
+            address = this.address,
+            city = this.city,
+            roles = this.roles,
+            houseNumber = this.houseNumber,
+            createdAt = this.createdAt,
+            emailVerifiedAt = this.emailVerifiedAt,
+            currentTeamId = this.currentTeamId,
+            phoneNumber = this.phoneNumber,
+            updatedAt = this.updatedAt,
+            name = this.name,
+            id = this.id,
+            profilePhotoPath = this.profilePhotoPath,
+            email = this.email
+        )
+    }
 
 }
