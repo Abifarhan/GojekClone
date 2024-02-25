@@ -2,7 +2,7 @@ package com.ourproject.register_cache
 
 interface RegisterPreferenceClient {
 
-    fun saveSessionEmail(userData:UserSessionSubmit)
+    fun saveSessionEmail(email: String)
 
     fun getSessionEmail(): String
 }

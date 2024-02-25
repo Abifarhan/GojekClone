@@ -3,17 +3,14 @@ package com.ourproject.infrastructure.session
 import android.content.SharedPreferences
 import com.ourproject.register_cache.LocalKey
 import com.ourproject.register_cache.RegisterPreferenceClient
-import com.ourproject.register_cache.UserSessionSubmit
 
 class UserRegisterSessionPreferenceClient(private val preferences: SharedPreferences):
     RegisterPreferenceClient {
 
-    override fun saveSessionEmail(userData: UserSessionSubmit) {
-        val sessionToInfrastructure = LocalUserSessionSubmit(
-            email = userData.email
-        )
+    override fun saveSessionEmail(email: String) {
+
         val edit = preferences.edit()
-        edit.putString(LocalKey.EMAIL_SESSION, sessionToInfrastructure.email)
+        edit.putString(LocalKey.EMAIL_SESSION, email)
         edit.apply()
     }
 

@@ -9,10 +9,7 @@ class LocalSessionInsertUseCase(private val preferenceClient: RegisterPreference
 
 
     override fun insertUserSession(userData: UserDataDomain) {
-        val userDomainToSession = UserSessionSubmit(
-            email = userData.email
-        )
-        preferenceClient.saveSessionEmail(userDomainToSession)
+        preferenceClient.saveSessionEmail(userData.email)
     }
 
 
