@@ -20,58 +20,24 @@ class RemoteRegisterUseCase(
     override fun register(registerSubmit: RegisterSubmitDomain): Flow<SubmitResult> {
         return flow{
 
-            val mapEntityToDto = RegisterSubmitRequest(
-                name = registerSubmit.name,
-                email = registerSubmit.email,
-                password = registerSubmit.password,
-                password_confirmation = registerSubmit.password_confirmation,
-                address = registerSubmit.password_confirmation,
-                city = registerSubmit.city,
-                houseNumber = registerSubmit.houseNumber,
-                phoneNumber = registerSubmit.phoneNumber
-            )
-            registerHttpClient.register(body = mapEntityToDto).collect{ result ->
+            registerHttpClient.register(body = registerSubmit.remoteToInfrastructure()).collect{ result ->
                 when(result){
                     is HttpClientResult.Success -> {
-                        val register = result.root
-
-                        val mapResultDtoToLocal = UserDataDomain(
-                            profilePhotoUrl = register.profilePhotoUrl,
-                            address = register.address,
-                            city = register.city,
-                            roles = register.roles,
-                            houseNumber = register.houseNumber,
-                            createdAt = register.createdAt,
-                            emailVerifiedAt = register.emailVerifiedAt,
-                            currentTeamId = register.currentTeamId,
-                            phoneNumber = register.phoneNumber,
-                            updatedAt = register.updatedAt,
-                            name = register.name,
-                            id = register.id,
-                            profilePhotoPath = register.profilePhotoPath,
-                            email =register.email
-                        )
-                        emit(SubmitResult.Success(mapResultDtoToLocal))
+                        val resultData = result.root
+                        emit(SubmitResult.Success(resultData.remoteToDomain()))
                     }
 
                     is HttpClientResult.Failure -> {
-                        when (result.throwable) {
-                            is InvalidDataException -> {
-                                emit(SubmitResult.Failure("Invalid Data"))
-                            }
-                            is ConnectivityException -> {
-                                emit(SubmitResult.Failure("Connectivity"))
-                            }
-                            is NotFoundExceptionException -> {
-                                emit(SubmitResult.Failure("Not Found"))
-                            }
-                            is InternalServerErrorException -> {
-                                emit(SubmitResult.Failure("Internal Server Error"))
-                            }
-                            is UnexpectedException -> {
-                                emit(SubmitResult.Failure("Something went wrong"))
-                            }
+                        val failureResult = when (result.throwable) {
+                            is InvalidDataException -> "Invalid Data"
+                            is ConnectivityException -> "Connectivity"
+                            is NotFoundExceptionException -> "Not Found"
+                            is InternalServerErrorException -> "Internal Server Error"
+                            is UnexpectedException -> "Something went wrong"
+                            else -> "Unknown Error"
                         }
+
+                        emit(SubmitResult.Failure(failureResult))
                     }
                 }
             }
@@ -79,4 +45,31 @@ class RemoteRegisterUseCase(
     }
 
 
+    private fun RegisterSubmitDomain.remoteToInfrastructure() = RegisterSubmitRequest(
+        name = this.name,
+        email = this.email,
+        password = this.password,
+        password_confirmation = this.password_confirmation,
+        address = this.password_confirmation,
+        city = this.city,
+        houseNumber = this.houseNumber,
+        phoneNumber = this.phoneNumber
+    )
+
+    private fun RegisterSubmitResponse.remoteToDomain() = UserDataDomain(
+        profilePhotoUrl = this.profilePhotoUrl,
+        address = this.address,
+        city = this.city,
+        roles = this.roles,
+        houseNumber = this.houseNumber,
+        createdAt = this.createdAt,
+        emailVerifiedAt = this.emailVerifiedAt,
+        currentTeamId = this.currentTeamId,
+        phoneNumber = this.phoneNumber,
+        updatedAt = this.updatedAt,
+        name = this.name,
+        id = this.id,
+        profilePhotoPath = this.profilePhotoPath,
+        email = this.email
+    )
 }
