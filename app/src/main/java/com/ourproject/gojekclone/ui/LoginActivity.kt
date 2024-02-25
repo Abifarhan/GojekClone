@@ -29,7 +29,6 @@ import com.ourproject.component.RoundedButton
 import com.ourproject.gojekclone.ui.compose.GoFoodTheme
 import com.ourproject.gojekclone.ui.presenter.LoginViewModelFactory
 import com.ourproject.login_presenter.LoginViewModel
-import com.ourproject.login_presenter.UserInputDataLogin
 import com.ourproject.view.DashboardActivity
 
 @ExperimentalComposeUiApi
@@ -62,7 +61,7 @@ fun LoginLayout(viewModel: LoginViewModel, activity: LoginActivity) {
     val password = rememberSaveable { mutableStateOf("") }
 
     LaunchedEffect(Unit){
-        viewModel.userDataLiveData.collect{
+        viewModel.userStateLogin.collect{
             if (it.userRegistered) {
                 val intent = Intent(activity, DashboardActivity::class.java)
                 activity.startActivity(intent)
@@ -91,14 +90,8 @@ fun LoginLayout(viewModel: LoginViewModel, activity: LoginActivity) {
                     EmailInput(emailState = password, enabled = true, labelId = "Password")
 
                     RoundedButton(label = "Submit",
-
                         onPress = {
-                            viewModel.login(
-                                UserInputDataLogin(
-                                    email = email.value,
-                                    password =  password.value
-                                )
-                            )
+                            viewModel.login(email = email.value,password =  password.value)
                         }
                     )
                 }

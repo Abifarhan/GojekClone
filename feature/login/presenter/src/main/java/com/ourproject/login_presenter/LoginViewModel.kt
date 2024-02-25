@@ -22,21 +22,16 @@ class LoginViewModel constructor(
 
 
 
-    private val _userDataLiveData = MutableStateFlow(UserStateLogin())
-    val userDataLiveData: StateFlow<UserStateLogin> = _userDataLiveData.asStateFlow()
-    fun login(inputLoginForm : UserInputDataLogin){
+    private val _userStateLogin = MutableStateFlow(UserStateLogin())
+    val userStateLogin: StateFlow<UserStateLogin> = _userStateLogin.asStateFlow()
+    fun login(email: String, password: String){
         viewModelScope.launch {
-            _userDataLiveData.update {
+            _userStateLogin.update {
                 it.copy(isLoading = true)
             }
-            loginInsert.login(
-                LoginSubmitDomain(
-                email = inputLoginForm.email,
-                password = inputLoginForm.password
-                )
-            ).collect{ result ->
+            loginInsert.login(presenterToDomain(email = email, password = password)).collect{ result ->
 
-                _userDataLiveData.update {
+                _userStateLogin.update {
                     when(result){
 
                         is SubmitResult.Success -> {
@@ -65,5 +60,12 @@ class LoginViewModel constructor(
 
             }
         }
+    }
+
+    private fun presenterToDomain(email: String, password: String): LoginSubmitDomain {
+        return LoginSubmitDomain(
+            email = email,
+            password = password
+        )
     }
 }

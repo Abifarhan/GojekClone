@@ -152,7 +152,7 @@ class LoginViewModelTest{
 
         useCase.login(params)
 
-        sut.userDataLiveData.take(1).test {
+        sut.userStateLogin.take(1).test {
             val receivedResult = awaitItem()
 
             if (receivedResult.failedMessage.isNotEmpty()) {
